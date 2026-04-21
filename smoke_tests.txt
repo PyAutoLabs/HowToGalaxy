@@ -1,0 +1,27 @@
+# HowToGalaxy smoke test list — one path per line, relative to `scripts/`.
+# Consumed by `.github/scripts/run_smoke.py` (CI) and by the `/smoke-test` skill.
+#
+# Chapter 1 tutorials are fast and representative — they exercise core PyAutoGalaxy
+# API (light profiles, galaxies, imaging, fitting) without running non-linear
+# searches. Chapter 2+ modeling tutorials are heavier; add them here once we've
+# confirmed they run green under PYAUTO_TEST_MODE=2.
+#
+# tutorial_0_visualization.py and tutorial_3_fitting.py are intentionally
+# excluded — both depend on pre-simulated datasets inherited from
+# autogalaxy_workspace conventions that HowToGalaxy does not ship:
+#
+#   tutorial_0 → uses `Path(...)` without importing it (same bug as upstream);
+#                references `dataset/imaging/simple__sersic` with no auto-sim
+#                fallback.
+#   tutorial_3 → auto-sim block calls `scripts/imaging/simulator.py` (does not
+#                exist in HowToGalaxy); a second dataset load for
+#                `dataset/imaging/simple` has no auto-sim fallback.
+#
+# Both need a content-alignment pass (fix imports, switch to the simulators
+# already shipped in HowToGalaxy, or add auto-sim blocks) before they can be
+# included here. Tracked as a follow-up to the bootstrap PR.
+
+chapter_1_introduction/tutorial_1_grids_and_galaxies.py
+chapter_1_introduction/tutorial_2_data.py
+chapter_1_introduction/tutorial_4_methods.py
+chapter_1_introduction/tutorial_5_summary.py
