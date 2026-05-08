@@ -7,10 +7,10 @@ infer a good model.
 
 __Contents__
 
-**Searching Non-linear Parameter Space:** How dimensionality, priors and settings drive search run-times.
-**Algorithmic Optimization:** How PyAutoGalaxy uses numba and JAX for fast computation.
-**Data Quantity:** How the number of image pixels affects run-time.
-**Wrap Up:** Summary of strategies for keeping model-fit run-times manageable.
+- **Searching Non-linear Parameter Space:** How dimensionality, priors and settings drive search run-times.
+- **Algorithmic Optimization:** How PyAutoGalaxy uses numba and JAX for fast computation.
+- **Data Quantity:** How the number of image pixels affects run-time.
+- **Wrap Up:** Summary of strategies for keeping model-fit run-times manageable.
 
 For fitting more complex models, the final challenge that we face is keeping the run-time low. One can easily end
 up in a situation where a model-fit takes days, or longer, to fit just one image. For fitting complex models and high

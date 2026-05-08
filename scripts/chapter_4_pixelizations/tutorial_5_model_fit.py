@@ -21,12 +21,12 @@ initializing the bulge and disk components. In the later searches we will switch
 
 __Contents__
 
-**Initial Setup:** Load the complex galaxy dataset and apply a mask.
-**Model + Search + Analysis + Model-Fit (Search 1):** Fit light profiles to the main galaxy components.
-**Mesh Shape:** Discussion of how mesh shape affects the inversion.
-**Model + Search + Analysis + Model-Fit (Search 2):** Fit with a pixelization for residual structure.
-**Model + Search (Search 3):** Final simultaneous fit of light profiles and pixelization.
-**Wrap Up:** Summary of combining light profiles with pixelizations via search chaining.
+- **Initial Setup:** Load the complex galaxy dataset and apply a mask.
+- **Model + Search + Analysis + Model-Fit (Search 1):** Fit light profiles to the main galaxy components.
+- **Mesh Shape:** Discussion of how mesh shape affects the inversion.
+- **Model + Search + Analysis + Model-Fit (Search 2):** Fit with a pixelization for residual structure.
+- **Model + Search (Search 3):** Final simultaneous fit of light profiles and pixelization.
+- **Wrap Up:** Summary of combining light profiles with pixelizations via search chaining.
 """
 
 # from autoconf import setup_notebook; setup_notebook()

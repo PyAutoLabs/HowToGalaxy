@@ -21,13 +21,13 @@ concepts and show how they are applied in practice to analyze astronomical data.
 
 __Contents__
 
-**Dataset:** Load the imaging dataset previously simulated, consisting of the image, noise map, and PSF.
-**Mask:** Apply a mask to the data, excluding regions with low signal-to-noise ratios from the analysis.
-**Masked Grid:** Create a masked grid containing only coordinates of unmasked pixels.
-**Fitting:** Fit the data with a galaxy model, computing the model image, residuals, chi-squared, and log likelihood.
-**Incorrect Fit:** Demonstrate how small deviations from true parameters impact fit quality.
-**Model Fitting:** Perform a basic model fit, adjusting parameters to improve the fit.
-**Wrap Up:** Summary of the fitting process and key statistical concepts.
+- **Dataset:** Load the imaging dataset previously simulated, consisting of the image, noise map, and PSF.
+- **Mask:** Apply a mask to the data, excluding regions with low signal-to-noise ratios from the analysis.
+- **Masked Grid:** Create a masked grid containing only coordinates of unmasked pixels.
+- **Fitting:** Fit the data with a galaxy model, computing the model image, residuals, chi-squared, and log likelihood.
+- **Incorrect Fit:** Demonstrate how small deviations from true parameters impact fit quality.
+- **Model Fitting:** Perform a basic model fit, adjusting parameters to improve the fit.
+- **Wrap Up:** Summary of the fitting process and key statistical concepts.
 """
 
 import numpy as np

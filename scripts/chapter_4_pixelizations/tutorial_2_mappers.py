@@ -9,10 +9,10 @@ Therefore, in this tutorial, we'll cover mappers in more detail.
 
 __Contents__
 
-**Initial Setup:** Load the dataset for illustration.
-**Mappers:** Understand how mappers map image-plane pixels to pixelization pixels.
-**Mask:** Apply a mask and see how it affects the mapper.
-**Wrap Up:** Summary of mapper concepts.
+- **Initial Setup:** Load the dataset for illustration.
+- **Mappers:** Understand how mappers map image-plane pixels to pixelization pixels.
+- **Mask:** Apply a mask and see how it affects the mapper.
+- **Wrap Up:** Summary of mapper concepts.
 """
 
 # from autoconf import setup_notebook; setup_notebook()

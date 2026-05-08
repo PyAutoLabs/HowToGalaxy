@@ -13,9 +13,9 @@ model-fitting techniques.
 
 __Contents__
 
-**Nested Sampling:** Customize Nautilus settings and use Dynesty as an alternative nested sampler.
-**Optimizers:** Use maximum likelihood optimizers like LBFGS for fast but less robust fitting.
-**MCMC:** Use Markov Chain Monte Carlo methods like Emcee for parameter estimation.
+- **Nested Sampling:** Customize Nautilus settings and use Dynesty as an alternative nested sampler.
+- **Optimizers:** Use maximum likelihood optimizers like LBFGS for fast but less robust fitting.
+- **MCMC:** Use Markov Chain Monte Carlo methods like Emcee for parameter estimation.
 """
 
 # from autoconf import setup_notebook; setup_notebook()

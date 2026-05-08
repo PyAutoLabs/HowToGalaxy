@@ -20,13 +20,13 @@ we created earlier.
 
 __Contents__
 
-**Initial Setup:** Create a 2D grid and define galaxy light profiles for simulation.
-**Optics Blurring:** Simulate how the telescope optics blur the galaxy's light using PSF convolution.
-**Poisson Noise:** Add Poisson noise to the image, simulating CCD photon-to-electron randomness.
-**Background Sky:** Add background sky light that introduces noise across the entire image.
-**Simulator:** Use the SimulatorImaging object to simulate imaging data with all effects combined.
-**Output:** Save the simulated data to .fits files for use in future tutorials.
-**Wrap Up:** Summary of how CCD imaging data is simulated.
+- **Initial Setup:** Create a 2D grid and define galaxy light profiles for simulation.
+- **Optics Blurring:** Simulate how the telescope optics blur the galaxy's light using PSF convolution.
+- **Poisson Noise:** Add Poisson noise to the image, simulating CCD photon-to-electron randomness.
+- **Background Sky:** Add background sky light that introduces noise across the entire image.
+- **Simulator:** Use the SimulatorImaging object to simulate imaging data with all effects combined.
+- **Output:** Save the simulated data to .fits files for use in future tutorials.
+- **Wrap Up:** Summary of how CCD imaging data is simulated.
 """
 
 # from autoconf import setup_notebook; setup_notebook()

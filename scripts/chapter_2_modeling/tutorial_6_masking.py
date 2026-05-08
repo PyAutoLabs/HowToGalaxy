@@ -8,11 +8,11 @@ We'll also learn a neat trick to improve the speed and accuracy of a non-linear 
 
 __Contents__
 
-**Initial Setup:** Load the dataset and apply a mask.
-**Mask:** Apply a custom mask to focus the fit on specific regions.
-**Model + Search + Analysis:** Fit the model using the custom mask.
-**Discussion:** How the mask affects the fit quality and run time.
-**Wrap Up:** Summary of masking strategies for galaxy modeling.
+- **Initial Setup:** Load the dataset and apply a mask.
+- **Mask:** Apply a custom mask to focus the fit on specific regions.
+- **Model + Search + Analysis:** Fit the model using the custom mask.
+- **Discussion:** How the mask affects the fit quality and run time.
+- **Wrap Up:** Summary of masking strategies for galaxy modeling.
 """
 
 # from autoconf import setup_notebook; setup_notebook()

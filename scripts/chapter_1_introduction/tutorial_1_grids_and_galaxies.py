@@ -31,13 +31,13 @@ profiles on the grid, we can effectively generate images that represent the stru
 
 __Contents__
 
-**Grids:** Create a uniform grid of (y,x) coordinates and show how it can be used to measure the light of a galaxy.
-**Geometry:** How to shift and rotate a grid, and convert it to elliptical coordinates.
-**Light Profiles:** Using light profiles, analytic functions that describe how a galaxy's light is distributed.
-**Galaxies:** Creating galaxies containing light profiles and computing the image of a galaxy.
-**One Dimension Projection:** Create projected 2D radial grids for 1D profile calculations.
-**Unit Conversion:** Converting angular distances to physical distances using cosmology.
-**Wrap Up:** Summary of the key concepts covered in this tutorial.
+- **Grids:** Create a uniform grid of (y,x) coordinates and show how it can be used to measure the light of a galaxy.
+- **Geometry:** How to shift and rotate a grid, and convert it to elliptical coordinates.
+- **Light Profiles:** Using light profiles, analytic functions that describe how a galaxy's light is distributed.
+- **Galaxies:** Creating galaxies containing light profiles and computing the image of a galaxy.
+- **One Dimension Projection:** Create projected 2D radial grids for 1D profile calculations.
+- **Unit Conversion:** Converting angular distances to physical distances using cosmology.
+- **Wrap Up:** Summary of the key concepts covered in this tutorial.
 
 The imports below are required to run the howtogalaxy tutorials in a Jupiter notebook. They also import the
 `autogalaxy` package and the `autogalaxy.plot` module which are used throughout the tutorials.

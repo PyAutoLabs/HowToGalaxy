@@ -10,9 +10,9 @@ learn how to create a pixelization in **PyAutoGalaxy**.
 
 __Contents__
 
-**Initial Setup:** Create a grid for illustration.
-**Mesh:** Set up a rectangular mesh for the pixelization.
-**Wrap Up:** Summary of pixelization concepts.
+- **Initial Setup:** Create a grid for illustration.
+- **Mesh:** Set up a rectangular mesh for the pixelization.
+- **Wrap Up:** Summary of pixelization concepts.
 """
 
 # from autoconf import setup_notebook; setup_notebook()
