@@ -20,10 +20,10 @@ global maxima solution is in indeed the global maxima.
 
 __Contents__
 
-**Initial Setup:** Load the dataset and apply a mask.
-**Approach 1: Prior Tuning:** Narrow the priors to guide the search to the correct region of parameter space.
-**Approach 2: Reducing Complexity:** Simplify the model to reduce the dimensionality of parameter space.
-**Approach 3: Look Harder:** Increase the thoroughness of the non-linear search sampling.
+- **Initial Setup:** Load the dataset and apply a mask.
+- **Approach 1: Prior Tuning:** Narrow the priors to guide the search to the correct region of parameter space.
+- **Approach 2: Reducing Complexity:** Simplify the model to reduce the dimensionality of parameter space.
+- **Approach 3: Look Harder:** Increase the thoroughness of the non-linear search sampling.
 """
 
 # from autoconf import setup_notebook; setup_notebook()

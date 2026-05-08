@@ -7,12 +7,12 @@ fit each model-fit. In this tutorial, we'll take a look at the result object in 
 
 __Contents__
 
-**Initial Setup:** Perform a model-fit to obtain a Result object.
-**Galaxies & Fit:** Access the maximum likelihood galaxies and fit from the result.
-**Samples:** Inspect the non-linear search samples, including parameter estimates and errors.
-**Workspace:** Pointers to more detailed results examples in the workspace.
-**Database:** Overview of the database functionality for managing large numbers of results.
-**Wrap Up:** Summary of the Result object and its key attributes.
+- **Initial Setup:** Perform a model-fit to obtain a Result object.
+- **Galaxies & Fit:** Access the maximum likelihood galaxies and fit from the result.
+- **Samples:** Inspect the non-linear search samples, including parameter estimates and errors.
+- **Workspace:** Pointers to more detailed results examples in the workspace.
+- **Database:** Overview of the database functionality for managing large numbers of results.
+- **Wrap Up:** Summary of the Result object and its key attributes.
 """
 
 # from autoconf import setup_notebook; setup_notebook()

@@ -12,15 +12,15 @@ way, which is the topic of this tutorial.
 
 __Contents__
 
-**Initial Setup:** Load the dataset and apply a mask.
-**Model:** Compose the model for the first search.
-**Search:** Run the first search.
-**Result (Search 1):** Inspect the result of the first search.
-**Prior Passing:** Use the prior passing API to pass results to the second search.
-**Result:** Inspect the final result of the chained search.
-**Wrap Up:** Summary of the prior passing API.
-**Detailed Explanation Of Prior Passing:** In-depth explanation of how priors are passed between searches.
-**EXAMPLE:** A worked example of prior passing for a Sersic sersic_index parameter.
+- **Initial Setup:** Load the dataset and apply a mask.
+- **Model:** Compose the model for the first search.
+- **Search:** Run the first search.
+- **Result (Search 1):** Inspect the result of the first search.
+- **Prior Passing:** Use the prior passing API to pass results to the second search.
+- **Result:** Inspect the final result of the chained search.
+- **Wrap Up:** Summary of the prior passing API.
+- **Detailed Explanation Of Prior Passing:** In-depth explanation of how priors are passed between searches.
+- **EXAMPLE:** A worked example of prior passing for a Sersic sersic_index parameter.
 """
 
 # from autoconf import setup_notebook; setup_notebook()

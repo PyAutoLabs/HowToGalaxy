@@ -14,13 +14,13 @@ conceptually challenging!
 
 __Contents__
 
-**Initial Setup:** Load the dataset for illustration.
-**Convenience Function:** A helper function for performing inversions.
-**Pixelization:** Perform inversions with different regularization coefficients.
-**Regularization:** Understand how regularization smooths the reconstruction.
-**Bayesian Evidence:** Use the Bayesian evidence to objectively choose the regularization coefficient.
-**Non-Linear and Linear:** Discussion of how regularization interacts with the non-linear search.
-**Detailed Description:** In-depth explanation of how the Bayesian evidence penalizes overfitting.
+- **Initial Setup:** Load the dataset for illustration.
+- **Convenience Function:** A helper function for performing inversions.
+- **Pixelization:** Perform inversions with different regularization coefficients.
+- **Regularization:** Understand how regularization smooths the reconstruction.
+- **Bayesian Evidence:** Use the Bayesian evidence to objectively choose the regularization coefficient.
+- **Non-Linear and Linear:** Discussion of how regularization interacts with the non-linear search.
+- **Detailed Description:** In-depth explanation of how the Bayesian evidence penalizes overfitting.
 """
 
 # from autoconf import setup_notebook; setup_notebook()

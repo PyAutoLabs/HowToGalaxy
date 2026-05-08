@@ -7,12 +7,12 @@ Jupyter notebook and on your computer screen.
 
 __Contents__
 
-**Directories:** Set the working directory so PyAutoGalaxy can find configs, data and output folders.
-**Dataset:** Load an example imaging dataset of a galaxy.
-**Plot Customization:** Customize matplotlib options like title, figure size and colormap.
-**Subplots:** Plot all components of a dataset simultaneously using subplots.
-**Visuals:** Add visual overlays like masks and grids to figures.
-**Wrap Up:** Summary of visualization in PyAutoGalaxy.
+- **Directories:** Set the working directory so PyAutoGalaxy can find configs, data and output folders.
+- **Dataset:** Load an example imaging dataset of a galaxy.
+- **Plot Customization:** Customize matplotlib options like title, figure size and colormap.
+- **Subplots:** Plot all components of a dataset simultaneously using subplots.
+- **Visuals:** Add visual overlays like masks and grids to figures.
+- **Wrap Up:** Summary of visualization in PyAutoGalaxy.
 """
 
 # from autoconf import setup_notebook; setup_notebook()
