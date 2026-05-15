@@ -146,11 +146,11 @@ If you do enjoy code, variables, functions, and parameters, you may want to dig 
 code at some point in the future. Firstly, you should note that all of the code we discuss throughout the **HowToGalaxy** 
 lectures is not contained in just one project (e.g. the **PyAutoGalaxy** GitHub repository) but in fact three repositories:
 
-**PyAutoFit** - Everything required for modeling (the topic of chapter 2): https://github.com/rhayes777/PyAutoFit
+**PyAutoFit** - Everything required for modeling (the topic of chapter 2): https://github.com/PyAutoLabs/PyAutoFit
 
-**PyAutoArray** - Handles all data structures and Astronomy dataset objects: https://github.com/Jammy2211/PyAutoArray
+**PyAutoArray** - Handles all data structures and Astronomy dataset objects: https://github.com/PyAutoLabs/PyAutoArray
 
-**PyAutoGalaxy** - Contains the light profiles and galaxies: https://github.com/Jammy2211/PyAutoGalaxy
+**PyAutoGalaxy** - Contains the light profiles and galaxies: https://github.com/PyAutoLabs/PyAutoGalaxy
 
 Instructions on how to build these projects from source are provided here:
 
@@ -170,7 +170,7 @@ of **HowToGalaxy**.
 Finally, if you enjoyed doing the **HowToGalaxy** tutorials please git us a star on the **PyAutoGalaxy** GitHub
 repository: 
 
- https://github.com/Jammy2211/PyAutoGalaxy
+ https://github.com/PyAutoLabs/PyAutoGalaxy
 
 Even the smallest bit of exposure via a GitHub star can help our project grow!
 """

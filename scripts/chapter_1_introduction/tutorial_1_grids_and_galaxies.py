@@ -6,7 +6,7 @@ Nearly a century ago, Edwin Hubble famously classified galaxies into three disti
 ellipticals, spirals and irregulars. He produced a diagram of these galaxies, called the Hubble Tuning Fork, which
 is shown below and still discussed by astronomers in the modern day:
 
-![HubbleTuning](https://github.com/Jammy2211/autogalaxy_workspace/blob/main/scripts/chapter_1_introduction/HubbleTuningFork.jpg)
+![HubbleTuning](https://github.com/PyAutoLabs/autogalaxy_workspace/blob/main/scripts/chapter_1_introduction/HubbleTuningFork.jpg)
 
 To make his diagram, Hubble looked at images of each galaxy in his sample, and subjectively judged by eye how
 to classify it. Today, Astronomers use computer software, statistical algorithms and image processing techniques to
