@@ -2,6 +2,19 @@
 
 This is the **HowToGalaxy** tutorial lecture series for `PyAutoGalaxy`, a Python library for galaxy morphology modeling. Tutorials teach new users how to model galaxy light from first principles.
 
+## Scientific Context
+
+Adjacent science — strong-lensing concepts that overlap galaxy modelling
+(light profiles + MGE, regularisation, pixelisation, kinematics,
+bulge/halo decomposition) — lives in the lensing sub-wiki at
+[`PyAutoLabs/PyAutoPaper`](https://github.com/PyAutoLabs/PyAutoPaper),
+locally at `../PyAutoPaper/lensing_wiki/`. The wiki is lensing-focused
+but tutorials that want to frame a galaxy concept against a real
+scientific application can pull from it (e.g.
+`concepts/source-reconstruction.md` for pixelisation,
+`concepts/bulge-halo-decomposition.md` for SLaM-style decomposition).
+Start at `../PyAutoPaper/lensing_wiki/index.md`.
+
 ## Repository Structure
 
 - `scripts/` — Runnable Python tutorial scripts
