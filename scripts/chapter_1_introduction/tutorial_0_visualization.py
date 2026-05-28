@@ -35,6 +35,11 @@ directory `autogalaxy_workspace/dataset/imaging/simple__sersic`.
 There are many example simulated images of galaxies in this directory that will be used throughout the
 **HowToGalaxy** lectures.
 """
+from pathlib import Path
+
+import autogalaxy as ag
+import autogalaxy.plot as aplt
+
 dataset_path = Path("dataset", "imaging", "simple__sersic")
 
 """
