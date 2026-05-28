@@ -58,7 +58,7 @@ if not dataset_path.exists():
     import sys
 
     subprocess.run(
-        [sys.executable, "scripts/guides/plot/simulator.py"],
+        [sys.executable, "scripts/simulators/sersic_x2.py"],
         check=True,
     )
 
