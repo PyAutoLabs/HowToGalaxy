@@ -35,7 +35,6 @@
 - ellipse/database # Ellipse model needs refactor and JAX support
 - ellipse/modeling # NEEDS_FIX 2026-04-10 - KeyError on 'ellipses.0.centre_0' kwargs after API drift in ellipse model
 - guides/advanced/over_sampling # NEEDS_FIX 2026-04-10 - plot_grid() got unexpected kwarg 'plot_grid_lines' after plotter API drift
-- howtogalaxy/chapter_4_pixelizations/tutorial_2_mappers # NEEDS_FIX 2026-04-10 - IndexError in mapper tutorial, likely empty mapping array
 - howtogalaxy/chapter_4_pixelizations/tutorial_5_model_fit # NEEDS_FIX 2026-04-10 - LinAlgError: matrix not positive definite in pixelization fit
 - imaging/data_preparation/manual/mask_irregular # NEEDS_FIX 2026-04-10 - silent failure, needs investigation
 - imaging/features/pixelization/modeling # NEEDS_FIX 2026-04-10 - LinAlgError: matrix not positive definite in pixelization modeling
