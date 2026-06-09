@@ -98,10 +98,10 @@ aaplt.subplot_image_and_mapper(mapper=mapper, image=dataset.data)
 Using a mapper, we can now make these mappings appear the other way round. That is, we can input a pixelization pixel
 index (of our rectangular grid) and highlight how all of the image-pixels that it contains map to the image-plane. 
 
-Lets map source pixel 313, the central source-pixel, to the image. We observe that for a given rectangular pixelization
+Lets map a central source pixel to the image. We observe that for a given rectangular pixelization
 pixel, there are four image pixels.
 """
-pix_indexes = [[312]]
+pix_indexes = [[max(0, mapper.pixels // 2 - 1)]]
 
 indexes = mapper.slim_indexes_for_pix_indexes(pix_indexes=pix_indexes)
 
@@ -148,7 +148,14 @@ maps too in the pixelization.
 
 Now lets show that when we plot pixelization pixel indexes, they still appear in the same place in the image.
 """
-pix_indexes = [[312], [314], [316], [318]]
+pix_indexes = []
+
+for pix_index in range(mapper.pixels):
+    if mapper.slim_indexes_for_pix_indexes(pix_indexes=[[pix_index]])[0]:
+        pix_indexes.append([pix_index])
+
+    if len(pix_indexes) == 4:
+        break
 
 indexes = mapper.slim_indexes_for_pix_indexes(pix_indexes=pix_indexes)
 
