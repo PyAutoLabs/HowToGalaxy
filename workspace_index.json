@@ -1,0 +1,423 @@
+[
+  {
+    "contents": [
+      "Directories",
+      "Dataset",
+      "Plot Customization",
+      "Subplots",
+      "Visuals",
+      "Wrap Up"
+    ],
+    "cross_refs": [],
+    "notebook": "notebooks/chapter_1_introduction/tutorial_0_visualization.ipynb",
+    "path": "scripts/chapter_1_introduction/tutorial_0_visualization.py",
+    "summary": "In this tutorial, we quickly cover visualization in **PyAutoGalaxy** and make sure images display clearly in your Jupyter notebook and on your computer screen.",
+    "title": "Tutorial 0: Visualization"
+  },
+  {
+    "contents": [
+      "Grids",
+      "Geometry",
+      "Light Profiles",
+      "Galaxies",
+      "One Dimension Projection",
+      "Unit Conversion",
+      "Wrap Up"
+    ],
+    "cross_refs": [
+      "/guides/over_sampling.ipynb"
+    ],
+    "notebook": "notebooks/chapter_1_introduction/tutorial_1_grids_and_galaxies.ipynb",
+    "path": "scripts/chapter_1_introduction/tutorial_1_grids_and_galaxies.py",
+    "summary": "Nearly a century ago, Edwin Hubble famously classified galaxies into three distinct groups: ellipticals, spirals and irregulars. He produced a diagram of these galaxies, called the Hubble Tuning Fork, which is shown below and still discussed by astronomers in the modern day:",
+    "title": "HowToGalaxy: Introduction"
+  },
+  {
+    "contents": [
+      "Initial Setup",
+      "Optics Blurring",
+      "Poisson Noise",
+      "Background Sky",
+      "Simulator",
+      "Output",
+      "Wrap Up"
+    ],
+    "cross_refs": [],
+    "notebook": "notebooks/chapter_1_introduction/tutorial_2_data.ipynb",
+    "path": "scripts/chapter_1_introduction/tutorial_2_data.py",
+    "summary": "In the previous tutorial, we used light profiles to create images of galaxies. However, those images don't accurately represent what we would observe through a telescope.",
+    "title": "Tutorial 2: Data"
+  },
+  {
+    "contents": [
+      "Dataset",
+      "Mask",
+      "Masked Grid",
+      "Fitting",
+      "Incorrect Fit",
+      "Model Fitting",
+      "Wrap Up"
+    ],
+    "cross_refs": [],
+    "notebook": "notebooks/chapter_1_introduction/tutorial_3_fitting.ipynb",
+    "path": "scripts/chapter_1_introduction/tutorial_3_fitting.py",
+    "summary": "In previous tutorials, we used light profiles to create simulated images of galaxies and visualized how these images would appear when captured by a CCD detector on a telescope like the Hubble Space Telescope.",
+    "title": "Tutorial 3: Fitting"
+  },
+  {
+    "contents": [],
+    "cross_refs": [],
+    "notebook": "notebooks/chapter_1_introduction/tutorial_4_methods.ipynb",
+    "path": "scripts/chapter_1_introduction/tutorial_4_methods.py",
+    "summary": "(no summary in script docstring)",
+    "title": "tutorial_4_methods"
+  },
+  {
+    "contents": [
+      "Initial Setup",
+      "Object Composition",
+      "Visualization",
+      "Code Design",
+      "Source Code",
+      "Wrap Up"
+    ],
+    "cross_refs": [],
+    "notebook": "notebooks/chapter_1_introduction/tutorial_5_summary.ipynb",
+    "path": "scripts/chapter_1_introduction/tutorial_5_summary.py",
+    "summary": "In this chapter, we have learnt that:",
+    "title": "Tutorial 9: Summary"
+  },
+  {
+    "contents": [
+      "Parameter Space",
+      "Non-Linear Search",
+      "Search Types",
+      "Deeper Background",
+      "Data",
+      "Model",
+      "Priors",
+      "Analysis",
+      "Searches",
+      "Maximum Likelihood Estimation (MLE)",
+      "Markov Chain Monte Carlo (MCMC)",
+      "Nested Sampling",
+      "Result",
+      "Samples",
+      "Customizing Searches",
+      "Wrap Up"
+    ],
+    "cross_refs": [
+      "/imaging/log_likelihood_function/parametric.ipynb"
+    ],
+    "notebook": "notebooks/chapter_2_modeling/tutorial_1_non_linear_search.ipynb",
+    "path": "scripts/chapter_2_modeling/tutorial_1_non_linear_search.py",
+    "summary": "The starting point for most scientific analysis conducted by an Astronomer is that they have observations of a galaxy using a telescope like the Hubble Space Telescope, and seek to learn about the galaxy and the Universe from these observations. With **PyAutoGalaxy**, we seek to learn about the galaxy's structure and morphology, asking questions like how big is the galaxy, is it disky or bulgy, and how is its light distributed?",
+    "title": "Tutorial 1: Non-linear Search"
+  },
+  {
+    "contents": [],
+    "cross_refs": [
+      "/guides/over_sampling.ipynb",
+      "scripts/chapter_2_modeling/tutorial_2_practicalities.py"
+    ],
+    "notebook": "notebooks/chapter_2_modeling/tutorial_2_practicalities.ipynb",
+    "path": "scripts/chapter_2_modeling/tutorial_2_practicalities.py",
+    "summary": "In the last tutorial, we introduced foundational statistical concepts essential for model-fitting, such as parameter spaces, likelihoods, priors, and non-linear searches. Understanding these statistical concepts is crucial for performing model fits effectively.",
+    "title": "Tutorial 2: Practicalities"
+  },
+  {
+    "contents": [
+      "Initial Setup",
+      "Model + Search + Analysis",
+      "Result",
+      "Global and Local Maxima",
+      "Wrap Up"
+    ],
+    "cross_refs": [
+      "/guides/over_sampling.ipynb"
+    ],
+    "notebook": "notebooks/chapter_2_modeling/tutorial_3_realism_and_complexity.ipynb",
+    "path": "scripts/chapter_2_modeling/tutorial_3_realism_and_complexity.py",
+    "summary": "In the previous two tutorials, we fitted a fairly basic model: the galaxy's light was a single bulge component. In real observations we know that galaxies are observed to have multiple different morphological structures.",
+    "title": "Tutorial 3: Realism and Complexity"
+  },
+  {
+    "contents": [
+      "Initial Setup",
+      "Approach 1: Prior Tuning",
+      "Approach 2: Reducing Complexity",
+      "Approach 3: Look Harder"
+    ],
+    "cross_refs": [
+      "/guides/over_sampling.ipynb",
+      "HowToGalaxy/chapter_optional/tutorial_searches.ipynb"
+    ],
+    "notebook": "notebooks/chapter_2_modeling/tutorial_4_dealing_with_failure.ipynb",
+    "path": "scripts/chapter_2_modeling/tutorial_4_dealing_with_failure.py",
+    "summary": "In the previous tutorial we intentionally made our non-linear search infer a local maxima solution and therefore return a physically incorrect model. In this tutorial, we will pretend that we have modeled our galaxy and inferred a local maxima. We introduce three approaches one can take that changes how we fit the model, all of which have the aim of ensuring we infer the global maxima:",
+    "title": "Tutorial 4: Dealing With Failure"
+  },
+  {
+    "contents": [
+      "Initial Setup",
+      "Linear Light Profiles",
+      "Run Time",
+      "Result",
+      "Intensities",
+      "Visualization",
+      "Basis",
+      "Model Fit",
+      "Disk MGE",
+      "Multi Gaussian Expansion Benefits",
+      "Positive Only Solver",
+      "Other Basis Functions",
+      "Wrap Up"
+    ],
+    "cross_refs": [
+      "/guides/over_sampling.ipynb",
+      "autogalaxy_workspace/scripts/modeling/imaging/features/shapelets.py"
+    ],
+    "notebook": "notebooks/chapter_2_modeling/tutorial_5_linear_profiles.ipynb",
+    "path": "scripts/chapter_2_modeling/tutorial_5_linear_profiles.py",
+    "summary": "In the previous tutorial we learned how to balance model complexity with our non-linear search in order to infer accurate model solutions and avoid failure. We saw how in order to fit a model accurately one may have to parameterize and fit a simpler model with fewer non-linear parameters, at the expense of fitting the data less accurately.",
+    "title": "Tutorial 5: Linear Profiles"
+  },
+  {
+    "contents": [
+      "Initial Setup",
+      "Mask",
+      "Model + Search + Analysis",
+      "Discussion",
+      "Wrap Up"
+    ],
+    "cross_refs": [
+      "/guides/over_sampling.ipynb"
+    ],
+    "notebook": "notebooks/chapter_2_modeling/tutorial_6_masking.ipynb",
+    "path": "scripts/chapter_2_modeling/tutorial_6_masking.py",
+    "summary": "We have learnt everything we need to know about non-linear searches to model a galaxy and infer a good lens model solution. Now, lets consider masking in more detail, something we have not given much consideration previously. We'll also learn a neat trick to improve the speed and accuracy of a non-linear search.",
+    "title": "Tutorial 6: Masking"
+  },
+  {
+    "contents": [
+      "Initial Setup",
+      "Galaxies & Fit",
+      "Samples",
+      "Workspace",
+      "Database",
+      "Wrap Up"
+    ],
+    "cross_refs": [],
+    "notebook": "notebooks/chapter_2_modeling/tutorial_7_results.ipynb",
+    "path": "scripts/chapter_2_modeling/tutorial_7_results.py",
+    "summary": "In the previous tutorials, each search returned a `Result` object, which we used to plot the maximum log likelihood fit each model-fit. In this tutorial, we'll take a look at the result object in a little more detail.",
+    "title": "Tutorial 5: Results"
+  },
+  {
+    "contents": [
+      "Searching Non-linear Parameter Space",
+      "Algorithmic Optimization",
+      "Data Quantity",
+      "Wrap Up"
+    ],
+    "cross_refs": [
+      "//numba.py",
+      "chapter_optional/tutorial_searches.ipynb"
+    ],
+    "notebook": "notebooks/chapter_2_modeling/tutorial_8_need_for_speed.ipynb",
+    "path": "scripts/chapter_2_modeling/tutorial_8_need_for_speed.py",
+    "summary": "In this chapter, we have learnt how to model galaxies and how to balance complexity and realism to ensure that we infer a good model.",
+    "title": "Tutorial 8: Need For Speed"
+  },
+  {
+    "contents": [
+      "Initial Setup",
+      "Model",
+      "Search + Analysis",
+      "Result",
+      "Prior Passing",
+      "Result",
+      "Wrap Up"
+    ],
+    "cross_refs": [],
+    "notebook": "notebooks/chapter_3_search_chaining/tutorial_1_search_chaining.ipynb",
+    "path": "scripts/chapter_3_search_chaining/tutorial_1_search_chaining.py",
+    "summary": "In chapter 2, we learnt how to perform modeling using a non-linear search. In all of the tutorials, we fitted the data using just one non-linear search. In this chapter, we introduce a technique called 'non-linear search chaining', which fits a model using a sequence of non-linear searches. The initial searches fit simpler models whose parameter spaces can be more accurately and efficiently sampled. The results of this search are then passed to later searches which fit models of gradually increasing complexity.",
+    "title": "Tutorial 1: Search Chaining"
+  },
+  {
+    "contents": [
+      "Initial Setup",
+      "Model",
+      "Search",
+      "Result (Search 1)",
+      "Prior Passing",
+      "Result",
+      "Wrap Up",
+      "Detailed Explanation Of Prior Passing",
+      "EXAMPLE"
+    ],
+    "cross_refs": [],
+    "notebook": "notebooks/chapter_3_search_chaining/tutorial_2_prior_passing.ipynb",
+    "path": "scripts/chapter_3_search_chaining/tutorial_2_prior_passing.py",
+    "summary": "In the previous tutorial, we used non-linear search chaining to break the model-fitting procedure down into two non-linear searches. This used an initial search to fit a simple model, whose results were used to tune and initialize the priors of a more complex model that was fitted by the second search.",
+    "title": "Tutorial 2: Prior Passing"
+  },
+  {
+    "contents": [
+      "Initial Setup",
+      "Paths",
+      "Search Chaining Approach",
+      "Model + Search + Analysis + Model-Fit (Search 1)",
+      "Result (Search 1)",
+      "Model (Search 2)",
+      "Search + Analysis + Model-Fit (Search 2)",
+      "Result (Search 2)",
+      "Model + Search + Analysis + Model-Fit (Search 4)",
+      "Result (Search 3)",
+      "Wrap Up"
+    ],
+    "cross_refs": [],
+    "notebook": "notebooks/chapter_3_search_chaining/tutorial_3_x2_galaxies.ipynb",
+    "path": "scripts/chapter_3_search_chaining/tutorial_3_x2_galaxies.py",
+    "summary": "Up to now, all the images we've fitted had one galaxy. However, we saw in chapter 1 that our galaxies object can consist of multiple galaxies which each contribute to the overall emission. Multi-galaxy systems are challenging to model, because they add an extra 5-10 parameters to the non-linear search per galaxy and, more problematically, the degeneracies between the parameters of the light profiles of the galaxies can be severe.",
+    "title": "Tutorial 3: Two Galaxies"
+  },
+  {
+    "contents": [
+      "Initial Setup",
+      "Mesh",
+      "Wrap Up"
+    ],
+    "cross_refs": [],
+    "notebook": "notebooks/chapter_4_pixelizations/tutorial_1_pixelizations.ipynb",
+    "path": "scripts/chapter_4_pixelizations/tutorial_1_pixelizations.py",
+    "summary": "In the previous chapters, we used light profiles to model the light of a galaxy, where the light profile was an analytic description of how the luminosity varies as a function of radius.",
+    "title": "Tutorial 1: pixelizations"
+  },
+  {
+    "contents": [
+      "Initial Setup",
+      "Mappers",
+      "Mask",
+      "Wrap Up"
+    ],
+    "cross_refs": [],
+    "notebook": "notebooks/chapter_4_pixelizations/tutorial_2_mappers.ipynb",
+    "path": "scripts/chapter_4_pixelizations/tutorial_2_mappers.py",
+    "summary": "In the previous tutorial, we used a pixelization to create made a `Mapper`. However, it was not clear what a `Mapper` does, why it was called a mapper and whether it was mapping anything at all!",
+    "title": "Tutorial 2: Mappers"
+  },
+  {
+    "contents": [
+      "Initial Setup",
+      "Pixelization",
+      "Positive Only Solver",
+      "Wrap Up",
+      "Detailed Explanation"
+    ],
+    "cross_refs": [
+      "/imaging/log_likelihood_function/inversion.ipynb"
+    ],
+    "notebook": "notebooks/chapter_4_pixelizations/tutorial_3_inversions.ipynb",
+    "path": "scripts/chapter_4_pixelizations/tutorial_3_inversions.py",
+    "summary": "In the previous two tutorials, we introduced:",
+    "title": "Tutorial 3: Inversions"
+  },
+  {
+    "contents": [
+      "Initial Setup",
+      "Convenience Function",
+      "Pixelization",
+      "Regularization",
+      "Bayesian Evidence",
+      "Non-Linear and Linear",
+      "Detailed Description"
+    ],
+    "cross_refs": [],
+    "notebook": "notebooks/chapter_4_pixelizations/tutorial_4_bayesian_regularization.ipynb",
+    "path": "scripts/chapter_4_pixelizations/tutorial_4_bayesian_regularization.py",
+    "summary": "So far, we have:",
+    "title": "Tutorial 4: Bayesian Regularization"
+  },
+  {
+    "contents": [
+      "Initial Setup",
+      "Model + Search + Analysis + Model-Fit (Search 1)",
+      "Mesh Shape",
+      "Model + Search + Analysis + Model-Fit (Search 2)",
+      "Model + Search (Search 3)",
+      "Wrap Up"
+    ],
+    "cross_refs": [],
+    "notebook": "notebooks/chapter_4_pixelizations/tutorial_5_model_fit.ipynb",
+    "path": "scripts/chapter_4_pixelizations/tutorial_5_model_fit.py",
+    "summary": "In the previous tutorials we used an inversion to reconstruct a complex galaxy. However, from the perspective of a scientific analysis, it is not clear how useful this was. When I fit a galaxy with light profiles, I learn about its brightness (`intensity`), size (`effective_radius`), compactness (`sersic_index`), etc.",
+    "title": "Tutorial 5: Model-Fit"
+  },
+  {
+    "contents": [
+      "Nested Sampling",
+      "Optimizers",
+      "MCMC"
+    ],
+    "cross_refs": [],
+    "notebook": "notebooks/chapter_optional/tutorial_searches.ipynb",
+    "path": "scripts/chapter_optional/tutorial_searches.py",
+    "summary": "Up to now, we've always used the non-linear search Nautilus and not considered the input parameters that control its sampling. In this tutorial, we'll consider how we can change these setting to balance finding the global maxima solution with fast run time.",
+    "title": "Tutorial: Alternative Searches"
+  },
+  {
+    "contents": [
+      "Dataset Paths",
+      "Grid",
+      "Galaxies",
+      "Output",
+      "Visualize",
+      "Plane Output"
+    ],
+    "cross_refs": [
+      "simulators/start_here.ipynb"
+    ],
+    "notebook": "notebooks/simulators/sersic.ipynb",
+    "path": "scripts/simulators/sersic.py",
+    "summary": "This script simulates `Imaging` of a galaxy using light profiles where:",
+    "title": "Simulator: Sersic"
+  },
+  {
+    "contents": [
+      "Dataset Paths",
+      "Grid",
+      "Galaxies",
+      "Output",
+      "Visualize",
+      "Plane Output"
+    ],
+    "cross_refs": [
+      "simulators/start_here.ipynb"
+    ],
+    "notebook": "notebooks/simulators/sersic_x2.ipynb",
+    "path": "scripts/simulators/sersic_x2.py",
+    "summary": "This script simulates `Imaging` of two galaxies where:",
+    "title": "Simulator: Sersic x2"
+  },
+  {
+    "contents": [
+      "Dataset Paths",
+      "Grid",
+      "Over Sampling",
+      "Galaxies",
+      "Output",
+      "Visualize",
+      "Plane Output"
+    ],
+    "cross_refs": [
+      "/guides/over_sampling.ipynb",
+      "scripts/guides/api/data_structures.py"
+    ],
+    "notebook": "notebooks/simulators/simple.ipynb",
+    "path": "scripts/simulators/simple.py",
+    "summary": "This script simulates `Imaging` of a galaxy using light profiles where:",
+    "title": "Simulator: Sersic + Exp"
+  }
+]
