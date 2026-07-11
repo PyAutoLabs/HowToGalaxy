@@ -9,7 +9,7 @@
   max_minutes: 30
 - script: scripts/chapter_1_introduction/tutorial_3_fitting.py
   max_minutes: 30
-- script: scripts/chapter_1_introduction/tutorial_4_methods.py
-  max_minutes: 30
+# tutorial_4_methods excluded: currently a "not written yet" stub (no content
+# or images to show). Re-add when the real tutorial is authored.
 - script: scripts/chapter_1_introduction/tutorial_5_summary.py
   max_minutes: 30
