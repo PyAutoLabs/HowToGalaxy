@@ -65,12 +65,14 @@
     "title": "Tutorial 3: Fitting"
   },
   {
-    "contents": [],
+    "contents": [
+      "Wrap Up"
+    ],
     "cross_refs": [],
     "notebook": "notebooks/chapter_1_introduction/tutorial_4_methods.ipynb",
     "path": "scripts/chapter_1_introduction/tutorial_4_methods.py",
-    "summary": "(no summary in script docstring)",
-    "title": "tutorial_4_methods"
+    "summary": "This tutorial is not written yet, but will explain in more detail the different methods used to fit and analyse galaxies.",
+    "title": "Tutorial 4: Methods"
   },
   {
     "contents": [

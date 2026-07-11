@@ -282,8 +282,10 @@ The Bayesian log evidence quantifies the following 3 aspects of a fit to galaxy 
  values of the image pixels whose variances are increased were initially very high (e.g. they were fit poorly by the 
  model).
 
+__Wrap Up__
+
 In summary, the log evidence is maximized for solutions which most accurately reconstruct the highest S/N realization of
-the observed image, without over-fitting its noise and using the fewest correlated pixelization pixels. By employing 
+the observed image, without over-fitting its noise and using the fewest correlated pixelization pixels. By employing
 this framework throughout, **PyAutoGalaxy** objectively determines the final model following the principles of Bayesian
 analysis and Occam’s Razor.
 """
