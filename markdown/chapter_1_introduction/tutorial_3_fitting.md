@@ -1,4 +1,7 @@
-"""
+> ✏️ **This page is auto-generated from [`scripts/chapter_1_introduction/tutorial_3_fitting.py`](../../scripts/chapter_1_introduction/tutorial_3_fitting.py) — do not edit it directly.**
+> It shows the example fully executed, with its real output images.
+> Run it yourself via the [Python script](../../scripts/chapter_1_introduction/tutorial_3_fitting.py) or the [Jupyter notebook](../../notebooks/chapter_1_introduction/tutorial_3_fitting.ipynb).
+
 Tutorial 3: Fitting
 ===================
 
@@ -28,16 +31,21 @@ __Contents__
 - **Incorrect Fit:** Demonstrate how small deviations from true parameters impact fit quality.
 - **Model Fitting:** Perform a basic model fit, adjusting parameters to improve the fit.
 - **Wrap Up:** Summary of the fitting process and key statistical concepts.
-"""
 
-# from autoconf import setup_notebook; setup_notebook()
+
+```python
+
+from autoconf import setup_notebook; setup_notebook()
 
 import numpy as np
 from pathlib import Path
 import autogalaxy as ag
 import autogalaxy.plot as aplt
+```
 
-"""
+    Working Directory has been set to `HowToGalaxy`
+
+
 __Dataset__
 
 We begin by loading the imaging dataset that we will use for fitting in this tutorial. This dataset is identical to the 
@@ -48,15 +56,19 @@ folder. The `.fits` format is commonly used in astronomy for storing image data 
 standard for CCD imaging.
 
 The `dataset_path` below specifies where these files are located: `autogalaxy_workspace/dataset/imaging/howtogalaxy/`.
-"""
-dataset_path = Path("dataset", "imaging", "howtogalaxy")
 
-"""
+
+```python
+dataset_path = Path("dataset", "imaging", "howtogalaxy")
+```
+
 __Dataset Auto-Simulation__
 
 If the dataset does not already exist on your system, it will be created by running the corresponding
 simulator script. This ensures that all example scripts can be run without manually simulating data first.
-"""
+
+
+```python
 if not dataset_path.exists():
     import subprocess
     import sys
@@ -73,8 +85,8 @@ dataset = ag.Imaging.from_fits(
     psf_path=dataset_path / "psf.fits",
     pixel_scales=0.1,
 )
+```
 
-"""
 The `Imaging` object contains three key components: `data`, `noise_map`, and `psf`:
 
 - `data`: The actual image of the galaxy, which we will analyze.
@@ -87,7 +99,9 @@ The `Imaging` object contains three key components: `data`, `noise_map`, and `ps
 
 Let's print some values from these components and plot a summary of the dataset to refresh our understanding of the 
 imaging data.
-"""
+
+
+```python
 print("Value of first pixel in imaging data:")
 print(dataset.data.native[0, 0])
 print("Value of first pixel in noise map:")
@@ -96,8 +110,22 @@ print("Value of first pixel in PSF:")
 print(dataset.psf.kernel.native[0, 0])
 
 aplt.subplot_imaging_dataset(dataset=dataset)
+```
 
-"""
+    Value of first pixel in imaging data:
+    -0.003333333333333341
+    Value of first pixel in noise map:
+    0.01795054935711501
+    Value of first pixel in PSF:
+    0.0
+
+
+
+    
+![png](tutorial_3_fitting_files/tutorial_3_fitting_7_1.png)
+    
+
+
 __Mask__
 
 The signal-to-noise map of the image highlights areas where the signal (light from the galaxy) is detected above the 
@@ -113,7 +141,9 @@ the image will be used during the fitting process.
 
 For our simulated image, a circular 3" mask centered at the center of the image is appropriate, since the simulated 
 galaxy was positioned at the center.
-"""
+
+
+```python
 mask = ag.Mask2D.circular(
     shape_native=dataset.shape_native,
     pixel_scales=dataset.pixel_scales,
@@ -123,38 +153,127 @@ mask = ag.Mask2D.circular(
 
 print(mask)  # 1 = True, meaning the pixel is masked. Edge pixels are indeed masked.
 print(mask[48:53, 48:53])  # Central pixels are `False` and therefore unmasked.
+```
 
-"""
+    Mask2D([[False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False]])
+    []
+
+
 We can visualize the mask over the galaxy image using an `Imaging`, which helps us adjust the mask as needed. 
 This is useful to ensure that the mask appropriately covers the galaxy's light and does not exclude important regions.
 
 To overlay objects like a mask onto a figure, we use the `Visuals2D` object. This tool allows us to add custom 
 visuals to any plot, providing flexibility in creating tailored visual representations.
-"""
-aplt.plot_array(array=dataset.data, title="Imaging Data With Mask")
 
-"""
+
+```python
+aplt.plot_array(array=dataset.data, title="Imaging Data With Mask")
+```
+
+
+    
+![png](tutorial_3_fitting_files/tutorial_3_fitting_11_0.png)
+    
+
+
 Once we are satisfied with the mask, we apply it to the imaging data using the `apply_mask()` method. This ensures 
 that only the unmasked regions are considered during the analysis.
-"""
-dataset = dataset.apply_mask(mask=mask)
 
-"""
+
+```python
+dataset = dataset.apply_mask(mask=mask)
+```
+
+    2026-07-11 16:29:05,943 - autoarray.dataset.imaging.dataset - INFO - IMAGING - Data masked, contains a total of 225 image-pixels
+
+
 When we plot the masked imaging data again, the mask is now automatically included in the plot, even though we did 
 not explicitly pass it using the `Visuals2D` object. The plot also zooms into the unmasked area, showing only the 
 region where we will focus our analysis. This is particularly helpful when working with large images, as it centers 
 the view on the regions where the galaxy's signal is detected.
-"""
-aplt.plot_array(array=dataset.data, title="Masked Imaging Data")
 
-"""
+
+```python
+aplt.plot_array(array=dataset.data, title="Masked Imaging Data")
+```
+
+
+    
+![png](tutorial_3_fitting_files/tutorial_3_fitting_15_0.png)
+    
+
+
 The mask is now stored as an additional attribute of the `Imaging` object, meaning it remains attached to the 
 dataset. This makes it readily available when we pass the dataset to a `FitImaging` object for the fitting process.
-"""
+
+
+```python
 print("Mask2D:")
 print(dataset.mask)
+```
 
-"""
+    Mask2D:
+    Mask2D([[False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False,
+            False, False, False, False, False, False]])
+
+
 In earlier tutorials, we discussed how grids and arrays have `native` and `slim` representations:
 
 - `native`: Represents the original 2D shape of the data, maintaining the full pixel array of the image.
@@ -169,38 +288,66 @@ After applying the mask, the `native` and `slim` representations change as follo
   from [total_y_pixels * total_x_pixels] to just the number of unmasked pixels.
 
 Let's verify this by checking the shape of the data in its `slim` representation.
-"""
+
+
+```python
 print("Number of unmasked pixels:")
 print(dataset.data.native.shape)
 print(
     dataset.data.slim.shape
 )  # This should be lower than the total number of pixels, e.g., 100 x 100 = 10,000
+```
 
-"""
+    Number of unmasked pixels:
+    (15, 15)
+    (225,)
+
+
 The `mask` object also has a `pixels_in_mask` attribute, which gives the number of unmasked pixels. This should 
 match the size of the `slim` data structure.
-"""
-print(dataset.data.mask.pixels_in_mask)
 
-"""
+
+```python
+print(dataset.data.mask.pixels_in_mask)
+```
+
+    225
+
+
 We can use the `slim` attribute to print the first unmasked values from the image and noise map:
-"""
+
+
+```python
 print("First unmasked image value:")
 print(dataset.data.slim[0])
 print("First unmasked noise map value:")
 print(dataset.noise_map.slim[0])
+```
 
-"""
+    First unmasked image value:
+    -0.003333333333333341
+    First unmasked noise map value:
+    0.01795054935711501
+
+
 Additionally, we can verify that the `native` data structure has zeros at the edges where the mask is applied and 
 retains non-zero values in the central unmasked regions.
-"""
+
+
+```python
 print("Example masked pixel in the image's native representation at its edge:")
 print(dataset.data.native[0, 0])
 print("Example unmasked pixel in the image's native representation at its center:")
 centre = tuple(s // 2 for s in dataset.data.shape_native)
 print(dataset.data.native[centre])
+```
 
-"""
+    Example masked pixel in the image's native representation at its edge:
+    -0.003333333333333341
+    Example unmasked pixel in the image's native representation at its center:
+    8.75
+
+
 __Masked Grid__
 
 In tutorial 1, we emphasized that the `Grid2D` object is crucial for evaluating a galaxy's light profile. This grid 
@@ -212,21 +359,37 @@ that light profile calculations focus exclusively on regions where the galaxy's 
 time and improving efficiency.
 
 Below, we plot the masked grid:
-"""
+
+
+```python
 masked_grid = mask.derive_grid.unmasked
 
 aplt.plot_grid(grid=masked_grid, title="Masked Grid2D")
+```
 
-"""
+
+    
+![png](tutorial_3_fitting_files/tutorial_3_fitting_27_0.png)
+    
+
+
 By plotting this masked grid over the galaxy image, we can see that the grid aligns with the unmasked pixels of the 
 image.
 
 This alignment **is crucial** for accurate fitting because it ensures that when we evaluate a galaxy's light profile, 
 the calculations occur only at positions where we have real data from.
-"""
-aplt.plot_array(array=dataset.data, title="Image Data With 2D Grid Overlaid")
 
-"""
+
+```python
+aplt.plot_array(array=dataset.data, title="Image Data With 2D Grid Overlaid")
+```
+
+
+    
+![png](tutorial_3_fitting_files/tutorial_3_fitting_29_0.png)
+    
+
+
 __Fitting__
 
 Now that our data is masked, we are ready to proceed with the fitting process.
@@ -234,7 +397,9 @@ Now that our data is masked, we are ready to proceed with the fitting process.
 Fitting the data is done using the `Galaxy` and `Galaxies objects that we introduced in tutorial 2. We will start by 
 setting up a `Galaxies`` object, using the same galaxy configuration that we previously used to simulate the 
 imaging data. This setup will give us what is known as a 'perfect' fit, as the simulated and fitted models are identical.
-"""
+
+
+```python
 galaxy = ag.Galaxy(
     redshift=0.5,
     bulge=ag.lp.Sersic(
@@ -247,18 +412,26 @@ galaxy = ag.Galaxy(
 )
 
 galaxies = ag.Galaxies(galaxies=[galaxy])
+```
 
-"""
 Next, let's plot the image of the galaxies. This should look familiar, as it is the same image we saw in 
 previous tutorials. The difference now is that we use the dataset's `grid`, which corresponds to the `masked_grid` 
 we defined earlier. This means that the galaxy image is only evaluated in the unmasked region, skipping calculations 
 in masked regions.
-"""
+
+
+```python
 aplt.plot_array(
     array=galaxies.image_2d_from(grid=dataset.grid), title="Galaxy Image To Be Fitted"
 )
+```
 
-"""
+
+    
+![png](tutorial_3_fitting_files/tutorial_3_fitting_33_0.png)
+    
+
+
 Now, we proceed to fit the image by passing both the `Imaging` and `Galaxies` objects to a `FitImaging` object. 
 This object will compute key quantities that describe the fit’s quality:
 
@@ -271,10 +444,12 @@ This object will compute key quantities that describe the fit’s quality:
 a log_likelihood, which measures how well the model fits the data (higher values indicate a better fit).
 
 Let's create the fit and inspect each of these attributes:
-"""
-fit = ag.FitImaging(dataset=dataset, galaxies=galaxies)
 
-"""
+
+```python
+fit = ag.FitImaging(dataset=dataset, galaxies=galaxies)
+```
+
 The `model_data` represents the galaxy's image after accounting for effects like PSF convolution.
 
 An important technical note is that when we mask data, we discussed above how the image of the galaxy is not evaluated
@@ -284,22 +459,50 @@ represents the image data.
 
 The `FitImaging` object handles this internally, but evaluating the model image in the additional regions outside the mask
 that are close enough to the mask edge to be blurred into the mask. 
-"""
+
+
+```python
 print("First model image pixel:")
 print(fit.model_data.slim[0])
 aplt.plot_array(array=fit.model_data, title="Model Image")
+```
 
-"""
+    First model image pixel:
+
+
+    0.9970308140413991
+
+
+
+    
+![png](tutorial_3_fitting_files/tutorial_3_fitting_37_2.png)
+    
+
+
 Even before computing other fit quantities, we can normally assess if the fit is going to be good by visually comparing
 the `data` and `model_data` and assessing if they look similar.
 
 In this example, the galaxies used to fit the data are the same as the galaxies used to simulate it, so the two
 look very similar (the only difference is the noise in the image).
-"""
+
+
+```python
 aplt.plot_array(array=dataset.data, title="Data")
 aplt.plot_array(array=fit.model_data, title="Model Image")
+```
 
-"""
+
+    
+![png](tutorial_3_fitting_files/tutorial_3_fitting_39_0.png)
+    
+
+
+
+    
+![png](tutorial_3_fitting_files/tutorial_3_fitting_39_1.png)
+    
+
+
 The `residual_map` is the different between the observed image and model image, showing where in the image the fit is
 good (e.g. low residuals) and where it is bad (e.g. high residuals).
 
@@ -309,7 +512,9 @@ The expression for the residual map is simply:
 
 The residual-map is plotted below, noting that all values are very close to zero because the fit is near perfect.
 The only non-zero residuals are due to noise in the image.
-"""
+
+
+```python
 residual_map = dataset.data - fit.model_data
 print("First residual-map pixel:")
 print(residual_map.slim[0])
@@ -318,8 +523,20 @@ print("First residual-map pixel via fit:")
 print(fit.residual_map.slim[0])
 
 aplt.plot_array(array=fit.residual_map, title="Residual Map")
+```
 
-"""
+    First residual-map pixel:
+    -1.0003641473747324
+    First residual-map pixel via fit:
+    -1.0003641473747324
+
+
+
+    
+![png](tutorial_3_fitting_files/tutorial_3_fitting_41_1.png)
+    
+
+
 Are these residuals indicative of a good fit to the data? Without considering the noise in the data, it's difficult 
 to ascertain. That is, its hard to ascenrtain if a residual value is large or small because this depends on the
 amount of noise in that pixel.
@@ -332,7 +549,9 @@ Its expression is:
 If you're familiar with the concept of standard deviations (sigma) in statistics, the normalized residual map represents 
 how many standard deviations the residual is from zero. For instance, a normalized residual of 2.0 (corresponding 
 to a 95% confidence interval) means that the probability of the model underestimating the data by that amount is only 5%.
-"""
+
+
+```python
 normalized_residual_map = residual_map / dataset.noise_map
 
 print("First normalized residual-map pixel:")
@@ -342,8 +561,20 @@ print("First normalized residual-map pixel via fit:")
 print(fit.normalized_residual_map.slim[0])
 
 aplt.plot_array(array=fit.normalized_residual_map, title="Normalized Residual Map")
+```
 
-"""
+    First normalized residual-map pixel:
+    -55.72888759408473
+    First normalized residual-map pixel via fit:
+    -55.72888759408473
+
+
+
+    
+![png](tutorial_3_fitting_files/tutorial_3_fitting_43_1.png)
+    
+
+
 Next, we define the `chi_squared_map`, which is obtained by squaring the `normalized_residual_map` and serves as a 
 measure of goodness of fit.
 
@@ -356,7 +587,9 @@ and 0.2 would square to 0.04, indicating the same quality of fit in terms of `ch
 
 As seen from the normalized residual map, it's evident that the model provides a good fit to the data, in this
 case because the chi-squared values are close to zero.
-"""
+
+
+```python
 chi_squared_map = (normalized_residual_map) ** 2
 print("First chi-squared pixel:")
 print(chi_squared_map.slim[0])
@@ -365,8 +598,20 @@ print("First chi-squared pixel via fit:")
 print(fit.chi_squared_map.slim[0])
 
 aplt.plot_array(array=fit.chi_squared_map, title="Chi-Squared Map")
+```
 
-"""
+    First chi-squared pixel:
+    3105.708912474131
+    First chi-squared pixel via fit:
+    3105.708912474131
+
+
+
+    
+![png](tutorial_3_fitting_files/tutorial_3_fitting_45_1.png)
+    
+
+
 Now, we consolidate all the information in our `chi_squared_map` into a single measure of goodness-of-fit 
 called `chi_squared`. 
 
@@ -380,12 +625,18 @@ leading to an inaccurate assessment of the model's fit to the data.
 
 The lower the `chi_squared`, the fewer residuals exist between the model's fit and the data, indicating a better 
 overall fit!
-"""
+
+
+```python
 chi_squared = np.sum(chi_squared_map)
 print("Chi-squared = ", chi_squared)
 print("Chi-squared via fit = ", fit.chi_squared)
+```
 
-"""
+    Chi-squared =  2969344.8564160876
+    Chi-squared via fit =  2969344.8564160876
+
+
 The reduced chi-squared is the `chi_squared` value divided by the number of data points (e.g., the number of pixels
 in the mask). 
 
@@ -395,11 +646,16 @@ because every data point is fitted with a chi-squared value of 1.0.
 
 A reduced chi-squared value significantly greater than 1.0 indicates that the model is not a good fit to the data,
 whereas a value significantly less than 1.0 suggests that the model is overfitting the data.
-"""
+
+
+```python
 reduced_chi_squared = chi_squared / dataset.mask.pixels_in_mask
 print("Reduced Chi-squared = ", reduced_chi_squared)
+```
 
-"""
+    Reduced Chi-squared =  13197.088250738167
+
+
 Another quantity that contributes to our final assessment of the goodness-of-fit is the `noise_normalization`.
 
 The `noise_normalization` is computed as the logarithm of the sum of squared noise values in our data: 
@@ -414,12 +670,18 @@ including the `noise_normalization` is considered good practice due to its stati
 Understanding the exact meaning of `noise_normalization` isn't critical for our primary goal of successfully 
 fitting a model to a dataset. Essentially, it provides a measure of how well the noise properties of our data align 
 with a Gaussian distribution.
-"""
+
+
+```python
 noise_normalization = np.sum(np.log(2 * np.pi * dataset.noise_map**2))
 print("Noise Normalization = ", noise_normalization)
 print("Noise Normalization via fit = ", fit.noise_normalization)
+```
 
-"""
+    Noise Normalization =  -1242.2701057123368
+    Noise Normalization via fit =  -1242.2701057123368
+
+
 From the `chi_squared` and `noise_normalization`, we can define a final goodness-of-fit measure known as 
 the `log_likelihood`. 
 
@@ -430,12 +692,18 @@ result by -0.5:
 
 Don't worry about why we multiply by -0.5; it's a standard practice in statistics to ensure the log likelihood is
 defined correctly.
-"""
+
+
+```python
 log_likelihood = -0.5 * (chi_squared + noise_normalization)
 print("Log Likelihood = ", log_likelihood)
 print("Log Likelihood via fit = ", fit.log_likelihood)
+```
 
-"""
+    Log Likelihood =  -1484051.2931551877
+    Log Likelihood via fit =  -1484051.2931551877
+
+
 In the previous discussion, we noted that a lower \(\chi^2\) value indicates a better fit of the model to the 
 observed data. 
 
@@ -463,12 +731,20 @@ As a rule of thumb:
 
 All these metrics can be visualized together using the `FitImaging` object, which offers a comprehensive 
 overview of the fit quality.
-"""
+
+
+```python
 fit = ag.FitImaging(dataset=dataset, galaxies=galaxies)
 
 aplt.subplot_fit_imaging(fit=fit)
+```
 
-"""
+
+    
+![png](tutorial_3_fitting_files/tutorial_3_fitting_55_0.png)
+    
+
+
 If you're familiar with model-fitting, you've likely encountered terms like 'residuals', 'chi-squared', 
 and 'log_likelihood' before. 
 
@@ -485,7 +761,9 @@ likelihood values possible, reflecting a good match between the model and the ob
 Now, let's modify our galaxy model to create a fit that is close to the correct solution but slightly off. 
 Specifically, we will slightly offset the center of the galaxy by half a pixel (0.05") in both the x and y directions. 
 This change will allow us to observe how even small deviations from the true parameters can impact the quality of the fit.
-"""
+
+
+```python
 galaxy = ag.Galaxy(
     redshift=0.5,
     bulge=ag.lp.Sersic(
@@ -498,31 +776,49 @@ galaxy = ag.Galaxy(
 )
 
 galaxies = ag.Galaxies(galaxies=[galaxy])
+```
 
-"""
 After implementing this slight adjustment, we can now plot the fit. In doing so, we observe that residuals have 
 emerged at the center of the galaxy, which indicates a mismatch between our model and the data. Consequently, 
 this discrepancy results in increased chi-squared values, which in turn affects our log likelihood.
-"""
+
+
+```python
 fit_bad = ag.FitImaging(dataset=dataset, galaxies=galaxies)
 
 aplt.subplot_fit_imaging(fit=fit_bad)
+```
 
-"""
+
+    
+![png](tutorial_3_fitting_files/tutorial_3_fitting_59_0.png)
+    
+
+
 Next, we can compare the log likelihood of our current model to the log likelihood value we computed previously.
-"""
+
+
+```python
 print("Previous Likelihood:")
 print(fit.log_likelihood)
 print("New Likelihood:")
 print(fit_bad.log_likelihood)
+```
 
-"""
+    Previous Likelihood:
+    -1484051.2931551877
+    New Likelihood:
+    -1564635.9594986455
+
+
 As expected, we observe that the log likelihood has decreased! This decline confirms that our new model is indeed a 
 worse fit to the data compared to the original model.
 
 Now, let’s change our galaxy model once more, this time setting it to a position that is far from the true parameters. 
 We will offset the galaxy's center significantly to see how this extreme deviation affects the fit quality.
-"""
+
+
+```python
 galaxy = ag.Galaxy(
     redshift=0.5,
     bulge=ag.lp.Sersic(
@@ -542,20 +838,35 @@ galaxies = ag.Galaxies(galaxies=[galaxy])
 fit_very_bad = ag.FitImaging(dataset=dataset, galaxies=galaxies)
 
 aplt.subplot_fit_imaging(fit=fit_very_bad)
+```
 
-"""
+
+    
+![png](tutorial_3_fitting_files/tutorial_3_fitting_63_0.png)
+    
+
+
 It is now evident that this model provides a terrible fit to the data. The galaxies do not resemble a plausible 
 representation of our simulated galaxy dataset, which we already anticipated given that we generated the data ourselves!
 
 As expected, the log likelihood has dropped dramatically with this poorly fitting model.
-"""
+
+
+```python
 print("Previous Likelihoods:")
 print(fit.log_likelihood)
 print(fit_bad.log_likelihood)
 print("New Likelihood:")
 print(fit_very_bad.log_likelihood)
+```
 
-"""
+    Previous Likelihoods:
+    -1484051.2931551877
+    -1564635.9594986455
+    New Likelihood:
+    -4260401.8922673315
+
+
 __Model Fitting__
 
 In the previous sections, we used the true model to fit the data, which resulted in a high log likelihood and minimal 
@@ -570,7 +881,9 @@ Chapter 2 of *HowToGalaxy*.
 To conclude this section, let's perform a basic, hands-on model fit to develop some intuition about how we can find 
 the best-fit model. We'll start by loading a simple dataset that was simulated using a `Sersic` profile, where the 
 true parameters of this profile are unknown.
-"""
+
+
+```python
 dataset_name = "simple"
 dataset_path = Path("dataset") / "imaging" / dataset_name
 
@@ -591,8 +904,17 @@ dataset = dataset.apply_mask(mask=mask)
 
 aplt.subplot_imaging_dataset(dataset=dataset)
 
+```
 
-"""
+    2026-07-11 16:29:10,659 - autoarray.dataset.imaging.dataset - INFO - IMAGING - Data masked, contains a total of 2828 image-pixels
+
+
+
+    
+![png](tutorial_3_fitting_files/tutorial_3_fitting_67_1.png)
+    
+
+
 Now, you'll try to determine the best-fit model for this image, corresponding to the parameters used to simulate the 
 dataset.
 
@@ -608,7 +930,9 @@ Keep experimenting with different values for a while, seeing how small you can m
 can push the log likelihood. Eventually, you’ll likely reach a point where further improvements become difficult, 
 even after trying many different parameter values. This is a good point to stop and reflect on your first experience 
 with model fitting, and then to scroll to the next cell to see a discussion of the exercise.
-"""
+
+
+```python
 
 galaxy = ag.Galaxy(
     redshift=0.5,
@@ -628,8 +952,18 @@ aplt.subplot_fit_imaging(fit=fit)
 
 print("Log Likelihood:")
 print(fit.log_likelihood)
+```
 
-"""
+
+    
+![png](tutorial_3_fitting_files/tutorial_3_fitting_69_0.png)
+    
+
+
+    Log Likelihood:
+    -238826.9938543461
+
+
 Manually guessing model parameters repeatedly is a very inefficient and slow way to find the best fit. If the model 
 were more complex—say, if the `galaxy` had additional light profile components beyond just its `bulge` (like a 
 second `Sersic` profile representing a `disk`)—the model would become so intricate that this manual approach 
@@ -664,4 +998,8 @@ Let's summarise what we have covered:
   
 - **Model Fitting**: We performed a basic model fit on a simple dataset, adjusting the model parameters to improve the
   fit quality.
-"""
+
+
+```python
+
+```
