@@ -2,6 +2,7 @@
 
 [Installation Guide](https://pyautogalaxy.readthedocs.io/en/latest/installation/overview.html) |
 [PyAutoGalaxy readthedocs](https://pyautogalaxy.readthedocs.io/en/latest/index.html) |
+[Browse Chapter 1 With Images](markdown/README.md) |
 [autogalaxy_workspace](https://github.com/PyAutoLabs/autogalaxy_workspace)
 
 <img src="https://github.com/Jammy2211/PyAutoLogo/blob/main/gifs/pyautogalaxy.gif?raw=true" width="900" />
