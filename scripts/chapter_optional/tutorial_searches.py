@@ -296,3 +296,14 @@ result_emcee = search.fit(model=model, analysis=analysis)
 print("The search has finished run - you may now continue the notebook.")
 
 aplt.subplot_fit_imaging(fit=result_emcee.max_log_likelihood_fit)
+
+"""
+__Wrap Up__
+
+This tutorial showed how the same model can be fitted using different non-linear searches (e.g. `Nautilus`, `Emcee`,
+`PySwarms`). Each search explores parameter space in a different way, and the best choice depends on the
+dimensionality and complexity of the model you are fitting.
+
+For the vast majority of models in **PyAutoGalaxy**, the default nested sampling search `Nautilus` is recommended, as
+it is robust, efficient and requires little manual tuning.
+"""
