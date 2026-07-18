@@ -29,7 +29,7 @@ __Contents__
 - **Wrap Up:** Summary of how CCD imaging data is simulated.
 """
 
-# from autoconf import setup_notebook; setup_notebook()
+# from autogalaxy import setup_notebook; setup_notebook()
 
 import numpy as np
 from pathlib import Path

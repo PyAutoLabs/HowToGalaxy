@@ -20,7 +20,7 @@ __Contents__
 
 ```python
 
-from autoconf import setup_notebook; setup_notebook()
+from autogalaxy import setup_notebook; setup_notebook()
 ```
 
     2026-07-11 16:20:09,770 - matplotlib.font_manager - INFO - Failed to extract font properties from /usr/share/fonts/truetype/noto/NotoColorEmoji.ttf: Can not load face (unknown file format; error code 0x2)

@@ -30,7 +30,7 @@ __Contents__
 - **Wrap Up:** Summary of the fitting process and key statistical concepts.
 """
 
-# from autoconf import setup_notebook; setup_notebook()
+# from autogalaxy import setup_notebook; setup_notebook()
 
 import numpy as np
 from pathlib import Path

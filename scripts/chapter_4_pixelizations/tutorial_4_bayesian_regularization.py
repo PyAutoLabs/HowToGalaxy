@@ -23,7 +23,7 @@ __Contents__
 - **Detailed Description:** In-depth explanation of how the Bayesian evidence penalizes overfitting.
 """
 
-# from autoconf import setup_notebook; setup_notebook()
+# from autogalaxy import setup_notebook; setup_notebook()
 
 from pathlib import Path
 import autogalaxy as ag

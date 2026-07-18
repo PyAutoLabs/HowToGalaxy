@@ -18,7 +18,7 @@ __Contents__
 - **MCMC:** Use Markov Chain Monte Carlo methods like Emcee for parameter estimation.
 """
 
-# from autoconf import setup_notebook; setup_notebook()
+# from autogalaxy import setup_notebook; setup_notebook()
 
 from pathlib import Path
 import autogalaxy as ag

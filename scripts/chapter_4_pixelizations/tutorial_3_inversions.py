@@ -19,7 +19,7 @@ __Contents__
 - **Detailed Explanation:** In-depth explanation of the linear algebra behind inversions.
 """
 
-# from autoconf import setup_notebook; setup_notebook()
+# from autogalaxy import setup_notebook; setup_notebook()
 
 from pathlib import Path
 import autogalaxy as ag
