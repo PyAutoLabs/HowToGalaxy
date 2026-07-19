@@ -4,14 +4,14 @@ In chapter 1, we introduce you to strong gravitational lensing and the core **Py
 
 # Files
 
-- [Tutorial 0: Visualization](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.7.15.1/notebooks/chapter_1_introduction/tutorial_0_visualization.ipynb) — Setting up **PyAutoGalaxy**'s visualization library.
+- [Tutorial 0: Visualization](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.7.19.1/notebooks/chapter_1_introduction/tutorial_0_visualization.ipynb) — Setting up **PyAutoGalaxy**'s visualization library.
 
-- [Tutorial 1: Grids And Galaxies](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.7.15.1/notebooks/chapter_1_introduction/tutorial_1_grids_and_galaxies.ipynb) — How grids of (y,x) coordinates are used to create images of galaxies that ultimately quantify their morphology.
+- [Tutorial 1: Grids And Galaxies](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.7.19.1/notebooks/chapter_1_introduction/tutorial_1_grids_and_galaxies.ipynb) — How grids of (y,x) coordinates are used to create images of galaxies that ultimately quantify their morphology.
 
-- [Tutorial 2: Data](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.7.15.1/notebooks/chapter_1_introduction/tutorial_2_data.ipynb) — Simulating and inspecting telescope imaging data of a galaxy, for example from the Hubble Space Telescope.
+- [Tutorial 2: Data](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.7.19.1/notebooks/chapter_1_introduction/tutorial_2_data.ipynb) — Simulating and inspecting telescope imaging data of a galaxy, for example from the Hubble Space Telescope.
 
-- [Tutorial 3: Fitting](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.7.15.1/notebooks/chapter_1_introduction/tutorial_3_fitting.ipynb) — How to fit imaging data of a galaxy and quantify whether a fit is good or bad.
+- [Tutorial 3: Fitting](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.7.19.1/notebooks/chapter_1_introduction/tutorial_3_fitting.ipynb) — How to fit imaging data of a galaxy and quantify whether a fit is good or bad.
 
-- [Tutorial 4: Methods](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.7.15.1/notebooks/chapter_1_introduction/tutorial_4_methods.ipynb) — An overview of the different methods used to fit galaxies with.
+- [Tutorial 4: Methods](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.7.19.1/notebooks/chapter_1_introduction/tutorial_4_methods.ipynb) — An overview of the different methods used to fit galaxies with.
 
-- [Tutorial 5: Summary](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.7.15.1/notebooks/chapter_1_introduction/tutorial_5_summary.ipynb) — A summary of the chapter.
+- [Tutorial 5: Summary](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.7.19.1/notebooks/chapter_1_introduction/tutorial_5_summary.ipynb) — A summary of the chapter.
