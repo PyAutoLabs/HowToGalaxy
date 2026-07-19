@@ -15,7 +15,7 @@ __Contents__
 - **Wrap Up:** Summary of visualization in PyAutoGalaxy.
 """
 
-# from autoconf import setup_notebook; setup_notebook()
+# from autogalaxy import setup_notebook; setup_notebook()
 
 """
 If the printed working directory does not match the workspace path on your computer, you can manually set it

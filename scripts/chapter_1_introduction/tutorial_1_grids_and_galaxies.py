@@ -43,7 +43,7 @@ The imports below are required to run the howtogalaxy tutorials in a Jupiter not
 `autogalaxy` package and the `autogalaxy.plot` module which are used throughout the tutorials.
 """
 
-# from autoconf import setup_notebook; setup_notebook()
+# from autogalaxy import setup_notebook; setup_notebook()
 
 import matplotlib.pyplot as plt
 import numpy as np

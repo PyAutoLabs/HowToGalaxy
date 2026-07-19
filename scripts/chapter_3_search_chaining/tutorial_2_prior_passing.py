@@ -23,7 +23,7 @@ __Contents__
 - **EXAMPLE:** A worked example of prior passing for a Sersic sersic_index parameter.
 """
 
-# from autoconf import setup_notebook; setup_notebook()
+# from autogalaxy import setup_notebook; setup_notebook()
 
 import numpy as np
 from pathlib import Path

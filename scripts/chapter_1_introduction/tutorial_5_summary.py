@@ -25,7 +25,7 @@ __Contents__
 - **Wrap Up:** Summary of chapter 1 and preview of the modeling chapter.
 """
 
-# from autoconf import setup_notebook; setup_notebook()
+# from autogalaxy import setup_notebook; setup_notebook()
 
 from pathlib import Path
 import autogalaxy as ag

@@ -16,9 +16,9 @@ __Contents__
 
 """
 
-from autoconf import jax_wrapper  # Sets JAX environment before other imports
+from autogalaxy import jax_wrapper  # Sets JAX environment before other imports
 
-# from autoconf import setup_notebook; setup_notebook()
+# from autogalaxy import setup_notebook; setup_notebook()
 
 import autogalaxy as ag
 import autogalaxy.plot as aplt

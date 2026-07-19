@@ -37,7 +37,7 @@ This tutorial is split into the following sections:
  **Result:** Plot the best-fit model to the data.
 """
 
-# from autoconf import setup_notebook; setup_notebook()
+# from autogalaxy import setup_notebook; setup_notebook()
 
 from pathlib import Path
 import autogalaxy as ag

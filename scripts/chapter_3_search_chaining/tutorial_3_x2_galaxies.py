@@ -30,7 +30,7 @@ __Contents__
 - **Wrap Up:** Summary of search chaining for multi-galaxy systems.
 """
 
-# from autoconf import setup_notebook; setup_notebook()
+# from autogalaxy import setup_notebook; setup_notebook()
 
 from pathlib import Path
 import autofit as af

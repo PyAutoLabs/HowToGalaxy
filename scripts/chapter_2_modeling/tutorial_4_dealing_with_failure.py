@@ -26,7 +26,7 @@ __Contents__
 - **Approach 3: Look Harder:** Increase the thoroughness of the non-linear search sampling.
 """
 
-# from autoconf import setup_notebook; setup_notebook()
+# from autogalaxy import setup_notebook; setup_notebook()
 
 import numpy as np
 from pathlib import Path

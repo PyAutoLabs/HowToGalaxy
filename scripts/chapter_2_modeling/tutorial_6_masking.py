@@ -15,7 +15,7 @@ __Contents__
 - **Wrap Up:** Summary of masking strategies for galaxy modeling.
 """
 
-# from autoconf import setup_notebook; setup_notebook()
+# from autogalaxy import setup_notebook; setup_notebook()
 
 from pathlib import Path
 import autogalaxy as ag
