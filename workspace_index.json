@@ -58,7 +58,9 @@
       "Model Fitting",
       "Wrap Up"
     ],
-    "cross_refs": [],
+    "cross_refs": [
+      "tutorial_2_data.py"
+    ],
     "notebook": "notebooks/chapter_1_introduction/tutorial_3_fitting.ipynb",
     "path": "scripts/chapter_1_introduction/tutorial_3_fitting.py",
     "summary": "In previous tutorials, we used light profiles to create simulated images of galaxies and visualized how these images would appear when captured by a CCD detector on a telescope like the Hubble Space Telescope.",

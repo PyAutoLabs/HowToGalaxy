@@ -54,15 +54,16 @@ dataset_path = Path("dataset", "imaging", "howtogalaxy")
 """
 __Dataset Auto-Simulation__
 
-If the dataset does not already exist on your system, it will be created by running the corresponding
-simulator script. This ensures that all example scripts can be run without manually simulating data first.
+The `howtogalaxy` dataset is the one built up and saved in tutorial 2 (`tutorial_2_data.py`). If it
+does not already exist on your system, it is created by running that script. This ensures every
+example script can be run without manually simulating data first.
 """
-if not dataset_path.exists():
+if ag.util.dataset.should_simulate(str(dataset_path)):
     import subprocess
     import sys
 
     subprocess.run(
-        [sys.executable, "scripts/simulators/simple.py"],
+        [sys.executable, "scripts/chapter_1_introduction/tutorial_2_data.py"],
         check=True,
     )
 
@@ -573,6 +574,15 @@ true parameters of this profile are unknown.
 """
 dataset_name = "simple"
 dataset_path = Path("dataset") / "imaging" / dataset_name
+
+if ag.util.dataset.should_simulate(str(dataset_path)):
+    import subprocess
+    import sys
+
+    subprocess.run(
+        [sys.executable, "scripts/simulators/simple.py"],
+        check=True,
+    )
 
 dataset = ag.Imaging.from_fits(
     data_path=dataset_path / "data.fits",

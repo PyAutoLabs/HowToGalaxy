@@ -21,12 +21,10 @@ defaults:
   MPLCONFIGDIR: "/tmp/matplotlib"       # Writable config dir for matplotlib
 
 overrides:
-  # Non-simulator scripts that load committed FITS data need full-size
-  # datasets to avoid shape mismatch with pre-existing 100x100 data.
-  - pattern: "howtogalaxy/"
-    unset: [PYAUTO_SMALL_DATASETS]
-  - pattern: "guides/"
-    unset: [PYAUTO_SMALL_DATASETS]
+  # (Removed the dead `howtogalaxy/` + `guides/` PYAUTO_SMALL_DATASETS-unset
+  # workarounds: they matched no files here, and the tutorials now use
+  # `ag.util.dataset.should_simulate` which deletes + re-simulates stale data
+  # under the cap, so the chapters run correctly at 16x16.)
   # guides/results/start_here.py must produce real samples so the example
   # scripts that read from `output/results_folder` afterwards
   # (data_fitting, queries, models, samples_via_aggregator) find a
