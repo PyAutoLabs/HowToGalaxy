@@ -34,8 +34,14 @@ __Mesh__
 Next, lets set up a `Mesh` using the `mesh` module. The mesh represents the pixel-grid used by the pixelization
 to reconstruct the galaxy.
 
-There are multiple `Mesh`'s available in **PyAutoGalaxy**. For now, we'll keep it simple and use a uniform 
-rectangular grid, whose `shape` defines its $(y,x)$ dimensions. We will make it the same shape as the 2D grid.
+There are multiple `Mesh`'s available in **PyAutoGalaxy**. For now, we'll keep it simple and use a rectangular
+grid, whose `shape` defines its $(y,x)$ dimensions. We will make it the same shape as the 2D grid.
+
+The `RectangularAdaptDensity` mesh adapts its pixels to the density of the masked image-plane
+grid via the ray-guided transformed uniform (RTU) grid formulation of Enzi et al. (2026)
+(https://arxiv.org/abs/2606.30620), which should be cited in published work using this mesh.
+Note that whereas that paper pairs the RTU grid with a Gaussian-process prior, **PyAutoGalaxy**
+instead uses its own regularization schemes, introduced later in this chapter.
 """
 mesh = ag.mesh.RectangularAdaptDensity(shape=(100, 100))
 
