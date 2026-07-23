@@ -5,8 +5,8 @@ different model.
 
 # Files
 
-- [Tutorial 1: Search Chaining](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.7.22.1/notebooks/chapter_3_search_chaining/tutorial_1_search_chaining.ipynb) — Breaking the modeling procedure into a chained sequence of model-fits.
+- [Tutorial 1: Search Chaining](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.7.23.1/notebooks/chapter_3_search_chaining/tutorial_1_search_chaining.ipynb) — Breaking the modeling procedure into a chained sequence of model-fits.
 
-- [Tutorial 2: Prior Passing](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.7.22.1/notebooks/chapter_3_search_chaining/tutorial_2_prior_passing.ipynb) — How the results of earlier searches are passed to later searches.
+- [Tutorial 2: Prior Passing](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.7.23.1/notebooks/chapter_3_search_chaining/tutorial_2_prior_passing.ipynb) — How the results of earlier searches are passed to later searches.
 
-- [Tutorial 3: x2 Galaxies](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.7.22.1/notebooks/chapter_3_search_chaining/tutorial_3_x2_galaxies.ipynb) — Modeling two galaxies simultaneously using chained searches.
+- [Tutorial 3: x2 Galaxies](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.7.23.1/notebooks/chapter_3_search_chaining/tutorial_3_x2_galaxies.ipynb) — Modeling two galaxies simultaneously using chained searches.
