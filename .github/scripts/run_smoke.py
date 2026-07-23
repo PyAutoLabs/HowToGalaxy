@@ -1,7 +1,7 @@
 """
 Run the workspace smoke test suite.
 
-Reads `smoke_tests.txt` from the workspace root and `config/build/env_vars.yaml`
+Reads `smoke_tests.txt` from the workspace root and `config/build/profile_smoke.yaml`
 for per-script env var overrides, then runs each listed script with the
 appropriate environment. Continues through failures and exits non-zero
 if any script failed.
@@ -23,7 +23,11 @@ import yaml
 
 WORKSPACE = Path(__file__).resolve().parents[2]
 SMOKE_FILE = WORKSPACE / "smoke_tests.txt"
-ENV_VARS_FILE = WORKSPACE / "config" / "build" / "env_vars.yaml"
+# Prefer the canonical profile name; fall back to the legacy name until the
+# stage-3 cleanup drops the fallback.
+ENV_VARS_FILE = WORKSPACE / "config" / "build" / "profile_smoke.yaml"
+if not ENV_VARS_FILE.exists():
+    ENV_VARS_FILE = WORKSPACE / "config" / "build" / "env_vars.yaml"
 SCRIPTS_DIR = WORKSPACE / "scripts"
 
 
