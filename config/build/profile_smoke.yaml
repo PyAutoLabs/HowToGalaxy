@@ -27,7 +27,7 @@ defaults:
 #
 # 2026-07-23: the last remaining override, `guides/results/`, was removed for
 # the same reason — it is an autogalaxy_workspace path copied in from that
-# repo's env_vars.yaml. HowToGalaxy contains only chapter_*/tutorial_*.py, so
+# repo's profile_smoke.yaml. HowToGalaxy contains only chapter_*/tutorial_*.py, so
 # it never matched a file here. Do not copy override patterns between repos; a
 # pattern that matches nothing is silently inert, not an override. The list is
 # now empty, and `overrides: []` is written explicitly because env_config.py
