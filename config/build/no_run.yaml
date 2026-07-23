@@ -4,6 +4,14 @@
 #   - Entries without '/' match the file stem exactly
 # Add an inline # comment to document the reason for skipping.
 #
+# THIS LIST IS REPO-LOCAL. Do not copy entries from autogalaxy_workspace (or any
+# other repo) into it. HowToGalaxy contains only chapter_*/tutorial_*.py, so a
+# workspace path such as `gui/mask` or `guides/results/start_here` can never
+# match here; it is silently inert, not a skip. In July 2026 this file had
+# accumulated 15 such entries against 1 real one. Every entry below must match a
+# file in THIS repo — verify with `should_skip` in
+# PyAutoHands/autobuild/build_util.py before adding one.
+#
 # SLOW-skip convention:
 #   Entries tagged `# SLOW <YYYY-MM-DD> - <reason>` mark scripts that are
 #   skipped because they exceed the per-script timeout cap (300s by
@@ -19,18 +27,3 @@
 #   the NEEDS_FIX marker.
 
 - tutorial_searches
-- guides/results/start_here # SLOW 2026-04-10 - exceeds 60s test timeout; unsets TEST_MODE to produce real samples for downstream examples
-- guides/results/examples/galaxies_fit # SLOW 2026-04-10 - exceeds 60s test timeout; unsets TEST_MODE for downstream examples
-- guides/results/examples/samples # SLOW 2026-04-10 - exceeds 60s test timeout; unsets TEST_MODE for downstream examples
-- guides/results/examples/models # SLOW 2026-04-10 - cascade from SLOW-skipped results/start_here.py; aggregator returns NoneType so instance.galaxies is None
-- guides/results/workflow/csv_make # SLOW 2026-04-10 - exceeds 60s test timeout; unsets TEST_MODE for downstream examples
-- guides/results/database/start_here # SLOW 2026-04-10 - previously failed fast on a broken aggregator query; now runs the real aggregator and exceeds 60s
-- gui/light_centre # GUI scripts cannot be run
-- gui/mask_extra_galaxies # GUI scripts cannot be run
-- gui/mask # GUI scripts cannot be run
-- gui/extra_galaxies_centres # GUI scripts cannot be run
-- fits_make # Test mode does not output .fits images.
-- png_make # Test mode does not output .png images.
-- examples/searches # Test mode breaks search visualization.
-- data_fitting # Test mode breaks .fits file output
-- ellipse/database # Ellipse model needs refactor and JAX support
