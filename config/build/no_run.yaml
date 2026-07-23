@@ -10,7 +10,7 @@
 # match here; it is silently inert, not a skip. In July 2026 this file had
 # accumulated 15 such entries against 1 real one. Every entry below must match a
 # file in THIS repo — verify with `should_skip` in
-# PyAutoHands/autobuild/build_util.py before adding one.
+# PyAutoHands/autohands/build_util.py before adding one.
 #
 # SLOW-skip convention:
 #   Entries tagged `# SLOW <YYYY-MM-DD> - <reason>` mark scripts that are
