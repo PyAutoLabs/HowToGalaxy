@@ -17,7 +17,7 @@ __Contents__
 
 __Start Here Notebook__
 
-If any code in this script is unclear, refer to the `simulators/start_here.ipynb` notebook.
+If any code in this script is unclear, refer to the `simulators/simple.ipynb` notebook.
 """
 
 # from autogalaxy import setup_notebook; setup_notebook()

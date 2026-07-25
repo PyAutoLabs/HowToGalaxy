@@ -650,5 +650,5 @@ For a new user, the details of over-sampling are not important, therefore just b
 adaptive over sampling scheme which high accuracy across all use cases.
 
 Once you are more experienced, you should read up on over-sampling in more detail via 
-the `autogalaxy_workspace/*/guides/over_sampling.ipynb` notebook.
+the `autogalaxy_workspace/*/guides/advanced/over_sampling.ipynb` notebook.
 """

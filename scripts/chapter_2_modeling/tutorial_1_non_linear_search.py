@@ -344,7 +344,7 @@ entered different models to a `FitImaging` object and used its `log_likelihood` 
 fitted the data.
 
 A detailed step-by-step visual guide of the likelihood function is provided 
-at `autogalaxy_workspace/*/imaging/log_likelihood_function/parametric.ipynb`.
+at `autogalaxy_workspace/*/imaging/likelihood_function.ipynb`.
 """
 analysis = ag.AnalysisImaging(dataset=dataset, use_jax=True)
 

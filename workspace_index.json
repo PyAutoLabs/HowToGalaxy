@@ -25,7 +25,7 @@
       "Wrap Up"
     ],
     "cross_refs": [
-      "/guides/over_sampling.ipynb"
+      "/guides/advanced/over_sampling.ipynb"
     ],
     "notebook": "notebooks/chapter_1_introduction/tutorial_1_grids_and_galaxies.ipynb",
     "path": "scripts/chapter_1_introduction/tutorial_1_grids_and_galaxies.py",
@@ -111,7 +111,7 @@
       "Wrap Up"
     ],
     "cross_refs": [
-      "/imaging/log_likelihood_function/parametric.ipynb"
+      "/imaging/likelihood_function.ipynb"
     ],
     "notebook": "notebooks/chapter_2_modeling/tutorial_1_non_linear_search.ipynb",
     "path": "scripts/chapter_2_modeling/tutorial_1_non_linear_search.py",
@@ -121,7 +121,7 @@
   {
     "contents": [],
     "cross_refs": [
-      "/guides/over_sampling.ipynb",
+      "/guides/advanced/over_sampling.ipynb",
       "scripts/chapter_2_modeling/tutorial_2_practicalities.py"
     ],
     "notebook": "notebooks/chapter_2_modeling/tutorial_2_practicalities.ipynb",
@@ -138,7 +138,7 @@
       "Wrap Up"
     ],
     "cross_refs": [
-      "/guides/over_sampling.ipynb"
+      "/guides/advanced/over_sampling.ipynb"
     ],
     "notebook": "notebooks/chapter_2_modeling/tutorial_3_realism_and_complexity.ipynb",
     "path": "scripts/chapter_2_modeling/tutorial_3_realism_and_complexity.py",
@@ -153,7 +153,7 @@
       "Approach 3: Look Harder"
     ],
     "cross_refs": [
-      "/guides/over_sampling.ipynb",
+      "/guides/advanced/over_sampling.ipynb",
       "HowToGalaxy/chapter_optional/tutorial_searches.ipynb"
     ],
     "notebook": "notebooks/chapter_2_modeling/tutorial_4_dealing_with_failure.ipynb",
@@ -178,8 +178,8 @@
       "Wrap Up"
     ],
     "cross_refs": [
-      "/guides/over_sampling.ipynb",
-      "autogalaxy_workspace/scripts/modeling/imaging/features/shapelets.py"
+      "/guides/advanced/over_sampling.ipynb",
+      "autogalaxy_workspace/scripts/imaging/features/shapelets/modeling.py"
     ],
     "notebook": "notebooks/chapter_2_modeling/tutorial_5_linear_profiles.ipynb",
     "path": "scripts/chapter_2_modeling/tutorial_5_linear_profiles.py",
@@ -195,7 +195,7 @@
       "Wrap Up"
     ],
     "cross_refs": [
-      "/guides/over_sampling.ipynb"
+      "/guides/advanced/over_sampling.ipynb"
     ],
     "notebook": "notebooks/chapter_2_modeling/tutorial_6_masking.ipynb",
     "path": "scripts/chapter_2_modeling/tutorial_6_masking.py",
@@ -321,7 +321,7 @@
       "Detailed Explanation"
     ],
     "cross_refs": [
-      "/imaging/log_likelihood_function/inversion.ipynb"
+      "/imaging/features/pixelization/likelihood_function.ipynb"
     ],
     "notebook": "notebooks/chapter_4_pixelizations/tutorial_3_inversions.ipynb",
     "path": "scripts/chapter_4_pixelizations/tutorial_3_inversions.py",
@@ -381,7 +381,7 @@
       "Plane Output"
     ],
     "cross_refs": [
-      "simulators/start_here.ipynb"
+      "simulators/simple.ipynb"
     ],
     "notebook": "notebooks/simulators/sersic.ipynb",
     "path": "scripts/simulators/sersic.py",
@@ -398,7 +398,7 @@
       "Plane Output"
     ],
     "cross_refs": [
-      "simulators/start_here.ipynb"
+      "simulators/simple.ipynb"
     ],
     "notebook": "notebooks/simulators/sersic_x2.ipynb",
     "path": "scripts/simulators/sersic_x2.py",
@@ -416,8 +416,8 @@
       "Plane Output"
     ],
     "cross_refs": [
-      "/guides/over_sampling.ipynb",
-      "scripts/guides/api/data_structures.py"
+      "/guides/advanced/over_sampling.ipynb",
+      "autogalaxy_workspace/scripts/guides/data_structures.py"
     ],
     "notebook": "notebooks/simulators/simple.ipynb",
     "path": "scripts/simulators/simple.py",
