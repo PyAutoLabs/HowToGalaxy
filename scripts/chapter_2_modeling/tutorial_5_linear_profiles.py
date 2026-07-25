@@ -97,7 +97,7 @@ dataset = dataset.apply_mask(mask=mask)
 __Over Sampling__
 
 Apply adaptive over sampling to ensure the calculation is accurate, you can read up on over-sampling in more detail via 
-the `autogalaxy_workspace/*/guides/over_sampling.ipynb` notebook.
+the `autogalaxy_workspace/*/guides/advanced/over_sampling.ipynb` notebook.
 """
 over_sample_size = ag.util.over_sample.over_sample_size_via_radial_bins_from(
     grid=dataset.grid,
@@ -514,7 +514,7 @@ Shapelets are basis functions with analytic properties that are appropriate for 
 features of a galaxy. They do so over a wide range of scales, and can often represent features in source galaxies 
 that a single Sersic function or MGE cannot.
 
-An example using shapelets is given at `autogalaxy_workspace/scripts/modeling/imaging/features/shapelets.py`.
+An example using shapelets is given at `autogalaxy_workspace/scripts/imaging/features/shapelets/modeling.py`.
  
 Feel free to experiment with using shapelets as the galaxy by yourself. However they incur higher computational 
 overheads than the MGE and include a free parameter which governs the size of the basis functions and therefore source,
