@@ -166,5 +166,5 @@ ag.output_to_json(
 )
 
 """
-The dataset can be viewed in the folder `autogalaxy_workspace/imaging/sersic_x2`.
+The dataset can be viewed in the folder `autogalaxy_workspace/dataset/imaging/sersic_x2`.
 """

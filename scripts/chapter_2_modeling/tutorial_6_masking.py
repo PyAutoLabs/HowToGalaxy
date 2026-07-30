@@ -142,7 +142,7 @@ If your data includes the light of additional galaxies nearby you may  much have
 circular mask, because it is important these objects do not interfere with the fit. 
 
 In fact, you can drawcustom masks that remove their light entirely. You may now wish to checkout 
-the `autogalaxy_workspace/*/imaging/preprocess` package. This includes tools for  creating custom masks and 
+the `autogalaxy_workspace/*/imaging/data_preparation` package. This includes tools for  creating custom masks and 
 marking the positions on a galaxy (via a GUI) so you can use them in a model-fit.
 
 __Wrap Up__

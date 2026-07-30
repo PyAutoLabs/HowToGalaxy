@@ -109,7 +109,7 @@ the search finds the global solution when it previously found a local maxima.
 We saw in a previous tutorial that we can fully customize priors in **PyAutoGalaxy**, so lets give it a go. I've set up 
 a custom search below and specified priors that give the non-linear search a better chance of inferring the global 
 maxima solution, alongside discussing how I have changed each prior from the default values specified by the 
-`config/priors/default` config files.
+`config/priors` config files.
 
 In a previous tutorial, we customized the priors of a model by creating a `Galaxy` as a `Model` and customizing each
 prior:
