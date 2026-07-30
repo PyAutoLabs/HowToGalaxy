@@ -99,7 +99,7 @@ be found in the `autogalaxy_workspace/*/guides/plot` package. You should check t
 Ideally, we would not specify a `figsize` every time we plot an image. Fortunately, default values can be fully
 customized via the config files.
 
-Checkout the `mat_wrap.yaml` file in `autogalaxy_workspace/config/visualize/mat_wrap`.
+Checkout the `general.yaml` file in `autogalaxy_workspace/config/visualize`.
 
 All default matplotlib values are here. There are a lot of entries, so lets focus on whats important for displaying
 figures:
