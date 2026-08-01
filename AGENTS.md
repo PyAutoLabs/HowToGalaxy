@@ -76,18 +76,18 @@ write from a header skim silently deletes every section below the header.
 ## Scientific Context
 
 When a tutorial benefits from framing a galaxy concept against a real scientific application —
-light profiles + MGE, regularisation, pixelisation, bulge/halo decomposition, kinematics — pull from
-the `autolens_assistant` literature wiki at https://github.com/PyAutoLabs/autolens_assistant
-(`wiki/literature/` — concepts, entities, sources). If cloned as a sibling, read it locally at
-`../autolens_assistant/wiki/literature/`. It is currently lensing-focused, but several galaxy-modelling
-concepts (source reconstruction, bulge/halo decomposition) are directly useful.
+Sersic profiles, light profiles + MGE, pixelisation, bulge/disk decomposition, isophotes,
+scaling relations, kinematics — pull from the `autogalaxy_assistant` literature wiki at
+https://github.com/PyAutoLabs/autogalaxy_assistant (`wiki/literature/` — concept pages,
+survey/instrument entities, per-topic annotated bibliographies, every citation verified). If
+cloned as a sibling, read it locally at `../autogalaxy_assistant/wiki/literature/`.
 
 ## Related Repos
 
 - `../PyAutoGalaxy` — source library.
 - `../autogalaxy_workspace` — the user-facing workspace (tutorials point here as the next destination).
 - `../PyAutoHands` — notebook generation + CI tooling.
-- `../autolens_assistant` — science-assistant workspace (literature wiki; see *Scientific Context*).
+- `../autogalaxy_assistant` — the PyAutoGalaxy science-assistant workspace (literature wiki; see *Scientific Context*).
 
 ## Task Workflows
 
