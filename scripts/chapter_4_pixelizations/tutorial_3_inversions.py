@@ -79,7 +79,7 @@ we again use the rectangular pixelization to create the mapper.
 
 (Ignore the regularization input below for now, we will cover this in the next tutorial).
 """
-mesh = ag.mesh.RectangularAdaptDensity(shape=dataset.shape_native)
+mesh = ag.mesh.RectangularAdaptDensity(shape=(25, 25))
 
 pixelization = ag.Pixelization(mesh=mesh)
 
