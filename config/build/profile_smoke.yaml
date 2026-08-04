@@ -21,9 +21,15 @@ defaults:
   MPLCONFIGDIR: "/tmp/matplotlib"           # Writable config dir for matplotlib
 
 # (Removed the dead `howtogalaxy/` + `guides/` PYAUTO_SMALL_DATASETS-unset
-# workarounds: they matched no files here, and the tutorials now use
-# `ag.util.dataset.should_simulate` which deletes + re-simulates stale data
-# under the cap, so the chapters run correctly at 16x16.)
+# workarounds: they matched no files here, and the tutorials use
+# `ag.util.dataset.should_simulate`, which deletes + re-simulates stale data
+# under the cap.)
+#
+# 2026-08-04: this comment used to assert "the chapters run correctly at 16x16".
+# That was false — chapter_4 tutorial_3 raised IndexError under the cap because
+# it sized its mesh from `dataset.shape_native`. Nobody knew, because chapter 4
+# was not in the old smoke allowlist. The tutorial is fixed and smoke now runs
+# every script, so a claim like that would be caught rather than assumed.
 #
 # 2026-07-23: the last remaining override, `guides/results/`, was removed for
 # the same reason — it is an autogalaxy_workspace path copied in from that
