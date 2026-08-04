@@ -31,14 +31,20 @@ python scripts/chapter_1_introduction/tutorial_1_grids_and_galaxies.py
 
 Fast mode for integration: `PYAUTO_TEST_MODE=1` skips sampling (`=2` also bypasses; combine with
 `PYAUTO_SKIP_FIT_OUTPUT=1 PYAUTO_SKIP_VISUALIZATION=1 PYAUTO_SKIP_CHECKS=1 PYAUTO_FAST_PLOTS=1` for a
-fast smoke run). **Dataset realism:** `PYAUTO_SMALL_DATASETS` is deliberately **not** used in
-HowToGalaxy — tutorials assume the full-resolution simulated datasets (unlike the workspaces, which
-cap grids/masks).
+fast smoke run). **Dataset realism:** automated runs **do** cap datasets —
+`config/build/profile_smoke.yaml` sets `PYAUTO_SMALL_DATASETS: "1"` for every script, the same as the
+workspaces. (This paragraph previously claimed the opposite; the claim was untrue and went unnoticed
+because the chapters that break under the cap were never in the smoke list.) Tutorials must therefore
+work at **both** resolutions: never hardcode an index or a shape derived from the full-resolution
+dataset. `chapter_4_pixelizations/tutorial_3_inversions.py` is the cautionary case — it sized its mesh
+from `dataset.shape_native`, giving 10000 mesh pixels at full resolution but 256 under the cap, so its
+fixed `pix_indexes` ran off the end.
 
 ## Testing
 
 On CI, every PR is gated on Python **3.12 and 3.13** by `smoke_tests.yml` (runs
-`python .github/scripts/run_smoke.py`, driven by `smoke_tests.txt` + `config/build/profile_smoke.yaml` —
+`python .github/scripts/run_smoke.py`, which runs **every** script under `scripts/` except the
+exclusions in `config/build/no_run.yaml`, with per-script env from `config/build/profile_smoke.yaml` —
 the definition of green), `navigator_check.yml` (PyAutoHands's reusable navigator-catalogue check;
 see *Notebooks vs Scripts*), and `url_check.yml` (link checking). The smoke and navigator jobs check
 out **PyAutoHands** as a sibling and run the PyAuto* libraries from the **same-named branch** of each
