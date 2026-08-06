@@ -117,10 +117,7 @@ Lets perform two fits, where:
 """
 model = af.Collection(
     galaxies=af.Collection(
-        lens=af.Model(
-            ag.Galaxy, redshift=0.5, bulge=ag.lp.Sersic, mass=ag.mp.Isothermal
-        ),
-        source=af.Model(ag.Galaxy, redshift=1.0, bulge=ag.lp.Sersic),
+        galaxy=af.Model(ag.Galaxy, redshift=0.5, bulge=ag.lp.Sersic),
     )
 )
 
@@ -219,40 +216,18 @@ modeling than Nautilus.
 I've included an example runs of Emcee and Zeus below, where the model is set up using `UniformPriors` to give
 the starting point of the MCMC walkers. 
 """
-lens_bulge = af.Model(ag.lp.Sersic)
-lens_bulge.centre.centre_0 = af.UniformPrior(lower_limit=-0.1, upper_limit=0.1)
-lens_bulge.centre.centre_1 = af.UniformPrior(lower_limit=-0.1, upper_limit=0.1)
-lens_bulge.ell_comps.ell_comps_0 = af.UniformPrior(lower_limit=-0.3, upper_limit=0.3)
-lens_bulge.ell_comps.ell_comps_1 = af.UniformPrior(lower_limit=-0.3, upper_limit=0.3)
-lens_bulge.intensity = af.UniformPrior(lower_limit=0.5, upper_limit=1.5)
-lens_bulge.effective_radius = af.UniformPrior(lower_limit=0.2, upper_limit=1.6)
-lens_bulge.sersic_index = af.UniformPrior(lower_limit=3.0, upper_limit=5.0)
-
-
-mass = af.Model(ag.mp.Isothermal)
-mass.centre.centre_0 = af.UniformPrior(lower_limit=-0.1, upper_limit=0.1)
-mass.centre.centre_1 = af.UniformPrior(lower_limit=-0.1, upper_limit=0.1)
-mass.ell_comps.ell_comps_0 = af.UniformPrior(lower_limit=-0.3, upper_limit=0.3)
-mass.ell_comps.ell_comps_1 = af.UniformPrior(lower_limit=-0.3, upper_limit=0.3)
-mass.einstein_radius = af.UniformPrior(lower_limit=1.0, upper_limit=2.0)
-
-shear = af.Model(ag.mp.ExternalShear)
-shear.gamma_1 = af.UniformPrior(lower_limit=-0.1, upper_limit=0.1)
-shear.gamma_2 = af.UniformPrior(lower_limit=-0.1, upper_limit=0.1)
-
 bulge = af.Model(ag.lp.Sersic)
 bulge.centre.centre_0 = af.UniformPrior(lower_limit=-0.1, upper_limit=0.1)
 bulge.centre.centre_1 = af.UniformPrior(lower_limit=-0.1, upper_limit=0.1)
 bulge.ell_comps.ell_comps_0 = af.UniformPrior(lower_limit=-0.3, upper_limit=0.3)
 bulge.ell_comps.ell_comps_1 = af.UniformPrior(lower_limit=-0.3, upper_limit=0.3)
-bulge.intensity = af.UniformPrior(lower_limit=0.1, upper_limit=0.5)
-bulge.effective_radius = af.UniformPrior(lower_limit=0.0, upper_limit=0.4)
-bulge.sersic_index = af.UniformPrior(lower_limit=0.5, upper_limit=2.0)
+bulge.intensity = af.UniformPrior(lower_limit=0.5, upper_limit=1.5)
+bulge.effective_radius = af.UniformPrior(lower_limit=0.2, upper_limit=1.6)
+bulge.sersic_index = af.UniformPrior(lower_limit=3.0, upper_limit=5.0)
 
-lens = af.Model(ag.Galaxy, redshift=0.5, mass=mass, shear=shear)
-source = af.Model(ag.Galaxy, redshift=1.0, bulge=bulge)
+galaxy = af.Model(ag.Galaxy, redshift=0.5, bulge=bulge)
 
-model = af.Collection(galaxies=af.Collection(lens=lens, source=source))
+model = af.Collection(galaxies=af.Collection(galaxy=galaxy))
 
 search = af.Zeus(
     path_prefix=Path("howtogalaxy", "chapter_optional"),
