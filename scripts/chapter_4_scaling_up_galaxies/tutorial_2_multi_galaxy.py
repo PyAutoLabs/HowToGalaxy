@@ -31,7 +31,8 @@ parameter space growing out of control, and what the data can — and cannot —
 
 __Contents__
 
-- **Initial Setup:** Load imaging of two blended galaxies, simulating it first if it is not on disk.
+- **Initial Setup:** Load imaging of two blended galaxies.
+- **Dataset Auto-Simulation:** Automatically simulate the dataset if it does not already exist.
 - **Mask:** Define a mask which encloses the light of both galaxies.
 - **Over Sampling:** Centre the adaptive over sampling grid on every galaxy, not just one.
 - **Why Not Fit Them Separately?:** Why masking out one galaxy and fitting the other biases both measurements.
@@ -235,7 +236,8 @@ profiles instead of MGEs it would grow at 7 per galaxy instead.
 __Fixing the Centres__
 
 Before fitting, we make one change that is standard practice for blended systems: we **fix each galaxy's
-centre to its observed light centre**, removing 2 free parameters per galaxy.
+centre to its observed light centre**, removing 2 free parameters per galaxy. The previous tutorial fixed the
+interloper's centre for the same reason; in a blend the case is even stronger.
 
 Why? With a single galaxy, the data constrains the centre extremely well: it is simply the peak of the light,
 and there is only one plausible culprit for every photon. With blended light this breaks down. Each pixel's

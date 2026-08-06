@@ -29,9 +29,9 @@ __Dataset Paths__
 
 The `dataset_type` describes the type of data being simulated and `dataset_name` gives it a descriptive name. They define the folder the dataset is output to on your hard-disk:
 
- - The image will be output to `/autogalaxy_workspace/dataset/dataset_type/dataset_name/image.fits`.
- - The noise-map will be output to `/autogalaxy_workspace/dataset/dataset_type/dataset_name/noise_map.fits`.
- - The psf will be output to `/autogalaxy_workspace/dataset/dataset_type/dataset_name/psf.fits`.
+ - The image will be output to `/dataset/dataset_type/dataset_name/image.fits`.
+ - The noise-map will be output to `/dataset/dataset_type/dataset_name/noise_map.fits`.
+ - The psf will be output to `/dataset/dataset_type/dataset_name/psf.fits`.
 """
 dataset_type = "imaging"
 dataset_name = "simple"
@@ -39,7 +39,7 @@ dataset_name = "simple"
 """
 The path where the dataset will be output.
 
-In this example, this is: `/autogalaxy_workspace/dataset/imaging/simple`
+In this example, this is: `/dataset/imaging/simple`
 """
 dataset_path = Path("dataset", dataset_type, dataset_name)
 
@@ -185,7 +185,7 @@ ag.output_to_json(
 )
 
 """
-The dataset can be viewed in the folder `autogalaxy_workspace/dataset/imaging/simple`.
+The dataset can be viewed in the folder `dataset/imaging/simple`.
 
 __JAX Variant__
 

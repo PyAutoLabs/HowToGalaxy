@@ -41,8 +41,9 @@ __The Scaling Problem__
 The previous tutorials composed models the way we have all chapter: one `af.Model(ag.Galaxy)` per galaxy,
 each with its own free light profile. A blend of two or three galaxies is fine. A cluster is not:
 
-- **Parameters**: ten members with a free spherical Sersic each is 40 free parameters before we even touch
-  the BCG; a hundred members is 400. No non-linear search can sample such a space reliably.
+- **Parameters**: ten members with a free spherical Sersic each (5 parameters per galaxy) is 50 free
+  parameters before we even touch the BCG; a hundred members is 500. No non-linear search can sample such a
+  space reliably.
 
 - **Information**: the faint members do not contain enough signal to constrain four free parameters each —
   most of those dimensions would be unconstrained noise.
@@ -60,7 +61,9 @@ with the population.
 
 __Contents__
 
-- **Dataset:** Load the simulated cluster field (1 BCG + 10 members), auto-simulating it if absent.
+- **The Scaling Problem:** Why one-free-model-per-galaxy cannot scale to a cluster's member population.
+- **Dataset:** Load the simulated cluster field (1 BCG + 10 members).
+- **Dataset Auto-Simulation:** Automatically simulate the dataset if it does not already exist.
 - **Member Catalogue:** Load the member centres and luminosities from `scaling_galaxies.csv`.
 - **Masking:** Mask the wide cluster field and over-sample every galaxy's centre.
 - **Model:** Compose the two-tier cluster model — free BCG MGE + catalogue-driven member tier.
@@ -120,7 +123,7 @@ Plotting the dataset shows what a cluster field looks like in imaging: the brigh
 the centre, with the fainter members scattered across the frame. In real data the diffuse intra-cluster
 light would fill the space between them.
 
-Note the field of view compared to earlier chapters — the members sit up to ~8" from the centre, so the
+Note the field of view compared to earlier chapters — the members sit up to ~10" from the centre, so the
 image is far larger than the ~6" cutouts we fitted before.
 """
 aplt.subplot_imaging_dataset(dataset=dataset)
@@ -214,8 +217,8 @@ Gaussian intensities are solved linearly).
        intensity_i = intensity_scale * luminosity_i
 
 The single `intensity_scale` prior is defined once, outside the loop, and every member's intensity is an
-arithmetic expression of it — the prior-linking arithmetic we have used throughout the lectures, now doing
-population-scale work. The whole 10-member tier therefore contributes ONE free parameter to the non-linear
+arithmetic expression of it — an extension of the prior linking we used in earlier chapters (pairing two
+parameters with `=`, e.g. `bulge.centre = disk.centre`), now doing population-scale work. The whole 10-member tier therefore contributes ONE free parameter to the non-linear
 search, and would still contribute one with 200 members.
 
 Physically, `intensity_scale` is the conversion between the catalogue's luminosity units and the image's
@@ -372,8 +375,8 @@ the ladder one final time:
 - **One galaxy** (chapters 1-3): light profiles, non-linear searches, linear profiles and the MGE, and
   pixelized reconstructions — the core toolkit, applied to a single galaxy at the centre of its image.
 
-- **Extra galaxies**: nearby galaxies whose light contaminates the target's, included in the model so the
-  target's photometry is unbiased.
+- **Extra galaxies**: nearby galaxies whose light contaminates the target's, noise-scaled out of the fit or
+  included in the model so the target's photometry is unbiased.
 
 - **Multi-galaxy blends**: systems of overlapping galaxies modeled simultaneously, each with its own free
   light model.

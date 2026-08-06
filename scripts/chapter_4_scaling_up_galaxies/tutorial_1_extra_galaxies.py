@@ -201,8 +201,9 @@ aplt.subplot_imaging_dataset(dataset=dataset)
 """
 __Noise Scaling Fit__
 
-We now fit this noise-scaled dataset with a model that does **not** include the extra galaxy. The model is the
-same one we used in chapter 2's linear profiles tutorial: a linear `Sersic` bulge.
+We now fit this noise-scaled dataset with a model that does **not** include the extra galaxy. The model is a
+single linear `Sersic` bulge, using the linear light profiles introduced in chapter 2's linear profiles
+tutorial.
 """
 bulge = af.Model(ag.lp_linear.Sersic)
 

@@ -18,11 +18,6 @@ __Contents__
 - **Visualize:** Output subplot and image PNGs of the simulated dataset.
 - **Plane Output:** Save the Galaxies object as a JSON file.
 
-__Advanced__
-
-This is an advanced simulator script, meaning that detailed explanations of certain code are omitted. Refer to
-simulators not in the `advanced` folder for more detailed comments.
-
 __Start Here Notebook__
 
 If any code in this script is unclear, refer to the `simulators/simple.ipynb` notebook.
@@ -166,5 +161,5 @@ ag.output_to_json(
 )
 
 """
-The dataset can be viewed in the folder `autogalaxy_workspace/dataset/imaging/sersic_x2`.
+The dataset can be viewed in the folder `dataset/imaging/sersic_x2`.
 """

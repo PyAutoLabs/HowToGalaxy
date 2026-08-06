@@ -16,8 +16,8 @@ __Contents__
 - **Dataset Auto-Simulation:** Automatically simulate the dataset if it does not already exist.
 - **Pixelization:** Create a pixelization and perform an inversion to reconstruct the galaxy.
 - **Positive Only Solver:** Ensure the reconstruction has only positive intensity values.
+- **Detailed Explanation:** Where the linear algebra behind inversions is derived in full.
 - **Wrap Up:** Summary of inversion concepts.
-- **Detailed Explanation:** In-depth explanation of the linear algebra behind inversions.
 """
 
 # from autogalaxy import setup_notebook; setup_notebook()
@@ -209,21 +209,21 @@ possible, where a bespoke fast non-negative linear solver was developed to achie
 Other methods in the literature often do not use a positive only solver, and therefore suffer from these
 unphysical solutions, which can degrade the results of galaxy models in general.
 
-__Wrap Up__
-
-And, we're done, here are a few questions to get you thinking about inversions:
-
- 1) The inversion provides the maximum log likelihood solution to the observed image. Is there a problem with seeking 
- the highest likelihood solution? Is there a risk that we're going to fit other things in the image than just the 
- galaxy? What happens if you reduce the `coefficient` of the regularization object above to zero?
-
- 2) The exterior pixels in the rectangular pixel-grid have no image-pixels in them. However, they are still given a 
- reconstructed flux. Given these pixels do not map to the data, where is this value coming from?
- 
 __Detailed Explanation__
 
 The linear algebra sketched above -- setting up the mappings as a matrix and solving for the pixelization pixel
 fluxes -- is derived in full in tutorial 5 of this chapter, where we build every matrix by hand and perform the
 solve ourselves. The file `autogalaxy_workspace/*/imaging/features/pixelization/likelihood_function.ipynb` gives a
 further visual step-by-step guide of the process alongside equations and references to literature on the subject.
+
+__Wrap Up__
+
+And, we're done, here are a few questions to get you thinking about inversions:
+
+ 1) The inversion provides the maximum log likelihood solution to the observed image. Is there a problem with seeking
+ the highest likelihood solution? Is there a risk that we're going to fit other things in the image than just the
+ galaxy? What happens if you reduce the `coefficient` of the regularization object above to zero?
+
+ 2) The exterior pixels in the rectangular pixel-grid have no image-pixels in them. However, they are still given a
+ reconstructed flux. Given these pixels do not map to the data, where is this value coming from?
 """

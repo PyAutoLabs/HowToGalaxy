@@ -37,11 +37,11 @@ __Contents__
 - **Mapper:** Package the interpolation into a `Mapper` describing all image-to-mesh mappings.
 - **Mapping Matrix:** Express the mappings as the 2D matrix $f$.
 - **Blurred Mapping Matrix:** Convolve every column of $f$ with the imaging PSF.
-- **Data Vector:** Compute the data vector $D$ from the blurred mapping matrix, data and noise-map.
-- **Curvature Matrix:** Compute the curvature matrix $F$.
+- **Data Vector (D):** Compute the data vector $D$ from the blurred mapping matrix, data and noise-map.
+- **Curvature Matrix (F):** Compute the curvature matrix $F$.
 - **Unregularized Solve:** Solve $s = F^{-1} D$ and see the over-fitted mess this produces.
-- **Regularization Matrix:** Compute the regularization matrix $H$ encoding the smoothness prior.
-- **Galaxy Reconstruction:** Solve the regularized system $s = [F + H]^{-1} D$.
+- **Regularization Matrix (H):** Compute the regularization matrix $H$ encoding the smoothness prior.
+- **Galaxy Reconstruction (s):** Solve the regularized system $s = [F + H]^{-1} D$.
 - **Image Reconstruction:** Map the reconstruction back to image resolution via the blurred mapping matrix.
 - **Likelihood Function:** The five terms which combine into the log evidence.
 - **Chi Squared:** The goodness-of-fit of the reconstructed image to the data.
