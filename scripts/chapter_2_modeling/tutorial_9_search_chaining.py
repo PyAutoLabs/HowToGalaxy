@@ -1,14 +1,18 @@
 """
-Tutorial 1: Search Chaining
+Tutorial 9: Search Chaining
 ===========================
 
-In chapter 2, we learnt how to perform modeling using a non-linear search. In all of the tutorials, we fitted the
-data using just one non-linear search. In this chapter, we introduce a technique called 'non-linear search chaining',
-which fits a model using a sequence of non-linear searches. The initial searches fit simpler models whose parameter
-spaces can be more accurately and efficiently sampled. The results of this search are then passed to later searches
-which fit models of gradually increasing complexity.
+Throughout this chapter, we have fitted the data using just one non-linear search. The previous tutorial discussed
+the run-time cost of doing this: with a single search, the dimensionality of the model, the priors on its parameters
+and the search settings must all be juggled at once, leaving us little flexibility to trade them off against one
+another.
 
-Lets think back to tutorial 4 of chapter 2. We learnt there were three approaches one could take fitting a model
+In this closing part of the chapter, we introduce a technique called 'non-linear search chaining', which fits a
+model using a sequence of non-linear searches. The initial searches fit simpler models whose parameter spaces can
+be more accurately and efficiently sampled. The results of this search are then passed to later searches which fit
+models of gradually increasing complexity.
+
+Lets think back to tutorial 4 of this chapter. We learnt there were three approaches one could take fitting a model
 accurately if we found that a model fit failed. These were:
 
  1) Tuning our priors to the galaxy we're fitting.
@@ -21,23 +25,24 @@ much on searching parameter space for longer, we could end up with search`s that
 
 In this tutorial, we are going to show how search chaining combines these 3 approaches such that we can fit
 complex and realistic models in a way that that can be generalized to many different galaxies. To do this,
-we'll run 2 searches, and chain the model inferred in the first search to the priors of the second search`s lens
+we'll run 2 searches, and chain the model inferred in the first search to the priors of the second search`s
 model.
 
-Our first search will make the same bulge-disk alignment assumption we made in the previous tutorial. We saw that this
-gives a reasonable model. However, we'll make a couple of extra simplifying assumptions, to really try and bring
-our model complexity down and get the non-linear search running fast.
+Our first search will make the same bulge-disk alignment assumption we made in tutorial 4 of this chapter. We saw
+that this gives a reasonable model. However, we'll make a couple of extra simplifying assumptions, to really try and
+bring our model complexity down and get the non-linear search running fast.
 
 The model we infer above will therefore be a lot less realistic. But it does not matter, because in the second search
 we are going to relax these assumptions and fit the more realistic model. The beauty is that, by running the first
 search, we can use its results to tune the priors of our second search. For example:
 
  1) The first search should give us a pretty good idea of the galaxy's bulge and disk profiles, for example its
- centre, intensity, effective radius.
+ centre, ellipticity and effective radius.
 
 __Contents__
 
 - **Initial Setup:** Load the dataset and apply a mask.
+- **Dataset Auto-Simulation:** Simulate the dataset via its simulator script if it is not on your hard-disk.
 - **Model:** Compose a simplified model for the first search with aligned bulge-disk assumptions.
 - **Search + Analysis:** Run the first search with the simplified model.
 - **Result:** Inspect the result of the first search.
@@ -57,7 +62,7 @@ import autofit as af
 """
 __Initial Setup__
 
-we'll use the same galaxy data as tutorial 4 of chapter 2, where:
+we'll use the same galaxy data as tutorial 4 of this chapter, where:
 
  - The galaxy's bulge is an `Sersic`.
  - The galaxy's disk is an `Exponential`.
@@ -132,6 +137,18 @@ bulge.centre_1 = 0.0
 disk.centre_0 = 0.0
 disk.centre_1 = 0.0
 
+"""
+Lets also use the same approach as tutorial 4 of this chapter and align the ellipticity of the bulge and disk,
+removing another two parameters from the model.
+"""
+disk.ell_comps = bulge.ell_comps
+
+"""
+We also know that the bulges of many galaxies are well described by a Sersic index of around 4 (a de Vaucouleurs
+profile). Lets fix it to 4 this time.
+"""
+bulge.sersic_index = 4.0
+
 galaxy = af.Model(ag.Galaxy, redshift=0.5, bulge=bulge, disk=disk)
 
 model_1 = af.Collection(galaxies=af.Collection(galaxy=galaxy))
@@ -147,21 +164,21 @@ __Search + Analysis__
 Now lets create the search and analysis.
 """
 search_1 = af.Nautilus(
-    path_prefix=Path("howtogalaxy", "chapter_3"),
-    name="tutorial_1_search_chaining_1",
+    path_prefix=Path("howtogalaxy", "chapter_2"),
+    name="tutorial_9_search_chaining_1",
     unique_tag=dataset_name,
     n_live=100,
-    n_batch=50,  # GPU batching and VRAM use explained in chapter 2 tutorial 2.
+    n_batch=50,  # GPU batching and VRAM use explained in tutorial 2 of this chapter.
 )
 
 analysis_1 = ag.AnalysisImaging(dataset=dataset, use_jax=True)
 
 """
-Lets run the search, noting that our liberal approach to reducing the model complexity has reduced it to just 
-6 parameters.
+Lets run the search, noting that our liberal approach to reducing the model complexity has reduced it to just
+4 parameters.
 """
 print(
-    "The non-linear search has begun running - checkout the workspace/output/5_chaining_searches"
+    "The non-linear search has begun running - checkout the output/howtogalaxy/chapter_2"
     " folder for live output of the results, images and model."
     " This Jupyter notebook cell with progress once search has completed - this could take some time!"
 )
@@ -202,7 +219,7 @@ What I've done below is looked at the results of search 1 and manually specified
 parameter was fixed in the previous search, its prior is based around the previous value. Don't worry about the sigma 
 values for now, I've chosen values that I know will ensure reasonable sampling, but we'll cover this later.
 
-__LENS BULGE PRIORS:__
+__BULGE PRIORS:__
 """
 bulge.centre.centre_0 = af.TruncatedGaussianPrior(
     mean=0.0, sigma=0.1, lower_limit=-np.inf, upper_limit=np.inf
@@ -224,7 +241,7 @@ bulge.sersic_index = af.TruncatedGaussianPrior(
 )
 
 """
-__LENS DISK PRIORS:__
+__DISK PRIORS:__
 """
 disk.centre.centre_0 = af.TruncatedGaussianPrior(
     mean=0.0, sigma=0.1, lower_limit=-np.inf, upper_limit=np.inf
@@ -261,20 +278,18 @@ print(model_2.info)
 Lets setup and run the search. As expected, it gives us the correct model. However, it does so significantly 
 faster than we are used to!
 """
-batch_size = 50  # Explained chapter 2 tutorial 2
-
 search_2 = af.Nautilus(
-    path_prefix=Path("howtogalaxy", "chapter_3"),
-    name="tutorial_1_search_chaining_2",
+    path_prefix=Path("howtogalaxy", "chapter_2"),
+    name="tutorial_9_search_chaining_2",
     unique_tag=dataset_name,
     n_live=100,
-    n_batch=50,  # GPU batching and VRAM use explained in chapter 2 tutorial 2.
+    n_batch=50,  # GPU batching and VRAM use explained in tutorial 2 of this chapter.
 )
 
 analysis_2 = ag.AnalysisImaging(dataset=dataset, use_jax=True)
 
 print(
-    "The non-linear search has begun running - checkout the workspace/output/5_chaining_searches"
+    "The non-linear search has begun running - checkout the output/howtogalaxy/chapter_2"
     " folder for live output of the results, images and model."
     " This Jupyter notebook cell with progress once search has completed - this could take some time!"
 )
@@ -303,7 +318,7 @@ begin by making simplifying assumptions that eased our search of non-linear para
 pretty much any galaxy and therefore get ourselves a decent model with which to tune search 2`s priors.
 
 You are probably thinking though that there is one huge, giant, glaring flaw in all of this that I've not mentioned. 
-Search 2 can`t be generalized to another lens, because its priors are tuned to the image we fitted. If we had a lot 
+Search 2 can`t be generalized to another galaxy, because its priors are tuned to the image we fitted. If we had a lot
 of galaxies, we`d have to write a new search for every single one. This isn't ideal, is it?
 
 Fortunately, we can pass priors in **PyAutoGalaxy** without specifying the specific values. The API for this technique,

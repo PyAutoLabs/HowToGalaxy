@@ -421,7 +421,7 @@ Disadvantage:
 
 So, we can now fit galaxies. And when it fails, we know how to get it to work. 
 
-In chapter 3 of **HowToGalaxy**, we will introduce a technique called 'non-linear search chaining', which performs a 
+At the end of this chapter, we will introduce a technique called 'non-linear search chaining', which performs a
 model fit by chaining together multiple searches back-to-back . This allows us to combine the 3 different approaches 
 discussed and exploit the advantages of each, whilst not being hindered by their disadvantages.
 

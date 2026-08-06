@@ -135,8 +135,8 @@ model complexity, non-linear search settings, etc. As you develop this intuition
 use as large of a mask as possible (whilst still achieving reasonable run-times). Aggressive masking will make 
 **PyAutoGalaxy** run very fast, but could lead you to infer an incorrect model! 
 
-In chapter 3, where we introduce 'non-linear search chaining' we will see how we can use tighter masks in earlier 
-searches to achieve faster run times.
+At the end of this chapter, where we introduce 'non-linear search chaining', we will see how chaining makes it
+possible to use tighter masks in earlier searches to achieve faster run times.
 
 If your data includes the light of additional galaxies nearby you may  much have no choice but to use a smaller 
 circular mask, because it is important these objects do not interfere with the fit. 

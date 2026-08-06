@@ -8,10 +8,12 @@ In this chapter, you learnt:
 4) How one must carefully balance complexity and realism when fitting a model to a data-set.
 5) The importance of factoring in run-speed when modeling a galaxy, and tricks to speed up the analysis.
 6) About masking data in the analysis.
+7) How to chain searches together, passing priors from one search to the next so that earlier fits of simpler
+   models guide later fits of more complex ones.
 
 At this point, you are ready to begin modeling galaxies. The 'modeling' folders in the
 autogalaxy_workspace contains a number of scripts that can be easily adopted to model galaxies using a variety of
 different approaches, models and non-linear searches. If you have your own galaxy data, I'd recommend you adapt these
 scripts to your data. If you don't have your own data, checkout the 'simulators' folder to simulate your own dataset!
 
-Alternatively, you may wish to continue on to chapter 3 on search chaining.
+Alternatively, you may wish to continue on to chapter 3 on pixelized galaxy reconstructions.

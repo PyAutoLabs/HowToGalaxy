@@ -1,6 +1,6 @@
 """
-Tutorial 2: Prior Passing
-=========================
+Tutorial 10: Prior Passing
+==========================
 
 In the previous tutorial, we used non-linear search chaining to break the model-fitting procedure down into two
 non-linear searches. This used an initial search to fit a simple model, whose results were used to tune and
@@ -13,6 +13,7 @@ way, which is the topic of this tutorial.
 __Contents__
 
 - **Initial Setup:** Load the dataset and apply a mask.
+- **Dataset Auto-Simulation:** Simulate the dataset via its simulator script if it is not on your hard-disk.
 - **Model:** Compose the model for the first search.
 - **Search:** Run the first search.
 - **Result (Search 1):** Inspect the result of the first search.
@@ -34,7 +35,7 @@ import autofit as af
 """
 __Initial Setup__
 
-we'll use the same galaxying data as the previous tutorial, where:
+we'll use the same galaxy data as the previous tutorial, where:
 
  - The galaxy's bulge is an `Sersic`.
  - The galaxy's disk is an `Exponential`.
@@ -120,11 +121,11 @@ run it.
 analysis_1 = ag.AnalysisImaging(dataset=dataset, use_jax=True)
 
 search_1 = af.Nautilus(
-    path_prefix=Path("howtogalaxy", "chapter_3"),
-    name="tutorial_1_search_chaining_1",
+    path_prefix=Path("howtogalaxy", "chapter_2"),
+    name="tutorial_9_search_chaining_1",
     unique_tag=dataset_name,
     n_live=100,
-    n_batch=50,  # GPU batching and VRAM use explained in chapter 2 tutorial 2.
+    n_batch=50,  # GPU batching and VRAM use explained in tutorial 2 of this chapter.
 )
 
 result_1 = search_1.fit(model=model_1, analysis=analysis_1)
@@ -197,15 +198,15 @@ that were passed.
 analysis_2 = ag.AnalysisImaging(dataset=dataset, use_jax=True)
 
 search_2 = af.Nautilus(
-    path_prefix=Path("howtogalaxy", "chapter_3"),
-    name="tutorial_2_search_chaining_2",
+    path_prefix=Path("howtogalaxy", "chapter_2"),
+    name="tutorial_10_prior_passing_2",
     unique_tag=dataset_name,
     n_live=100,
-    n_batch=50,  # GPU batching and VRAM use explained in chapter 2 tutorial 2.
+    n_batch=50,  # GPU batching and VRAM use explained in tutorial 2 of this chapter.
 )
 
 print(
-    "The non-linear search has begun running - checkout the workspace/output/5_chaining_searches"
+    "The non-linear search has begun running - checkout the output/howtogalaxy/chapter_2"
     " folder for live output of the results, images and model."
     " This Jupyter notebook cell with progress once search has completed - this could take some time!"
 )
@@ -230,18 +231,19 @@ aplt.subplot_fit_imaging(fit=result_2.max_log_likelihood_fit)
 """
 __Wrap Up__
 
-We will expand on the prior passing API in the following tutorials. The main thing to note is that we can pass 
-entire profiles or galaxies using prior passing, if their model does not change (which for the bulge and disk, was 
-not true). The API to pass a whole profile or galaxy is as follows:
- 
+This tutorial has covered the core of the prior passing API; the chaining example in the `autogalaxy_workspace`
+(`autogalaxy_workspace/scripts/guides/modeling/chaining.py`) expands on it further. The main thing to note is that
+we can pass entire profiles or galaxies using prior passing, if their model does not change (which for the bulge
+and disk above, was not true). The API to pass a whole profile or galaxy is as follows:
+
  bulge = result_1.model.galaxies.galaxy.bulge
  galaxy = result_1.model.galaxies.galaxy
- 
+
 We can also pass priors using an `instance` instead of a `model`. When an `instance` is used, the maximum likelihood
 parameter values are passed as fixed values that are therefore not fitted for by the non-linear search (reducing its
-dimensionality). We will use this in the next tutorial to fit data with two galaxies, where fit one galaxy, fix it to 
-the best-fit model in a second search that fits the second galaxy, and then go on to fit both simultaneously in the 
-final search.
+dimensionality). Chained fits often use this to fix one galaxy's light to the best-fit model of an early search
+before fitting a second galaxy alongside it — chapter 4 of **HowToGalaxy**, which scales up to modeling multiple
+galaxies, and the workspace's chaining example show this in action.
  
 Lets now think about how priors are passed. Checkout the `model.info` file of the second search of this tutorial. The 
 parameters do not use the default priors we saw in search 1 (which are typically broad UniformPriors). Instead, 
@@ -251,13 +253,13 @@ they use GaussianPrior`s where:
  - The sigma values are specified in the `width_modifier` field of the profile's entry in the `priors.yaml' config 
    file (we will discuss why this is used in a moment).
 
-Like the manual `GaussianPrior`'s that were used in tutorial 1, the prior passing API sets up the prior on each 
+Like the manual `GaussianPrior`'s that were used in the previous tutorial, the prior passing API sets up the prior on each
 parameter with a `GaussianPrior` centred on the high likelihood regions of parameter space!
 
 __Detailed Explanation Of Prior Passing__
 
 To end, I provide a detailed overview of how prior passing works and illustrate tools that can be used to customize
-its behaviour. It is up to you whether you want read this, or go ahead to the next tutorial!
+its behaviour. It is up to you whether you want read this, or move on to the summary that concludes the chapter!
 
 Lets say I chain two parameters as follows:
  
@@ -265,7 +267,7 @@ Lets say I chain two parameters as follows:
 
 By invoking the `model` attribute, the prior is passed following 3 rules:
 
- 1) The new parameter, in this case the einstein radius, uses a `GaussianPrior`.This is ideal, as the 1D pdf results 
+ 1) The new parameter, in this case the effective radius, uses a `GaussianPrior`. This is ideal, as the 1D pdf results
  we compute at the end of a search are easily summarised as a Gaussian.
 
  2) The mean of the `GaussianPrior` is the median PDF value of the parameter estimated in search 1.
