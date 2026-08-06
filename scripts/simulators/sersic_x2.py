@@ -7,7 +7,7 @@ This script simulates `Imaging` of two galaxies where:
  - The first galaxy's bulge is an `Sersic`.
  - The second galaxy's bulge is an `Sersic`.
 
-This dataset is used in chapter 3 of the **HowToGalaxy** lectures.
+This dataset is used in chapter 4 of the **HowToGalaxy** lectures.
 
 __Contents__
 
