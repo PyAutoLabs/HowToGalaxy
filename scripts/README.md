@@ -14,7 +14,7 @@ Welcome to **HowToGalaxy** - The **PyAutoGalaxy** tutorial!
 
 # HOW TO TACKLE HowToGalaxy
 
-The **HowToGalaxy** lecture series current sits at 4 chapters, and each will take a day or so to go through
+The **HowToGalaxy** lecture series currently sits at 4 chapters, and each will take a day or so to go through
 properly. You probably want to be modeling galaxies faster than that! Furthermore, the concepts
 in the later chapters are pretty challenging, and familiarity and modeling is desirable before
 you tackle them.
@@ -85,31 +85,32 @@ fit CCD imaging data of a galaxy with a model. At the end, you'll understand:
 2. How to fit a model to galaxy CCD imaging via a non-linear search.
 3. The trade-off between realism and complexity when choosing a model.
 4. Why an incorrect model may be inferred and how to prevent this from happening.
-5. The challenges that are involved in inferred a robust model in a computationally reasonable run-time.
+5. The challenges that are involved in inferring a robust model in a computationally reasonable run-time.
+6. How to chain non-linear searches together to build automated modeling pipelines with prior passing.
 
 **Once completed, you'll be ready to model your own galaxies with PyAutoGalaxy!**
 
 # OVERVIEW OF CHAPTER 3 (Intermediate)
 
-**Automated Modeling with non-linear search chaining**
+**Using an inversion to perform a pixelized morphology reconstruction**
 
-In chapter 3, we'll learn how to chain multiple non-linear searches together to build automated modeling pipelines
-which can:
-
-1. Break-down the fitting of a model using multiple non-linear searches and prior passing.
-2. Use a custom pipeline to fit data containing multiple galaxy where each galaxy is fitted one at a time.
-3. Fit the global structure of a galaxy, followed by faint morphological features like a bar.
-
-# OVERVIEW OF CHAPTER 4 (Intermediate)
-
-**Using an inverison to perform a pixelized morphology reconstructions**
-
-In chapter 4, we'll learn how to reconstruct morphology features of a galaxy using a pixel-grid, ensuring that we can
-fit an accurate model to sources with complex and irregular morphologies. You'll learn how to:
+In chapter 3, we'll learn how to reconstruct the morphological features of a galaxy using a pixel-grid, ensuring
+that we can fit an accurate model to galaxies with complex and irregular morphologies. You'll learn how to:
 
 1. Pixelize a galaxy reconstruction into pixels.
 2. Perform a linear inversion using this pixelization to reconstruct the galaxy's light.
 3. Apply a smoothness prior on the galaxy reconstruction, called regularization.
 4. Apply smoothing within a Bayesian framework to objectively quantify the reconstruction's complexity.
-5. Use alternative pixelizations, for example a Voronoi mesh.
+5. Write down the linear algebra and Bayesian evidence equations that underpin the whole framework.
 6. Use these features to fit a model via non-linear searches.
+
+# OVERVIEW OF CHAPTER 4 (Advanced)
+
+**Scaling Up Galaxies**
+
+In chapter 4, we'll scale galaxy modeling up beyond a single galaxy, learning how to:
+
+1. Handle extra galaxies near the one being fitted, by scaling their light out of the fit or modeling them explicitly.
+2. Model two or more blended galaxies simultaneously and understand the degeneracies this creates.
+3. Model cluster fields, where the brightest cluster galaxy is fitted richly and the member population is
+   composed from a catalogue.
