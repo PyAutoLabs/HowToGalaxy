@@ -26,6 +26,7 @@ __Contents__
 - **Background Sky:** Add background sky light that introduces noise across the entire image.
 - **Simulator:** Use the SimulatorImaging object to simulate imaging data with all effects combined.
 - **Output:** Save the simulated data to .fits files for use in future tutorials.
+- **Interferometer Data:** Radio / sub-mm interferometers like ALMA observe visibilities in the uv-plane rather than images.
 - **Wrap Up:** Summary of how CCD imaging data is simulated.
 """
 
@@ -168,8 +169,8 @@ Therefore, we need to add the Poisson noise after blurring the galaxy image.
 
 We also need to consider the units of our image data. Let’s assume that the galaxy image is measured in units of 
 electrons per second ($e^- s^{-1}$), which is standard for CCD imaging data. To simulate the number of electrons 
-actually detected in each pixel, we multiply the image by the observation’s exposure time. This conversion changes t
-he units to the total number of electrons collected per pixel over the entire exposure time.
+actually detected in each pixel, we multiply the image by the observation’s exposure time. This conversion changes
+the units to the total number of electrons collected per pixel over the entire exposure time.
 
 Once the image is converted, we add Poisson noise, simulating the randomness in the photon-to-electron conversion 
 process. After adding the noise, we convert the image back to units of electrons per second for analysis, as 
@@ -351,9 +352,63 @@ aplt.fits_imaging(
 )
 
 """
+__Interferometer Data__
+
+CCD imaging is not the only type of data used to study galaxies. Radio and sub-mm interferometers, like the
+Atacama Large Millimeter Array (ALMA) and the Jansky Very Large Array (JVLA), observe galaxies at wavelengths
+where a CCD cannot.
+
+An interferometer does not observe an image of the galaxy. Each pair of antennas in the array measures a
+"visibility", a Fourier component of the sky brightness, at a point in what is called the "uv-plane" set by the
+separation of the two antennas. The dataset is therefore a set of complex visibilities in Fourier space, not a 2D
+image, and its noise properties are very different from those of CCD data — there is no PSF convolution, Poisson
+noise or background sky; instead each visibility has Gaussian noise.
+
+One could Fourier transform the visibilities into an image (called a "dirty image") and fit that, but the transform
+correlates the noise between pixels, making the fit statistically incorrect. **PyAutoGalaxy** therefore fits galaxy
+models directly in visibility space: the galaxy's image is evaluated in real space on a grid (defined by a
+real-space mask), Fourier transformed to the uv-plane and compared with the observed visibilities there.
+
+Below, we load a simulated interferometer dataset (creating it first via the `scripts/simulators/interferometer.py`
+script if it does not exist on your hard-disk, using the same auto-simulation idiom as later tutorials) and plot
+its dirty images — the closest an interferometer dataset comes to the CCD images we simulated above.
+
+HowToGalaxy will not cover interferometry any further than this. The lecture series teaches galaxy modeling using
+CCD imaging, and everything you learn transfers to visibility-space fitting. If you need to model interferometer
+data, go to the `autogalaxy_workspace/scripts/interferometer` package, which is the dedicated resource for
+uv-plane galaxy modeling.
+"""
+dataset_path = Path("dataset") / "interferometer" / "simple"
+
+if ag.util.dataset.should_simulate(str(dataset_path)):
+    import subprocess
+    import sys
+
+    subprocess.run(
+        [sys.executable, "scripts/simulators/interferometer.py"],
+        check=True,
+    )
+
+real_space_mask = ag.Mask2D.circular(
+    shape_native=(100, 100),
+    pixel_scales=0.1,
+    radius=3.0,
+)
+
+dataset = ag.Interferometer.from_fits(
+    data_path=dataset_path / "data.fits",
+    noise_map_path=dataset_path / "noise_map.fits",
+    uv_wavelengths_path=dataset_path / "uv_wavelengths.fits",
+    real_space_mask=real_space_mask,
+    transformer_class=ag.TransformerDFT,
+)
+
+aplt.subplot_interferometer_dirty_images(dataset=dataset)
+
+"""
 __Wrap Up__
 
-In this tutorial, you learned how CCD imaging data of a galaxy is collected using real telescopes like the 
+In this tutorial, you learned how CCD imaging data of a galaxy is collected using real telescopes like the
 Hubble Space Telescope, and how to simulate this data using the `SimulatorImaging` object.
 
 Let's summarise what we've covered:

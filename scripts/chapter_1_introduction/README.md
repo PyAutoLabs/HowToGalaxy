@@ -1,4 +1,4 @@
-In chapter 1, we introduce you to strong gravitational lensing and the core **PyAutoGalaxy** API.
+In chapter 1, we introduce you to galaxies, the light they emit and the core **PyAutoGalaxy** API.
 
 **Colab** links to every tutorial are included.
 

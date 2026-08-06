@@ -53,7 +53,7 @@ __Initial Setup__
 
 we'll use the same galaxy data as the previous tutorial, where:
 
- - The galaxy's bulge is an `Sersic`.
+ - The galaxy's bulge is a `Sersic`.
  - The galaxy's disk is an `Exponential`.
 """
 dataset_name = "simple"
@@ -169,10 +169,10 @@ For standard light profiles, the log likelihood evaluation time is of order ~0.0
 For linear light profiles, the log likelihood evaluation increases to around ~0.05 seconds per likelihood evaluation.
 This is still fast, but it does mean that the fit may take around five times longer to run.
 
-However, because two free parameters have been removed from the model (the `intensity` of the lens bulge and 
-source bulge), the total number of likelihood evaluations will reduce. Furthermore, the simpler parameter space
-likely means that the fit will take less than 10000 per free parameter to converge. This is aided further
-by the reduction in `n_live` to 100.
+However, because two free parameters have been removed from the model (the `intensity` of the bulge and
+disk), the total number of likelihood evaluations will reduce. Furthermore, the simpler parameter space
+likely means that the fit will take less than 10000 likelihood evaluations per free parameter to converge. This is
+aided further by the reduction in `n_live` to 100.
 
 Fits using standard light profiles and linear light profiles therefore take roughly the same time to run. However,
 the simpler parameter space of linear light profiles means that the model-fit is more reliable, less susceptible to
@@ -183,7 +183,7 @@ Run the non-linear search.
 print(
     "The non-linear search has begun running - checkout the workspace/output/howtogalaxy/chapter_2/tutorial_5_linear_light_profile"
     " folder for live output of the results, images and model."
-    " This Jupyter notebook cell with progress once search has completed - this could take some time!"
+    " This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
 
 result_linear_light_profile = search.fit(model=model, analysis=analysis)
@@ -242,11 +242,9 @@ For example, below, we make a `Basis` out of 30 elliptical Gaussian linear light
 
  - All share the same centre and elliptical components.
  - The `sigma` size of the Gaussians increases in log10 increments.
- 
-Because `log10(1.0) = 0.0` the first Gaussian `sigma` value is therefore 0.0001, whereas because `log10(10) = 1.0`
-the size of the final Gaussian is 1.0. 
 
-The equation below has therefore been chosen to provide intuition on the scale of the Gaussians.
+The `sigma` values are spaced in log10 increments from a tenth of the pixel scale (0.01") to the mask
+radius (3.0"), ensuring the Gaussians span all scales the data constrains.
 """
 total_gaussians = 30
 
@@ -299,11 +297,11 @@ galaxies = ag.Galaxies(galaxies=[galaxy])
 fit = ag.FitImaging(dataset=dataset, galaxies=galaxies)
 
 """
-By plotting the fit, we see that the `Basis` does a reasonable job at capturing the appearance of the lens galaxy.
+By plotting the fit, we see that the `Basis` does a reasonable job at capturing the appearance of the galaxy.
 
 There are imperfections, but this is because we did not fit the model via a non-linear search in order to determine
 the optimal values of the Gaussians in the basis. In particular, the Gaussians above were all spherical, when the
-lens galaxy is elliptical. 
+galaxy is elliptical.
 
 We rectify this below, where we use a non-linear search to determine the optimal values of the Gaussians!
 """
@@ -321,7 +319,7 @@ In this example we fit a `Basis` model for the bulge where:
  - The centres and elliptical components of each family of Gaussians are all linked together.
  - The `sigma` size of the Gaussians increases in log10 increments.
 
-The number of free parameters and therefore the dimensionality of the MGe is just N=4.
+The number of free parameters and therefore the dimensionality of the MGE is just N=4.
 """
 total_gaussians = 30
 
@@ -430,7 +428,7 @@ composed of many Gaussians!
 print(model.info)
 
 """
-We now fit the model, with just `n_live=50` given the simiplicity of parameter space.
+We now fit the model, with just `n_live=50` given the simplicity of parameter space.
 """
 search = af.Nautilus(
     path_prefix=Path("howtogalaxy", "chapter_2"),
@@ -443,7 +441,7 @@ search = af.Nautilus(
 print(
     "The non-linear search has begun running - checkout the workspace/output/howtogalaxy/chapter_2/tutorial_5_basis"
     " folder for live output of the results, images and model."
-    " This Jupyter notebook cell with progress once search has completed - this could take some time!"
+    " This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
 
 result_basis = search.fit(model=model, analysis=analysis)
@@ -460,8 +458,8 @@ print(result_basis.info)
 Visualizing the fit shows that we successfully fit the data to the noise level.
 
 Note that the result objects `max_log_likelihood_galaxies` and `max_log_likelihood_fit` automatically convert
-all linear light profiles to ordinary light profiles, including every single one of the 20 Gaussians fitted
-above. 
+all linear light profiles to ordinary light profiles, including every single one of the 40 Gaussians fitted
+above.
 
 This means we can use them directly to perform the visualization below.
 """
@@ -477,11 +475,11 @@ aplt.subplot_fit_imaging(fit=result_basis.max_log_likelihood_fit)
 __Multi Gaussian Expansion Benefits__
 
 Symmetric light profiles (e.g. elliptical Sersics) may leave significant residuals, because they fail to capture
-irregular and asymmetric morphological of galaxies (e.g. isophotal twists, an ellipticity which varies radially).
+irregular and asymmetric morphological features of galaxies (e.g. isophotal twists, an ellipticity which varies radially).
 An MGE fully captures these features and can therefore much better represent the emission of complex galaxies.
 
 The MGE model can be composed in a way that has fewer non-linear parameters than an elliptical Sersic. In this example,
-a groups of Gaussians is used to represent the `bulge` of the galaxy, which in total correspond to just N=4 non-linear 
+a group of Gaussians is used to represent the `bulge` of the galaxy, which in total correspond to just N=4 non-linear
 parameters (a `bulge` and `disk` comprising two linear Sersics has N=10 parameters).
 
 The MGE model parameterization is also composed such that neither the `intensity` parameters or any of the
@@ -494,7 +492,7 @@ in a much simpler non-linear parameter space which has far less significant para
 
 __Positive Only Solver__
 
-Many codes which use linear algebra typically rely on a linear algabra solver which allows for positive and negative
+Many codes which use linear algebra typically rely on a linear algebra solver which allows for positive and negative
 values of the solution (e.g. `np.linalg.solve`), because they are computationally fast. 
 
 This is problematic, as it means that negative surface brightnesses values can be computed to represent a galaxy's 
@@ -510,19 +508,19 @@ __Other Basis Functions__
 In addition to the Gaussians used in this example, there is another basis function implemented in PyAutoGalaxy 
 that is commonly used to represent the light of galaxies, called a `Shapelet`. 
 
-Shapelets are basis functions with analytic properties that are appropriate for capturing the  exponential / disk-like 
-features of a galaxy. They do so over a wide range of scales, and can often represent features in source galaxies 
+Shapelets are basis functions with analytic properties that are appropriate for capturing the exponential / disk-like
+features of a galaxy. They do so over a wide range of scales, and can often represent features in galaxies
 that a single Sersic function or MGE cannot.
 
 An example using shapelets is given at `autogalaxy_workspace/scripts/imaging/features/shapelets/modeling.py`.
- 
-Feel free to experiment with using shapelets as the galaxy by yourself. However they incur higher computational 
-overheads than the MGE and include a free parameter which governs the size of the basis functions and therefore source,
-slowing down convergence of the non-linear search. We have found that MGEs perform better than shapelets in most 
-lens modeling problems. 
 
-If you have a desire to fit sources with even more complex morphologies we recommend you look at how to reconstruct 
-sources using pixelizations in the `modeling/features` section or chapter 4 of **HowToGalaxy**.
+Feel free to experiment with using shapelets to model the galaxy yourself. However they incur higher computational
+overheads than the MGE and include a free parameter which governs the size of the basis functions and therefore galaxy,
+slowing down convergence of the non-linear search. We have found that MGEs perform better than shapelets in most
+galaxy modeling problems.
+
+If you have a desire to fit galaxies with even more complex morphologies we recommend you look at how to reconstruct
+galaxies using pixelizations in the `modeling/features` section or chapter 3 of **HowToGalaxy**.
 
 __Wrap Up__
 
@@ -531,14 +529,11 @@ galaxies using fewer non-linear parameters, keeping the fit performed by the non
 and robust.
 
 Perhaps the biggest downside to basis functions is that they are only as good as the features they can capture
-in the data. For example, a baiss of Gaussians still assumes that they have a well defined centre, but there are
-galaxies which may have multiple components with multiple centres (e.g. many star forming knots) which such a 
-basis cannot catprue.
+in the data. For example, a basis of Gaussians still assumes that they have a well defined centre, but there are
+galaxies which may have multiple components with multiple centres (e.g. many star forming knots) which such a
+basis cannot capture.
 
-In chapter 4 of **HowToGalaxy** we introduce non-parametric pixelizations, which reconstruct the data in way
+In chapter 3 of **HowToGalaxy** we introduce non-parametric pixelizations, which reconstruct the data in way
 that does not make assumptions like a centre and can thus reconstruct even more complex, asymmetric and irregular
 galaxy morphologies.
 """
-basis = ag.lp_basis.Basis(
-    profile_list=gaussian_list, regularization=ag.reg.Constant(coefficient=1.0)
-)

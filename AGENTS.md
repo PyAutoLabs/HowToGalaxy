@@ -10,8 +10,9 @@ instructions for this repo.
 - `scripts/` — Runnable Python tutorial scripts:
   - `chapter_1_introduction/` — Grids, light profiles, galaxies, data, fitting
   - `chapter_2_modeling/` — Non-linear searches, Bayesian inference, galaxy modeling
-  - `chapter_3_search_chaining/` — Search chaining, prior passing, automated pipelines
-  - `chapter_4_pixelizations/` — Pixelized reconstruction, inversions, regularization
+  - `chapter_3_pixelizations/` — Pixelized reconstruction, inversions, regularization, the Bayesian
+    formalism
+  - `chapter_4_scaling_up_galaxies/` — Extra galaxies, blended multi-galaxy systems, cluster fields
   - `chapter_optional/` — Alternative searches and advanced topics
   - `simulators/` — Simulator scripts that generate the tutorial datasets at runtime
 - `notebooks/` — Jupyter versions, generated from `scripts/` (do not edit directly)
@@ -36,7 +37,7 @@ fast smoke run). **Dataset realism:** automated runs **do** cap datasets —
 workspaces. (This paragraph previously claimed the opposite; the claim was untrue and went unnoticed
 because the chapters that break under the cap were never in the smoke list.) Tutorials must therefore
 work at **both** resolutions: never hardcode an index or a shape derived from the full-resolution
-dataset. `chapter_4_pixelizations/tutorial_3_inversions.py` is the cautionary case — it sized its mesh
+dataset. `chapter_3_pixelizations/tutorial_3_inversions.py` is the cautionary case — it sized its mesh
 from `dataset.shape_native`, giving 10000 mesh pixels at full resolution but 256 under the cap, so its
 fixed `pix_indexes` ran off the end.
 

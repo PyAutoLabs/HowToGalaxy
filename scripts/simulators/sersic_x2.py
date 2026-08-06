@@ -7,7 +7,7 @@ This script simulates `Imaging` of two galaxies where:
  - The first galaxy's bulge is an `Sersic`.
  - The second galaxy's bulge is an `Sersic`.
 
-This dataset is used in chapter 3 of the **HowToGalaxy** lectures.
+This dataset is used in chapter 4 of the **HowToGalaxy** lectures.
 
 __Contents__
 
@@ -17,11 +17,6 @@ __Contents__
 - **Output:** Save the simulated dataset to FITS files.
 - **Visualize:** Output subplot and image PNGs of the simulated dataset.
 - **Plane Output:** Save the Galaxies object as a JSON file.
-
-__Advanced__
-
-This is an advanced simulator script, meaning that detailed explanations of certain code are omitted. Refer to
-simulators not in the `advanced` folder for more detailed comments.
 
 __Start Here Notebook__
 
@@ -166,5 +161,5 @@ ag.output_to_json(
 )
 
 """
-The dataset can be viewed in the folder `autogalaxy_workspace/dataset/imaging/sersic_x2`.
+The dataset can be viewed in the folder `dataset/imaging/sersic_x2`.
 """

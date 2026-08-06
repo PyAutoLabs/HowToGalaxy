@@ -6,8 +6,8 @@ Up to now, we've always used the non-linear search Nautilus and not considered t
 sampling. In this tutorial, we'll consider how we can change these setting to balance finding the global maxima
 solution with fast run time.
 
-We will also discuss other types of non-linear searches, such as MCMC and optimizers, which we can use to perform lens
-modeling. So far, we have no found any of these alternatives to give anywhere near as robust and efficient results as
+We will also discuss other types of non-linear searches, such as MCMC and optimizers, which we can use to perform
+modeling. So far, we have not found any of these alternatives to give anywhere near as robust and efficient results as
 Nautilus, and we recommend users use Nautilus unless they are particularly interested in investigating different
 model-fitting techniques.
 
@@ -26,11 +26,9 @@ import autogalaxy.plot as aplt
 import autofit as af
 
 """
-we'll use new galaxying data, where:
+we'll use the `simple__sersic` imaging data of a galaxy, where:
 
- - The galaxy's light is an `Sersic`.
- - The galaxy's total mass distribution is an `Isothermal` and `ExternalShear`.
- - The source galaxy's `LightProfile` is an `Sersic`.
+ - The galaxy's light is a `Sersic`.
 """
 dataset_name = "simple__sersic"
 dataset_path = Path("dataset") / "imaging" / dataset_name
@@ -59,7 +57,7 @@ dataset = ag.Imaging.from_fits(
 )
 
 """
-we'll create and use a smaller 2.0" `Mask2D` again.
+we'll create and use a 2.6" `Mask2D`.
 """
 mask = ag.Mask2D.circular(
     shape_native=dataset.shape_native, pixel_scales=dataset.pixel_scales, radius=2.6
@@ -91,11 +89,11 @@ to locate the global maxima as quickly as possible.
 
 f_live:
 
-A nested sampling algorithm estimates the *Bayesian Evidence* of the model-fit, which is quantity the non-linear 
+A nested sampling algorithm estimates the *Bayesian Evidence* of the model-fit, which is a quantity the non-linear 
 search algorithms we introduce later do not. The Bayesian evidence quantifies how well the model as a whole fits
 the data, following a principle called Occam's Razor (`https://simple.wikipedia.org/wiki/Occam%27s_razor`). This 
 penalizes models for being more complex (e.g. more parameters) and requires that their additional complexity improve 
-their overall fit to the data compared to a simpler model. By computing the comparing the Bayesian evidence of 
+their overall fit to the data compared to a simpler model. By comparing the Bayesian evidence of 
 different models one can objectively choose the model that best fits the data.
 
 A nested sampling algorithm stops sampling when it estimates that continuing sampling will not increase the Bayesian 
@@ -106,7 +104,7 @@ mean Nautilus terminate sooner.
 A high `f_live` will make the errors estimated on every parameter unreliable and its value must be kept 
 below 0.8 for reliable error estimates. However, when chaining searches, we typically *do not care* about the errors 
 in the first search, therefore setting a high evidence tolerance can be an effective means to make Nautilus converge
-faster (we'll estimate reliable errors in the second search when the `f_live is 0.8 or less). 
+faster (we'll estimate reliable errors in the second search when the `f_live` is 0.8 or less). 
 
 
 Lets perform two fits, where:
@@ -119,10 +117,7 @@ Lets perform two fits, where:
 """
 model = af.Collection(
     galaxies=af.Collection(
-        lens=af.Model(
-            ag.Galaxy, redshift=0.5, bulge=ag.lp.Sersic, mass=ag.mp.Isothermal
-        ),
-        source=af.Model(ag.Galaxy, redshift=1.0, bulge=ag.lp.Sersic),
+        galaxy=af.Model(ag.Galaxy, redshift=0.5, bulge=ag.lp.Sersic),
     )
 )
 
@@ -131,7 +126,7 @@ search = af.Nautilus(
     name="tutorial_searches_slow",
     unique_tag=dataset_name,
     n_live=400,
-    n_batch=50,  # GPU lens model fits are batched and run simultaneously, see VRAM section below.
+    n_batch=50,  # GPU model fits are batched and run simultaneously (see chapter 2 tutorial 2).
 )
 
 analysis = ag.AnalysisImaging(dataset=dataset, use_jax=True)
@@ -139,7 +134,7 @@ analysis = ag.AnalysisImaging(dataset=dataset, use_jax=True)
 print(
     "The non-linear search has begun running - checkout the workspace/output"
     "  folder for live output of the results, images and model."
-    "  This Jupyter notebook cell with progress once search has completed - this could take some time!"
+    "  This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
 
 result_slow = search.fit(model=model, analysis=analysis)
@@ -159,17 +154,17 @@ print(result_slow.samples.total_samples)
 Now lets run the search with fast settings, so we can compare the total number of iterations required.
 """
 search = af.Nautilus(
-    path_prefix=Path("howtogalaxy", "chapter_2"),
+    path_prefix=Path("howtogalaxy", "chapter_optional"),
     name="tutorial_searches_fast",
     unique_tag=dataset_name,
     n_live=75,
-    n_batch=50,  # GPU lens model fits are batched and run simultaneously, see VRAM section below.
+    n_batch=50,  # GPU model fits are batched and run simultaneously (see chapter 2 tutorial 2).
 )
 
 print(
     "The non-linear search has begun running - checkout the workspace/output"
     "  folder for live output of the results, images and model."
-    "  This Jupyter notebook cell with progress once search has completed - this could take some time!"
+    "  This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
 
 result_fast = search.fit(model=model, analysis=analysis)
@@ -221,43 +216,21 @@ modeling than Nautilus.
 I've included an example runs of Emcee and Zeus below, where the model is set up using `UniformPriors` to give
 the starting point of the MCMC walkers. 
 """
-lens_bulge = af.Model(ag.lp.Sersic)
-lens_bulge.centre.centre_0 = af.UniformPrior(lower_limit=-0.1, upper_limit=0.1)
-lens_bulge.centre.centre_1 = af.UniformPrior(lower_limit=-0.1, upper_limit=0.1)
-lens_bulge.ell_comps.ell_comps_0 = af.UniformPrior(lower_limit=-0.3, upper_limit=0.3)
-lens_bulge.ell_comps.ell_comps_1 = af.UniformPrior(lower_limit=-0.3, upper_limit=0.3)
-lens_bulge.intensity = af.UniformPrior(lower_limit=0.5, upper_limit=1.5)
-lens_bulge.effective_radius = af.UniformPrior(lower_limit=0.2, upper_limit=1.6)
-lens_bulge.sersic_index = af.UniformPrior(lower_limit=3.0, upper_limit=5.0)
-
-
-mass = af.Model(ag.mp.Isothermal)
-mass.centre.centre_0 = af.UniformPrior(lower_limit=-0.1, upper_limit=0.1)
-mass.centre.centre_1 = af.UniformPrior(lower_limit=-0.1, upper_limit=0.1)
-mass.ell_comps.ell_comps_0 = af.UniformPrior(lower_limit=-0.3, upper_limit=0.3)
-mass.ell_comps.ell_comps_1 = af.UniformPrior(lower_limit=-0.3, upper_limit=0.3)
-mass.einstein_radius = af.UniformPrior(lower_limit=1.0, upper_limit=2.0)
-
-shear = af.Model(ag.mp.ExternalShear)
-shear.gamma_1 = af.UniformPrior(lower_limit=-0.1, upper_limit=0.1)
-shear.gamma_2 = af.UniformPrior(lower_limit=-0.1, upper_limit=0.1)
-
 bulge = af.Model(ag.lp.Sersic)
 bulge.centre.centre_0 = af.UniformPrior(lower_limit=-0.1, upper_limit=0.1)
 bulge.centre.centre_1 = af.UniformPrior(lower_limit=-0.1, upper_limit=0.1)
 bulge.ell_comps.ell_comps_0 = af.UniformPrior(lower_limit=-0.3, upper_limit=0.3)
 bulge.ell_comps.ell_comps_1 = af.UniformPrior(lower_limit=-0.3, upper_limit=0.3)
-bulge.intensity = af.UniformPrior(lower_limit=0.1, upper_limit=0.5)
-bulge.effective_radius = af.UniformPrior(lower_limit=0.0, upper_limit=0.4)
-bulge.sersic_index = af.UniformPrior(lower_limit=0.5, upper_limit=2.0)
+bulge.intensity = af.UniformPrior(lower_limit=0.5, upper_limit=1.5)
+bulge.effective_radius = af.UniformPrior(lower_limit=0.2, upper_limit=1.6)
+bulge.sersic_index = af.UniformPrior(lower_limit=3.0, upper_limit=5.0)
 
-lens = af.Model(ag.Galaxy, redshift=0.5, mass=mass, shear=shear)
-source = af.Model(ag.Galaxy, redshift=1.0, bulge=bulge)
+galaxy = af.Model(ag.Galaxy, redshift=0.5, bulge=bulge)
 
-model = af.Collection(galaxies=af.Collection(lens=lens, source=source))
+model = af.Collection(galaxies=af.Collection(galaxy=galaxy))
 
 search = af.Zeus(
-    path_prefix=Path("howtogalaxy", "chapter_2"),
+    path_prefix=Path("howtogalaxy", "chapter_optional"),
     name="tutorial_searches_zeus",
     unique_tag=dataset_name,
     nwalkers=50,
@@ -267,7 +240,7 @@ search = af.Zeus(
 print(
     "Zeus has begun running - checkout the workspace/output"
     "  folder for live output of the results, images and model."
-    "  This Jupyter notebook cell with progress once search has completed - this could take some time!"
+    "  This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
 
 result_zeus = search.fit(model=model, analysis=analysis)
@@ -278,7 +251,7 @@ aplt.subplot_fit_imaging(fit=result_zeus.max_log_likelihood_fit)
 
 
 search = af.Emcee(
-    path_prefix=Path("howtogalaxy", "chapter_2"),
+    path_prefix=Path("howtogalaxy", "chapter_optional"),
     name="tutorial_searches_emcee",
     unique_tag=dataset_name,
     nwalkers=50,
@@ -288,7 +261,7 @@ search = af.Emcee(
 print(
     "The non-linear search has begun running - checkout the workspace/output"
     "  folder for live output of the results, images and model."
-    "  This Jupyter notebook cell with progress once search has completed - this could take some time!"
+    "  This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
 
 result_emcee = search.fit(model=model, analysis=analysis)
@@ -300,8 +273,8 @@ aplt.subplot_fit_imaging(fit=result_emcee.max_log_likelihood_fit)
 """
 __Wrap Up__
 
-This tutorial showed how the same model can be fitted using different non-linear searches (e.g. `Nautilus`, `Emcee`,
-`PySwarms`). Each search explores parameter space in a different way, and the best choice depends on the
+This tutorial showed how the same model can be fitted using different non-linear searches (e.g. `Nautilus`, `Zeus`,
+`Emcee`). Each search explores parameter space in a different way, and the best choice depends on the
 dimensionality and complexity of the model you are fitting.
 
 For the vast majority of models in **PyAutoGalaxy**, the default nested sampling search `Nautilus` is recommended, as

@@ -22,15 +22,15 @@ This tutorial is split into the following sections:
  **PyAutoFit:** The parent package of PyAutoGalaxy, which handles practicalities of model-fitting.
  **Initial Setup:** Load the dataset we'll fit a model to using a non-linear search.
  **Mask:** Apply a mask to the dataset.
+ **Over Sampling:** Apply adaptive over sampling to the dataset.
  **Model:** Introduce the model we will fit to the data.
  **Search:** Setup the non-linear search, Nautilus, used to fit the model to the data.
  **Search Settings:** Discuss the settings of the non-linear search, including the number of live points.
- **Number Of Cores:** Discuss how to use multiple cores to fit models faster in parallel.
- **Parallel Script:** Running the model-fit in parallel if a bug occurs in a Jupiter notebook.
  **Iterations Per Update:** How often the non-linear search outputs the current results to hard-disk.
  **Analysis:** Create the Analysis object which contains the `log_likelihood_function` that the non-linear search calls.
+ **Run Times:** Estimate the run-time of the model-fit before initiating it.
  **Model-Fit:** Fit the model to the data.
- **Result:** Print the results of the model-fit to the terminal.
+ **Result Info:** Print the results of the model-fit to the terminal.
  **Output Folder:** Inspect the output folder where results are stored.
  **Unique Identifier:** Discussion of the unique identifier of the model-fit which names the folder in the output directory.
  **Output Folder Contents:** What is output to the output folder (model results, visualization, etc.).
@@ -164,8 +164,8 @@ The main setting to balance is the **number of live points**. More live points a
 more thoroughly, increasing accuracy but also runtime. Fewer live points reduce run-time but may make the search less 
 reliable, possibly getting stuck in local maxima.
 
-The ideal number of live points depends on model complexity. More parameters generally require more live points, but 
-the default of 200 is sufficient for most galaxy models. Lower values can still yield reliable results, particularly 
+The ideal number of live points depends on model complexity. More parameters generally require more live points, but
+the default of 3000 is more than sufficient for most galaxy models. Lower values can still yield reliable results, particularly
 for simpler models. For this example (6 parameters), we reduce the live points to 80 to speed up runtime without 
 compromising accuracy.
 
@@ -185,8 +185,8 @@ which includes producing visualization.
 Depending on how long it takes for the model to be fitted to the data (see discussion about run times below), 
 this can take up a large fraction of the run-time of the non-linear search.
 
-For this fit, the fit is very fast, thus we set a high value of `iterations_per_quick_update=10000` to ensure these updates
-so not slow down the overall speed of the model-fit. 
+For this fit, the fit is very fast, thus we set a high value of `iterations_per_quick_update=2500` to ensure these updates
+do not slow down the overall speed of the model-fit.
 
 **If the iteration per update is too low, the model-fit may be significantly slowed down by the time it takes to
 output results and visualization frequently to hard-disk. If your fit is consistent displaying a log saying that it
@@ -197,7 +197,7 @@ search = af.Nautilus(
     name="tutorial_2_practicalities",
     unique_tag=dataset_name,
     n_live=80,
-    n_batch=50,  # GPU lens model fits are batched and run simultaneously, see VRAM section below.
+    n_batch=50,  # GPU model fits are batched and run simultaneously, see the run times section below.
     iterations_per_quick_update=2500,
 )
 
@@ -221,15 +221,15 @@ Run times are dictated by two factors:
  - **The log likelihood evaluation time:** the time it takes for a single `instance` of the model to be fitted to 
    the dataset such that a log likelihood is returned.
 
- - **The number of iterations (e.g. log likelihood evaluations) performed by the non-linear search:** more complex lens
+ - **The number of iterations (e.g. log likelihood evaluations) performed by the non-linear search:** more complex
    models require more iterations to converge to a solution (and as discussed above, settings like the number of live
    points also control this).
 
 For this analysis, the log likelihood evaluation time is ~0.05 seconds, which is extremely fast for model fitting. 
 
-The more advanced fitting techniques discussed at the end of chapter 1 (e.g. shapelets, multi Gaussian expansions, 
-pixelizations) have longer log likelihood evaluation times. However, on GPU, they can be so fast they may not produce
-significantly longer overall run-time feasible.
+The more advanced fitting techniques discussed later in this chapter (e.g. multi Gaussian expansions, shapelets) and
+the pixelizations of chapter 3 have longer log likelihood evaluation times. However, on GPU, they can be so fast that
+they may not produce significantly longer overall run-times.
 
 To estimate the expected overall run time of the model-fit we multiply the log likelihood evaluation time by an 
 estimate of the number of iterations the non-linear search will perform, which is around 50000 to 100000 for this model.
@@ -264,7 +264,7 @@ For tasks like loading results, inspecting data, plotting, and interpreting resu
 print(
     "The non-linear search has begun running - checkout the autogalaxy_workspace/output/"
     " folder for live output of the results, images and model."
-    " This Jupyter notebook cell with progress once search has completed - this could take some time!"
+    " This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
 
 result = search.fit(model=model, analysis=analysis)
@@ -276,7 +276,7 @@ __Result Info__
 
 A concise readable summary of the results is given by printing its `info` attribute.
 
-[Above, we discussed that the `info_whitespace_length` parameter in the config files could b changed to make 
+[Above, we discussed that the `info_whitespace_length` parameter in the config files could be changed to make
 the `model.info` attribute display optimally on your computer. This attribute also controls the whitespace of the
 `result.info` attribute.]
 """
@@ -308,9 +308,9 @@ the `dataset_name` to the search's `unique_tag`.
 
 __Output Folder Contents__
 
-Now this is running you should checkout the `autogalaxy_workspace/output` folder. This is where the results of the 
-search are written to hard-disk (in the `start_here` folder), where all outputs are human readable (e.g. as .json,
-.csv or text files).
+Now this is running you should checkout the `autogalaxy_workspace/output` folder. This is where the results of the
+search are written to hard-disk (in the `tutorial_2_practicalities` folder), where all outputs are human readable
+(e.g. as .json, .csv or text files).
 
 As the fit progresses, results are written to the `output` folder on the fly using the highest likelihood model found
 by the non-linear search so far. This means you can inspect the results of the model-fit as it runs, without having to
@@ -353,15 +353,15 @@ library, which is wrapped via the `corner_anesthetic` function.
 
 The PDF shows the 1D and 2D probabilities estimated for every parameter after the model-fit. The two dimensional 
 figures can show the degeneracies between different parameters, for example how increasing the intensity $I$ of the
-source galaxy and decreasing its effective radius $R_{Eff}$ lead to similar likelihoods and probabilities.
+galaxy and decreasing its effective radius $R_{Eff}$ lead to similar likelihoods and probabilities.
 
 This PDF will be discussed more in the next tutorial.
 
-The plot is labeled with short hand parameter names (e.g. `sersic_index` is mapped to the short hand 
-parameter `n`). These mappings ate specified in the `config/notation.yaml` file and can be customized by users.
+The plot is labeled with short hand parameter names (e.g. `sersic_index` is mapped to the short hand
+parameter `n`). These mappings are specified in the `config/notation.yaml` file and can be customized by users.
 
-The superscripts of labels correspond to the name each component was given in the model (e.g. for the `Isothermal`
-mass its name `mass` defined when making the `Model` above is used).
+The superscripts of labels correspond to the name each component was given in the model (e.g. for the `Sersic`
+bulge its name `bulge` defined when making the `Model` above is used).
 
 __Other Practicalities__
 

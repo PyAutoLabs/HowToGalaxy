@@ -1,9 +1,9 @@
 """
-Tutorial 5: Results
+Tutorial 7: Results
 ===================
 
 In the previous tutorials, each search returned a `Result` object, which we used to plot the maximum log likelihood
-fit each model-fit. In this tutorial, we'll take a look at the result object in a little more detail.
+fit of each model-fit. In this tutorial, we'll take a look at the result object in a little more detail.
 
 __Contents__
 
@@ -25,7 +25,7 @@ import autofit as af
 """
 __Initial Setup__
 
-Lets use the model-fit performed in tutorial 1 to get a `Result` object.
+Lets repeat the simple Sersic model-fit performed earlier in this chapter to get a `Result` object.
 """
 dataset_name = "simple__sersic"
 dataset_path = Path("dataset") / "imaging" / dataset_name
@@ -69,12 +69,12 @@ over_sample_size = ag.util.over_sample.over_sample_size_via_radial_bins_from(
 dataset = dataset.apply_over_sampling(over_sample_size_lp=over_sample_size)
 
 model = af.Collection(
-    galaxies=af.Collection(galaxy=af.Model(ag.Galaxy, redshift=0.5, mass=ag.lp.Sersic))
+    galaxies=af.Collection(galaxy=af.Model(ag.Galaxy, redshift=0.5, bulge=ag.lp.Sersic))
 )
 
 search = af.Nautilus(
     path_prefix=Path("howtogalaxy", "chapter_2"),
-    name="tutorial_1_non_linear_search",
+    name="tutorial_7_results",
     unique_tag=dataset_name,
     n_live=80,
     n_batch=50,  # GPU batching and VRAM use explained in chapter 2 tutorial 2.
@@ -105,7 +105,7 @@ The result contains a lot more information about the model-fit.
 
 For example, the `Samples` object contains all of the non-linear search samples, including the parameters 
 of every successful model evaluation and their log likelihood values. These are used for computing information 
-about the model-fit, such as the most probably parameter estimates and the error inferred for every parameter.
+about the model-fit, such as the most probable parameter estimates and the error inferred for every parameter.
 """
 print(result.samples)
 print("Parameters of 1st Sample:")
@@ -122,7 +122,7 @@ A comprehensive description of the results can be found at the following package
 
  `autogalaxy_workspace/*/results`
  
-The results API for CCD imaging data is the same as for other data types (e.g. interferometer, point-soures). This
+The results API for CCD imaging data is the same as for other data types (e.g. interferometer). This
 package can therefore be used to learn the API and then translate to other data types.
 
 __Database__
@@ -150,7 +150,7 @@ Here, you'll learn how to:
  - Use the `Samples` to produce many different results from the fit, including error estimates on parameters and 
  plots of the probability density function of parameters in 1D and 2D.
  
- - Visualize results, for example the fit to a lens dataset.
+ - Visualize results, for example the fit to a galaxy dataset.
 
 
 __Wrap Up__
@@ -158,6 +158,6 @@ __Wrap Up__
 Even if you are only modeling a small sample of galaxies, if you anticipate using **PyAutoGalaxy** for the long-term I 
 strongly recommend you begin using the database to inspect and analyse your result. 
 
-This is because it makes it simple to perform all analyse in a Jupyter notebook, which is the most flexible and 
+This is because it makes it simple to perform all analysis in a Jupyter notebook, which is the most flexible and
 versatile way to check results and make figures.
 """

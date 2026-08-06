@@ -1,4 +1,5 @@
-In chapter 2, we'll take you through how to model galaxies using a non-linear search.
+In chapter 2, we'll take you through how to model galaxies using a non-linear search, ending with how
+searches are chained together into automated modeling pipelines.
 
 **Colab** links to every tutorial are included.
 
@@ -19,3 +20,7 @@ In chapter 2, we'll take you through how to model galaxies using a non-linear se
 - [Tutorial 7: Results](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.8.4.1/notebooks/chapter_2_modeling/tutorial_7_results.ipynb) — Overview of the results available after successfully fitting a model.
 
 - [Tutorial 8: Need for Speed](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.8.4.1/notebooks/chapter_2_modeling/tutorial_8_need_for_speed.ipynb) — How to fit complex models whilst balancing efficiency and run-time.
+
+- [Tutorial 9: Search Chaining](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.8.4.1/notebooks/chapter_2_modeling/tutorial_9_search_chaining.ipynb) — Breaking the modeling procedure into a chained sequence of model-fits.
+
+- [Tutorial 10: Prior Passing](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.8.4.1/notebooks/chapter_2_modeling/tutorial_10_prior_passing.ipynb) — How the results of earlier searches are passed to later searches.

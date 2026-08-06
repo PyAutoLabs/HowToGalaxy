@@ -30,7 +30,7 @@ model-fitting works, both for **PyAutoGalaxy** and in general.
 
 __Overview__
 
-In this tutorial, we will use a non-linear search to fit a single Serisc light profile to simulated imaging of a
+In this tutorial, we will use a non-linear search to fit a single Sersic light profile to simulated imaging of a
 galaxy. We will:
 
 - Introduce concept like a "parameter space", "likelihood surface" and "priors", and relate them to how a non-linear
@@ -40,7 +40,7 @@ galaxy. We will:
   model instance to the data.
 
 - Fit datasets with different non-linear searches, including a maximum likelihood estimator (MLE),
-  Markok Chain Monte Carlo (MCMC) and nested sampling.
+  Markov Chain Monte Carlo (MCMC) and nested sampling.
 
 __Contents__
 
@@ -83,8 +83,8 @@ f(x, y, z) = x + y^2 - z^3
 This defines a parameter space in three dimensions, representing the relationships between \(x\), \(y\), \(z\),
 and the output \(f(x, y, z)\).
 
-This concept of parameter space is closely related to how we approach model-fitting. For instance, in chapter 1, w
-e created instances of a `Galaxy` object with
+This concept of parameter space is closely related to how we approach model-fitting. For instance, in chapter 1,
+we created instances of a `Galaxy` object with
 parameters like \( (\text{`centre_0`}, \text{`centre_1`}, \text{`ell_comps_0`}, \text{`ell_comps_1`}, \text{`intensity`}, \text{`effective_radius`}, \text{`sersic_index`}) \).
 These parameters were used to fit data and compute a log likelihood.
 
@@ -101,7 +101,7 @@ values. During model-fitting, our goal is to find the peak of this surface, wher
 
 This parameter space is "non-linear," meaning the relationship between the model parameters and the log likelihood is
 not a simple linear one. Because of this non-linearity, we cannot predict the log likelihood from a given set of model
-parameters without actually performing a fit to the data, as we did in tutorial 1.
+parameters without actually performing a fit to the data, as we did in the fitting tutorial of chapter 1.
 
 __Non-Linear Search__
 
@@ -149,7 +149,7 @@ We will provide more details on each of these searches below.
 
 __Deeper Background__
 
-**The descriptions of how searches work in this example are simplfied and phoenomenological and do not give a full
+**The descriptions of how searches work in this example are simplified and phenomenological and do not give a full
 description of how they work at a deep statistical level. The goal is to provide you with an intuition for how to use
 them and when different searches are appropriate for different problems. Later tutorials will provide a more formal
 description of how these searches work.**
@@ -175,7 +175,7 @@ Modeling uses the probabilistic programming language
 [PyAutoFit](https://github.com/PyAutoLabs/PyAutoFit), an open-source project that allows complex model
 fitting techniques to be straightforwardly integrated into scientific modeling software. 
 
-**PyAutoFit** is actually a spin-off project of **PyAutoGalaxy**. whereby we found that the statistic techniques and
+**PyAutoFit** is actually a spin-off project of **PyAutoGalaxy**, whereby we found that the statistical techniques and
 methods we applied to model galaxies could be used in a more general setting to many different scientific 
 problems. Check it out if you are interested in developing your own software to perform advanced model-fitting!
 
@@ -361,7 +361,7 @@ In this tutorial, we’ll focus on three searches that represent different appro
 2. **Markov Chain Monte Carlo (MCMC)** using the `Emcee` non-linear search.
 3. **Nested Sampling** using the `Nautilus` non-linear search.
 
-In this example, non-linear search results are stored in memory rather and not written to hard disk because the fits 
+In this example, non-linear search results are stored in memory rather than written to hard disk because the fits
 are fast and can therefore be easily regenerated. The next tutorial will perform fits which write results to the
 hard-disk and discuss the outputs that are generated.
 
@@ -394,7 +394,7 @@ The fit will take a minute or so to run.
 print(
     """
     The non-linear search has begun running.
-    This Jupyter notebook cell with progress once the search has completed - this could take a few minutes!
+    This Jupyter notebook cell will progress once the search has completed - this could take a few minutes!
     """
 )
 
@@ -409,7 +409,7 @@ Upon completion the non-linear search returns a `Result` object, which contains 
 
 The `info` attribute shows the result in a readable format.
 
-[Above, we discussed that the `info_whitespace_length` parameter in the config files could b changed to make 
+[Above, we discussed that the `info_whitespace_length` parameter in the config files could be changed to make
 the `model.info` attribute display optimally on your computer. This attribute also controls the whitespace of the
 `result.info` attribute.]
 """
@@ -456,7 +456,7 @@ search = af.LBFGS(initializer=initializer)
 print(
     """
     The non-linear search has begun running.
-    This Jupyter notebook cell with progress once the search has completed - this could take a few minutes!
+    This Jupyter notebook cell will progress once the search has completed - this could take a few minutes!
     """
 )
 
@@ -481,7 +481,7 @@ best-fit solution quickly.
 
 However, MLE has its limitations. As seen above, it can get "stuck" in a local maximum, particularly if the 
 starting point is poorly chosen. In complex model-fitting problems, providing a suitable starting point can be 
-challenging. While MLE performed well in the example with just three parameters, it struggles with models that have 
+challenging. While MLE performed well in the example with just six parameters, it struggles with models that have
 many parameters, as the complexity of the likelihood surface makes simply moving "up" the gradient less effective.
 
 The MLE also does not provide any information on the errors on the parameters, which is a significant limitation.
@@ -519,7 +519,7 @@ search = af.Emcee(
 print(
     """
     The non-linear search has begun running.
-    This Jupyter notebook cell with progress once the search has completed - this could take a few minutes!
+    This Jupyter notebook cell will progress once the search has completed - this could take a few minutes!
     """
 )
 
@@ -540,7 +540,7 @@ avoid the local maxima that had trapped the MLE search.
 
 A major advantage of MCMC is that it provides estimates of parameter uncertainties by "mapping out" the likelihood 
 surface, unlike MLE, which only finds the maximum likelihood solution. These error estimates are accessible in 
-the `result.info` string and through the `result.samples` object, which is explained fully in tutorial 5.
+the `result.info` string and through the `result.samples` object, which is explained fully in tutorial 7.
 
 While a good starting point wasn't necessary for this simple model, it becomes essential for efficiently mapping the 
 likelihood surface in more complex models with many parameters. The code below shows an MCMC fit using a good starting 
@@ -563,14 +563,14 @@ initializer = af.InitializerParamBounds(
 
 search = af.Emcee(
     nwalkers=20,  # The number of walkers we'll use to sample parameter space.
-    nsteps=300,  # The number of steps each walker takes, after which 10 * 200 = 2000 steps the non-linear search ends.
+    nsteps=300,  # The number of steps each walker takes, after which 20 * 300 = 6000 steps the non-linear search ends.
     initializer=initializer,
 )
 
 print(
     """
     The non-linear search has begun running.
-    This Jupyter notebook cell with progress once the search has completed - this could take a few minutes!
+    This Jupyter notebook cell will progress once the search has completed - this could take a few minutes!
     """
 )
 
@@ -628,7 +628,7 @@ The fit will take a minute or so to run.
 print(
     """
     The non-linear search has begun running.
-    This Jupyter notebook cell with progress once the search has completed - this could take a few minutes!
+    This Jupyter notebook cell will progress once the search has completed - this could take a few minutes!
     """
 )
 

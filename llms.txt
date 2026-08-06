@@ -26,8 +26,8 @@ real analysis?" below).
 
 - **Chapter 1 — Introduction** → [scripts/chapter_1_introduction/](scripts/chapter_1_introduction/): Galaxies from first principles: grids & galaxies, light profiles, simulating data, and fitting data. The conceptual foundation.
 - **Chapter 2 — Modeling** → [scripts/chapter_2_modeling/](scripts/chapter_2_modeling/): Fitting a galaxy model to data with a non-linear search — parameter spaces, priors, dealing with failure, linear light profiles, masking, and reading results.
-- **Chapter 3 — Search Chaining** → [scripts/chapter_3_search_chaining/](scripts/chapter_3_search_chaining/): Breaking a hard fit into a sequence of searches (prior passing) and modeling multi-galaxy images.
-- **Chapter 4 — Pixelizations** → [scripts/chapter_4_pixelizations/](scripts/chapter_4_pixelizations/): Reconstructing irregular galaxy structure on a pixel-grid instead of with light profiles — mappers, inversions, Bayesian regularization.
+- **Chapter 3 — Pixelizations** → [scripts/chapter_3_pixelizations/](scripts/chapter_3_pixelizations/): Reconstructing irregular galaxy structure on a pixel-grid instead of with light profiles — mappers, inversions, Bayesian regularization, the Bayesian formalism.
+- **Chapter 4 — Scaling Up Galaxies** → [scripts/chapter_4_scaling_up_galaxies/](scripts/chapter_4_scaling_up_galaxies/): Beyond a single galaxy — extra galaxies, blended multi-galaxy systems, and cluster fields.
 
 ## I want to understand…
 
@@ -37,8 +37,8 @@ real analysis?" below).
 - **How does a non-linear search find a model?** → [scripts/chapter_2_modeling/tutorial_1_non_linear_search.py](scripts/chapter_2_modeling/tutorial_1_non_linear_search.py): Parameter space, priors, MLE / MCMC / nested sampling.
 - **My fit found a wrong (local-maxima) solution — what do I do?** → [scripts/chapter_2_modeling/tutorial_4_dealing_with_failure.py](scripts/chapter_2_modeling/tutorial_4_dealing_with_failure.py): Prior tuning, reducing complexity, and looking harder.
 - **What are linear light profiles / MGE?** → [scripts/chapter_2_modeling/tutorial_5_linear_profiles.py](scripts/chapter_2_modeling/tutorial_5_linear_profiles.py): Solving intensities linearly; the Multi-Gaussian Expansion basis.
-- **How do I model an image with two galaxies?** → [scripts/chapter_3_search_chaining/tutorial_3_x2_galaxies.py](scripts/chapter_3_search_chaining/tutorial_3_x2_galaxies.py): Search chaining to handle multi-galaxy degeneracies.
-- **How do I reconstruct irregular structure on a pixel grid?** → [scripts/chapter_4_pixelizations/tutorial_1_pixelizations.py](scripts/chapter_4_pixelizations/tutorial_1_pixelizations.py) through [tutorial_4_bayesian_regularization.py](scripts/chapter_4_pixelizations/tutorial_4_bayesian_regularization.py).
+- **How do I model an image with two galaxies?** → [scripts/chapter_4_scaling_up_galaxies/tutorial_2_multi_galaxy.py](scripts/chapter_4_scaling_up_galaxies/tutorial_2_multi_galaxy.py): Joint fitting of blended galaxies and their degeneracies.
+- **How do I reconstruct irregular structure on a pixel grid?** → [scripts/chapter_3_pixelizations/tutorial_1_pixelizations.py](scripts/chapter_3_pixelizations/tutorial_1_pixelizations.py) through [tutorial_4_bayesian_regularization.py](scripts/chapter_3_pixelizations/tutorial_4_bayesian_regularization.py).
 
 ## Ready for real analysis?
 

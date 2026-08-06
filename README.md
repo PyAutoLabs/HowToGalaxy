@@ -23,11 +23,11 @@ more appropriate — they are concise and assume the concepts taught in **HowToG
 - `chapter_1_introduction` — An introduction to galaxy morphology and **PyAutoGalaxy**: grids, light
   profiles, galaxies, simulated imaging data, and fitting.
 - `chapter_2_modeling` — Bayesian inference, non-linear searches, and how to fit a galaxy model to CCD
-  imaging data with **PyAutoGalaxy**.
-- `chapter_3_search_chaining` — Chaining multiple non-linear searches together to build automated galaxy
-  modeling pipelines for complex systems.
-- `chapter_4_pixelizations` — Pixelized source reconstructions (inversions) for galaxies with irregular
-  morphologies.
+  imaging data with **PyAutoGalaxy**, ending with search chaining and automated pipelines.
+- `chapter_3_pixelizations` — Pixelized reconstructions (inversions) for galaxies with irregular
+  morphologies, including the Bayesian formalism underpinning them.
+- `chapter_4_scaling_up_galaxies` — Scaling galaxy modeling up beyond a single galaxy: extra galaxies,
+  blended multi-galaxy systems, and cluster fields.
 - `chapter_optional` — Optional tutorials on alternative non-linear searches and other advanced topics.
 
 **HowToGalaxy** currently sits at four chapters. Each chapter will take around a day to work through.

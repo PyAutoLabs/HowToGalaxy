@@ -2,7 +2,7 @@
 Tutorial 6: Masking
 ===================
 
-We have learnt everything we need to know about non-linear searches to model a galaxy and infer a good lens
+We have learnt everything we need to know about non-linear searches to model a galaxy and infer a good
 model solution. Now, lets consider masking in more detail, something we have not given much consideration previously.
 We'll also learn a neat trick to improve the speed and accuracy of a non-linear search.
 
@@ -27,7 +27,7 @@ __Initial Setup__
 
 we'll use the same galaxy data as tutorials 1 & 2, where:
 
- - The galaxy's `LightProfile` is an `Sersic`.
+ - The galaxy's `LightProfile` is a `Sersic`.
 """
 dataset_name = "simple__sersic"
 dataset_path = Path("dataset") / "imaging" / dataset_name
@@ -89,10 +89,10 @@ dataset = dataset.apply_over_sampling(over_sample_size_lp=over_sample_size)
 """
 __Model + Search + Analysis__
 
-Lets fit the data using this mask, by creating the search as per usuag. Note that the `imaging` data with this mask
+Lets fit the data using this mask, by creating the search as per usual. Note that the `imaging` data with this mask
 applied is passed into the `AnalysisImaging` object, ensuring that this is the mask the model-fit uses. 
 """
-galaxy = af.Model(ag.Galaxy, redshift=1.0, bulge=ag.lp.Sersic)
+galaxy = af.Model(ag.Galaxy, redshift=0.5, bulge=ag.lp.Sersic)
 model = af.Collection(galaxies=af.Collection(galaxy=galaxy))
 
 search = af.Nautilus(
@@ -110,7 +110,7 @@ search.fit(model=model, analysis=analysis)
 """
 __Discussion__
 
-So, we can choose the mask we use in a model-fit. We know that we want the mask remove as little of the galaxy's light, 
+So, we can choose the mask we use in a model-fit. We know that we want the mask to remove as little of the galaxy's light,
 but is this the 'right' mask? What is the 'right' mask? Maybe we want a bigger mask? a smaller mask?
 
 When it comes to choosing a mask, we are essentially balancing two things: computational run-time and accuracy. When we
@@ -121,7 +121,7 @@ it to the data, etc.
 If run-time was not a consideration we would always choose a bigger mask, for two reasons:
 
  1) The galaxy may have very faint emission that when you choose the mask you simply do not notice. Overly aggressive 
- masking runs the risk of us inadvertantly masking out some of the galaxy's light, which would otherwise better 
+ masking runs the risk of us inadvertently masking out some of the galaxy's light, which would otherwise better
  constrain the model!
     
  2) When the data is fitted with a model image, the fit is performed only within the masked region. For certain galaxies
@@ -135,19 +135,19 @@ model complexity, non-linear search settings, etc. As you develop this intuition
 use as large of a mask as possible (whilst still achieving reasonable run-times). Aggressive masking will make 
 **PyAutoGalaxy** run very fast, but could lead you to infer an incorrect model! 
 
-In chapter 3, where we introduce 'non-linear search chaining' we will see how we can use tighter masks in earlier 
-searches to achieve faster run times.
+At the end of this chapter, where we introduce 'non-linear search chaining', we will see how chaining makes it
+possible to use tighter masks in earlier searches to achieve faster run times.
 
-If your data includes the light of additional galaxies nearby you may  much have no choice but to use a smaller 
-circular mask, because it is important these objects do not interfere with the fit. 
+If your data includes the light of additional galaxies nearby you may have no choice but to use a smaller
+circular mask, because it is important these objects do not interfere with the fit.
 
-In fact, you can drawcustom masks that remove their light entirely. You may now wish to checkout 
-the `autogalaxy_workspace/*/imaging/data_preparation` package. This includes tools for  creating custom masks and 
+In fact, you can draw custom masks that remove their light entirely. You may now wish to checkout
+the `autogalaxy_workspace/*/imaging/data_preparation` package. This includes tools for creating custom masks and
 marking the positions on a galaxy (via a GUI) so you can use them in a model-fit.
 
 __Wrap Up__
 
-There are is one thing you should bare in mind in terms of masking:
+There is one thing you should bear in mind in terms of masking:
 
  1) Customizing the mask for the analysis of one galaxy gets the analysis running fast and can provide accurate 
  non-linear sampling. However, for a large sample of galaxies, this high level of customization may take a lot of time. 

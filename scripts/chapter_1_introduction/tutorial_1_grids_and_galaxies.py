@@ -6,7 +6,7 @@ Nearly a century ago, Edwin Hubble famously classified galaxies into three disti
 ellipticals, spirals and irregulars. He produced a diagram of these galaxies, called the Hubble Tuning Fork, which
 is shown below and still discussed by astronomers in the modern day:
 
-![HubbleTuning](https://github.com/PyAutoLabs/autogalaxy_workspace/blob/main/scripts/chapter_1_introduction/HubbleTuningFork.jpg)
+![HubbleTuning](https://github.com/PyAutoLabs/HowToGalaxy/blob/main/scripts/chapter_1_introduction/HubbleTuningFork.jpg)
 
 To make his diagram, Hubble looked at images of each galaxy in his sample, and subjectively judged by eye how
 to classify it. Today, Astronomers use computer software, statistical algorithms and image processing techniques to
@@ -34,12 +34,12 @@ __Contents__
 - **Grids:** Create a uniform grid of (y,x) coordinates and show how it can be used to measure the light of a galaxy.
 - **Geometry:** How to shift and rotate a grid, and convert it to elliptical coordinates.
 - **Light Profiles:** Using light profiles, analytic functions that describe how a galaxy's light is distributed.
-- **Galaxies:** Creating galaxies containing light profiles and computing the image of a galaxy.
 - **One Dimension Projection:** Create projected 2D radial grids for 1D profile calculations.
+- **Galaxies:** Creating galaxies containing light profiles and computing the image of a galaxy.
 - **Unit Conversion:** Converting angular distances to physical distances using cosmology.
 - **Wrap Up:** Summary of the key concepts covered in this tutorial.
 
-The imports below are required to run the howtogalaxy tutorials in a Jupiter notebook. They also import the
+The imports below are required to run the howtogalaxy tutorials in a Jupyter notebook. They also import the
 `autogalaxy` package and the `autogalaxy.plot` module which are used throughout the tutorials.
 """
 
@@ -130,7 +130,7 @@ specific point, like the center of a galaxy.
 
 We can shift the grid to a new center, (y_c, x_c), by subtracting this center from each coordinate.
 """
-centre = (0.3, 0.5)  # Shifting the grid to be centered at y=1.0", x=2.0".
+centre = (0.3, 0.5)  # Shifting the grid to be centered at y=0.3", x=0.5".
 
 grid_shifted = grid
 grid_shifted[:, 0] = grid_shifted[:, 0] - centre[0]  # Shift in y-direction.
@@ -351,10 +351,10 @@ aplt.plot_array(
 """
 __One Dimension Projection__
 
-We often want to calculative 1D quantities of a light profile, for example to plot how its light changes as
+We often want to calculate 1D quantities of a light profile, for example to plot how its light changes as
 a function of radius.
 
-To do this, we must still input a 2D grid into the `image_2d_from` method, therefore we create a project 2D 
+To do this, we must still input a 2D grid into the `image_2d_from` method, therefore we create a projected 2D
 radial grid as follows which has shape [Number_of_1d_coordinates, 2] and where all [:,0] entries are the same.
 
 A simple example of such a grid is as follows with 4 1D coordinates is:
@@ -372,14 +372,10 @@ grid_2d_projected = ag.Grid2DIrregular(
 As in this example, we often already have a 2D grid we are using to calculate images of a light profile
 and it would be convenient to simply create `grid_2d_projected` from that.
 
-For example, we may want the project grid which traces it major axis in uniform radial steps.
+For example, we may want the projected grid which traces the light profile's major axis in uniform radial steps.
 
-This is easily computed using the `grid_2d_radial_project_from` function and passing the `centre` and `angle`
-of a light profile we can make it align with the light profile itself.
-
-Note how in this example the two galaxy bulges are not rotationally aligned but we aligned the projected
-grid with the first galaxy. The centres are aligned, but if they were not that would cause similar
-issues.
+This is easily computed using the `grid_2d_radial_projected_from` function: by passing the `centre` and `angle`
+of a light profile we can make the projected grid align with the light profile itself.
 """
 grid_2d_projected = grid.grid_2d_radial_projected_from(
     centre=sersic_light_profile.centre, angle=sersic_light_profile.angle()
@@ -388,9 +384,9 @@ grid_2d_projected = grid.grid_2d_radial_projected_from(
 image_1d = sersic_light_profile.image_2d_from(grid=grid_2d_projected)
 
 """
-We can now plot the 1D radial profile of the light profile. This profile shows how the intensity of the light 
-changes as a function of distance from the profile's center. This is a more informative way to visualize the light p
-rofile's distribution.
+We can now plot the 1D radial profile of the light profile. This profile shows how the intensity of the light
+changes as a function of distance from the profile's center. This is a more informative way to visualize the light
+profile's distribution.
 
 When we plot 1D quantities, we do not use built-in plotting functions as in 2D, but instead use standard
 matplotlib functionality.
@@ -411,7 +407,7 @@ plt.close()
 Since galaxy light distributions often cover a wide range of values, they are typically better visualized on a log10 
 scale. This approach helps highlight details in the faint outskirts of a light profile.
 
-The `MatPlot2D` object has a `use_log10` option that applies this transformation automatically. Below, you can see 
+The plotting functions have a `use_log10` option that applies this transformation automatically. Below, you can see
 that the image plotted in log10 space reveals more details.
 """
 aplt.plot_array(
@@ -506,8 +502,8 @@ Using the tools above, we can visualize each light profile's contribution in 1D.
 and disk profiles in this example share the same `centre`, meaning that plotting them together on the same 1D plot 
 shows how they vary relative to one another. 
 
-If the `centre` of the profiles were different, when you make the 1D plot you would need to decide if you should the
-profiles offset from one another or plot them both from zero.
+If the `centre` of the profiles were different, when you make the 1D plot you would need to decide if you should plot
+the profiles offset from one another or plot them both from zero.
 """
 grid_2d_projected = grid.grid_2d_radial_projected_from(
     centre=galaxy.bulge.centre, angle=galaxy.bulge.angle()
@@ -594,12 +590,10 @@ print(kpc_per_arcsec)
 
 """
 This `kpc_per_arcsec` can be used as a conversion factor between arcseconds and kiloparsecs when plotting images of
-galaxies.
+galaxies, for example by converting plot tick labels to kiloparsecs.
 
-We compute this value and plot the image in converted units of kiloparsecs.
-
-This passes the plotting modules `Units` object a `ticks_convert_factor` and manually specified the new units of the
-plot ticks.
+The `autogalaxy_workspace/*/guides/units` examples show how to perform these conversions when plotting; below we
+simply plot the image in its default units of arc-seconds.
 """
 aplt.plot_array(array=galaxy.image_2d_from(grid=grid), title="Image")
 
@@ -647,7 +641,7 @@ Over sampling is a numerical technique where the images of light profiles and ga
 on a higher resolution grid than the image data to ensure the calculation is accurate. 
 
 For a new user, the details of over-sampling are not important, therefore just be aware that all calculations use an
-adaptive over sampling scheme which high accuracy across all use cases.
+adaptive over sampling scheme which ensures high accuracy across all use cases.
 
 Once you are more experienced, you should read up on over-sampling in more detail via 
 the `autogalaxy_workspace/*/guides/advanced/over_sampling.ipynb` notebook.
