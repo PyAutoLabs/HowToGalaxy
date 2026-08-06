@@ -1,5 +1,5 @@
 """
-Tutorial 1: pixelizations
+Tutorial 1: Pixelizations
 =========================
 
 In the previous chapters, we used light profiles to model the light of a galaxy, where the light profile was an
@@ -54,7 +54,7 @@ pixelization = ag.Pixelization(mesh=mesh)
 By itself, a pixelization does not tell us much. It has no grid of $(y,x)$ coordinates, no image, and no information
 about the galaxy we are fitting. 
 
-This information comes when we use the pixelization to create up a `Mapper`, which we perform below using the grid 
+This information comes when we use the pixelization to create a `Mapper`, which we perform below using the grid
 that we created above.
 """
 interpolator = mesh.interpolator_from(
@@ -64,7 +64,7 @@ interpolator = mesh.interpolator_from(
 mapper = ag.Mapper(interpolator=interpolator)
 
 """
-This `Mapper` is a `RectangularMapper` -- every `Mesh` and `Pixelization` generates it owns mapper.
+This `Mapper` is a `RectangularMapper` -- every `Mesh` and `Pixelization` generates its own mapper.
 """
 print(type(mapper))
 
@@ -93,7 +93,7 @@ We can plot these centre on our grid, to make it look slightly less boring!
 plot_mapper(
     mapper=mapper,
     mesh_grid=mapper.source_plane_mesh_grid,
-    title="Recntagular Grid With Pixel Cenres",
+    title="Rectangular Grid With Pixel Centres",
 )
 
 """
@@ -136,6 +136,6 @@ __Wrap Up__
 This was a relatively gentle overview of pixelizations, but one that was hopefully easy to follow. Think about the 
 following questions before moving on to the next tutorial:
 
- 1) The rectangular pixelization`s edges are aligned with the most exterior coordinates of the source-grid. This is 
- intentional, why do you think this is?
+ 1) The rectangular pixelization`s edges are aligned with the most exterior coordinates of the grid it was created
+ from. This is intentional, why do you think this is?
 """

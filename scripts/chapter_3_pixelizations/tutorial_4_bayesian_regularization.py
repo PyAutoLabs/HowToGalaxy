@@ -15,12 +15,14 @@ conceptually challenging!
 __Contents__
 
 - **Initial Setup:** Load the dataset for illustration.
+- **Dataset Auto-Simulation:** Automatically simulate the dataset if it does not already exist.
 - **Convenience Function:** A helper function for performing inversions.
 - **Pixelization:** Perform inversions with different regularization coefficients.
 - **Regularization:** Understand how regularization smooths the reconstruction.
 - **Bayesian Evidence:** Use the Bayesian evidence to objectively choose the regularization coefficient.
 - **Non-Linear and Linear:** Discussion of how regularization interacts with the non-linear search.
 - **Detailed Description:** In-depth explanation of how the Bayesian evidence penalizes overfitting.
+- **Wrap Up:** Summary of Bayesian regularization concepts.
 """
 
 # from autogalaxy import setup_notebook; setup_notebook()
@@ -33,11 +35,10 @@ from autoarray.inversion.plot.inversion_plots import subplot_of_mapper
 """
 __Initial Setup__
 
-we'll use the same complex galaxy data as the previous tutorial, where:
+we'll use the same galaxy data as the previous tutorial, where:
 
  - The galaxy's bulge is an `Sersic`.
  - The galaxy's disk is an `Exponential`.
- - The galaxy's has four star forming clumps which are `Sersic` profiles.
 """
 dataset_name = "simple"
 dataset_path = Path("dataset") / "imaging" / dataset_name
@@ -125,9 +126,9 @@ subplot_of_mapper(inversion=no_regularization_fit.inversion, mapper_index=0)
 So, what is happening here? Why does reducing the `coefficient` do this to our reconstruction? First, we need
 to understand what regularization actually does!
 
-When the inversion reconstructs the galaxy, it does not *only* compute the set of pixelization pixel fluxes that 
-best-fit the image. It also regularizes this solution, whereby it goes to every pixel on the rectangular grid 
-and computes the different between the reconstructed flux values of every pixel with its 4 neighboring pixels. 
+When the inversion reconstructs the galaxy, it does not *only* compute the set of pixelization pixel fluxes that
+best-fit the image. It also regularizes this solution, whereby it goes to every pixel on the rectangular grid
+and computes the difference between the reconstructed flux values of every pixel with its 4 neighboring pixels.
 If the difference in flux is large the solution is penalized, reducing its log likelihood. You can think of this as 
 us applying a 'smoothness prior' on the reconstructed galaxy's light.
 
@@ -158,7 +159,7 @@ aplt.subplot_fit_imaging(fit=high_regularization_fit)
 subplot_of_mapper(inversion=high_regularization_fit.inversion, mapper_index=0)
 
 """
-The figure above shows that we completely remove over-fitting. However, we now fit the image data less poorly,
+The figure above shows that we completely remove over-fitting. However, we now fit the image data more poorly,
 due to the much higher level of smoothing.
 
 So, we now understand what regularization is and why it is necessary. There is one nagging question that remains, how 
@@ -191,8 +192,11 @@ For this, we invoke the `Bayesian Evidence`, which quantifies the goodness of th
  Bayesian evidence will decrease. The evidence penalizes solutions which are complex, which, in a Bayesian sense, are 
  less probable (you may want to look up `Occam`s Razor`).
 
-The Bayesian evidence therefore ensures we only invoke a more complex galaxy reconstruction when the data absolutely 
+The Bayesian evidence therefore ensures we only invoke a more complex galaxy reconstruction when the data absolutely
 necessitates it.
+
+(This tutorial describes the Bayesian evidence in words; tutorial 5 writes it down as an equation, deriving each of
+its terms via the linear algebra of the inversion.)
 
 Lets take a look at the Bayesian evidence of the fits that we performed above, which is accessible from a `FitImaging` 
 object via the `log_evidence` property:
@@ -212,8 +216,8 @@ __Non-Linear and Linear__
 
 Before we end, lets consider which aspects of an inversion are linear and which are non-linear.
 
-The linear part of the inversion is the step that solves for the reconstruct pixelization pixel fluxes, including 
-accounting for the smoothing via regularizaton. We do not have to perform a non-linear search to determine the pixel
+The linear part of the inversion is the step that solves for the reconstructed pixelization pixel fluxes, including
+accounting for the smoothing via regularization. We do not have to perform a non-linear search to determine the pixel
 fluxes or compute the Bayesian evidence discussed above.
 
 However, determining the regularization `coefficient` that maximizes the Bayesian log evidence is a non-linear problem 

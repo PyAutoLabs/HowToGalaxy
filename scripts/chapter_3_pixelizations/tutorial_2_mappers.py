@@ -2,7 +2,7 @@
 Tutorial 2: Mappers
 ===================
 
-In the previous tutorial, we used a pixelization to create made a `Mapper`. However, it was not clear what a `Mapper`
+In the previous tutorial, we used a pixelization to create a `Mapper`. However, it was not clear what a `Mapper`
 does, why it was called a mapper and whether it was mapping anything at all!
 
 Therefore, in this tutorial, we'll cover mappers in more detail.
@@ -10,6 +10,7 @@ Therefore, in this tutorial, we'll cover mappers in more detail.
 __Contents__
 
 - **Initial Setup:** Load the dataset for illustration.
+- **Dataset Auto-Simulation:** Automatically simulate the dataset if it does not already exist.
 - **Mappers:** Understand how mappers map image-plane pixels to pixelization pixels.
 - **Mask:** Apply a mask and see how it affects the mapper.
 - **Wrap Up:** Summary of mapper concepts.
@@ -25,11 +26,10 @@ import autoarray.plot as aaplt
 """
 __Initial Setup__
 
-we'll use complex galaxy data, where:
+we'll use galaxy data, where:
 
  - The galaxy's bulge is an `Sersic`.
  - The galaxy's disk is an `Exponential`.
- - The galaxy's has four star forming clumps which are `Sersic` profiles.
 """
 dataset_name = "simple"
 dataset_path = Path("dataset") / "imaging" / dataset_name
@@ -66,7 +66,7 @@ grid = ag.Grid2D.uniform(
 """
 __Mappers__
 
-We now setup a `Pixelization` and use it to create a `Mapper` via the plane`s source-plane grid, just like we did in
+We now setup a `Pixelization` and use it to create a `Mapper` via the image's grid, just like we did in
 the previous tutorial.
 
 We will make its pixelization resolution half that of the grid above.
@@ -84,7 +84,7 @@ interpolator = mesh.interpolator_from(
 mapper = ag.Mapper(interpolator=interpolator)
 
 """
-We now plot the `Mapper` alongside the image we used to generate the source-plane grid.
+We now plot the `Mapper` alongside the image we used to generate the grid.
 
 Using the `Visuals2D` object we are also going to highlight specific grid coordinates certain colors, such that we
 can see how they map from the image grid to the pixelization grid. 
@@ -129,8 +129,7 @@ dataset = dataset.apply_mask(mask=mask)
 aplt.plot_array(array=dataset.data, title="Data")
 
 """
-We can now use the masked grid to create a new `Mapper` (using the same rectangular 25 x 25 pixelization 
-as before).
+We can now use the masked grid to create a new `Mapper` (using the same rectangular pixelization as before).
 """
 interpolator = mesh.interpolator_from(
     source_plane_data_grid=dataset.grids.pixelization, source_plane_mesh_grid=None
@@ -143,8 +142,8 @@ Lets plot it.
 aaplt.subplot_image_and_mapper(mapper=mapper, image=dataset.data)
 
 """
-First, We can see a red circle of dots in both the image and pixelization, showing where the edge of the mask
-maps too in the pixelization.
+First, we can see a red circle of dots in both the image and pixelization, showing where the edge of the mask
+maps to in the pixelization.
 
 Now lets show that when we plot pixelization pixel indexes, they still appear in the same place in the image.
 """
@@ -167,7 +166,7 @@ __Wrap Up__
 In this tutorial, we learnt about mappers, and we used them to understand how the image and pixelization map to one 
 another. Your exercises are:
         
- 1) Think about how this could help us actually model galaxies. We have said we're going to reconstruct our galaxies 
- on the pixel-grid. So, how does knowing how each pixel maps to the image actually help us? If you`ve not got 
- any bright ideas, then worry not, that exactly what we're going to cover in the next tutorial.
+ 1) Think about how this could help us actually model galaxies. We have said we're going to reconstruct our galaxies
+ on the pixel-grid. So, how does knowing how each pixel maps to the image actually help us? If you`ve not got
+ any bright ideas, then worry not, that's exactly what we're going to cover in the next tutorial.
 """

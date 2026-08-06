@@ -7,12 +7,13 @@ In the previous two tutorials, we introduced:
  - `Pixelization`'s: which place a pixel-grid over the image data.
  - `Mappers`'s: which describe how each pixelization pixel maps to one or more image pixels.
 
-However, non of this has actually helped us fit galaxy data or reconstruct the galaxy. This is the subject
+However, none of this has actually helped us fit galaxy data or reconstruct the galaxy. This is the subject
 of this tutorial, where the process of reconstructing the galaxy's light on the pixelization is called an `Inversion`.
 
 __Contents__
 
 - **Initial Setup:** Load the dataset for illustration.
+- **Dataset Auto-Simulation:** Automatically simulate the dataset if it does not already exist.
 - **Pixelization:** Create a pixelization and perform an inversion to reconstruct the galaxy.
 - **Positive Only Solver:** Ensure the reconstruction has only positive intensity values.
 - **Wrap Up:** Summary of inversion concepts.
@@ -29,11 +30,10 @@ import autoarray.plot as aaplt
 """
 __Initial Setup__
 
-we'll use the same complex galaxy data as the previous tutorial, where:
+we'll use the same galaxy data as the previous tutorial, where:
 
  - The galaxy's bulge is an `Sersic`.
  - The galaxy's disk is an `Exponential`.
- - The galaxy's has four star forming clumps which are `Sersic` profiles.
 """
 dataset_name = "simple"
 dataset_path = Path("dataset") / "imaging" / dataset_name
@@ -124,16 +124,17 @@ aplt.plot_array(
 aaplt.subplot_of_mapper(inversion=inversion, mapper_index=0)
 
 """
-There we have it, we have successfully reconstructed the galaxy using a rectangular pixel-grid. This has reconstructed
-the complex blobs of light of the galaxy.
+There we have it, we have successfully reconstructed the galaxy using a rectangular pixel-grid, capturing the
+structure of its light without assuming an analytic form for it.
 
-Pretty great, huh? If you ran the complex source pipeline in chapter 3, you'll remember that getting a model image 
-that looked this good simply *was not possible*. With an inversion, we can do this with ease and without having to 
+Pretty great, huh? If you fitted this galaxy via search chaining at the end of chapter 2 (tutorials 9-10), you'll
+remember how much effort a good model image took. With an inversion, we can do this with ease and without having to
 perform model-fitting with 20+ parameters for the galaxy's light!
 
-We will now briefly discuss how an inversion actually works, however the explanation I give in this tutorial will be 
-overly-simplified. To be good at modeling you do not need to understand the details of how an inversion works, you 
-simply need to be able to use an inversion to model a galaxy. 
+We will now briefly discuss how an inversion actually works, however the explanation given in this tutorial will be
+overly-simplified. (The full linear algebra -- the mapping matrices, the linear solve and the equations behind
+them -- is derived step-by-step in tutorial 5.) To be good at modeling you do not need to understand the details of
+how an inversion works, you simply need to be able to use an inversion to model a galaxy.
 
 To begin, lets consider some random mappings between our mapper`s pixelization pixels and the image.
 """
@@ -196,17 +197,17 @@ aplt.subplot_fit_imaging(fit=fit)
 """
 __Positive Only Solver__
 
-All pixelized source reconstructions use a positive-only solver, meaning that every source-pixel is only allowed
-to reconstruct positive flux values. This ensures that the source reconstruction is physical and that we don't
-reconstruct negative flux values that don't exist in the real source galaxy (a common systematic solution in lens
-analysis).
+All pixelized galaxy reconstructions use a positive-only solver, meaning that every pixelization pixel is only
+allowed to reconstruct positive flux values. This ensures that the reconstruction is physical and that we don't
+reconstruct negative flux values that don't exist in the real galaxy (a common unphysical systematic in methods
+without this constraint).
 
 It may be surprising to hear that this is a feature worth pointing out, but it turns out setting up the linear algebra
 to enforce positive reconstructions is difficult to make efficient. A lot of development time went into making this
 possible, where a bespoke fast non-negative linear solver was developed to achieve this.
 
-Other methods in the literature often do not use a positive only solver, and therefore suffer from these 
-unphysical solutions, which can degrade the results of lens model in general.
+Other methods in the literature often do not use a positive only solver, and therefore suffer from these
+unphysical solutions, which can degrade the results of galaxy models in general.
 
 __Wrap Up__
 
@@ -221,7 +222,8 @@ And, we're done, here are a few questions to get you thinking about inversions:
  
 __Detailed Explanation__
 
-If you are interested in a more detailed description of how inversions work, then checkout the file
-`autogalaxy_workspace/*/imaging/features/pixelization/likelihood_function.ipynb` which gives a visual step-by-step
-guide of the process alongside equations and references to literature on the subject.
+The linear algebra sketched above -- setting up the mappings as a matrix and solving for the pixelization pixel
+fluxes -- is derived in full in tutorial 5 of this chapter, where we build every matrix by hand and perform the
+solve ourselves. The file `autogalaxy_workspace/*/imaging/features/pixelization/likelihood_function.ipynb` gives a
+further visual step-by-step guide of the process alongside equations and references to literature on the subject.
 """

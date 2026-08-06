@@ -1,27 +1,28 @@
 """
-Tutorial 5: Model-Fit
+Tutorial 6: Model Fit
 =====================
 
 In the previous tutorials we used an inversion to reconstruct a complex galaxy. However, from the perspective of
-a scientific analysis, it is not clear how useful this was. When I fit a galaxy with light profiles, I learn about
+a scientific analysis, it is not clear how useful this was. When we fit a galaxy with light profiles, we learn about
 its brightness (`intensity`), size (`effective_radius`), compactness (`sersic_index`), etc.
 
-What did I learn about the galaxy I reconstructed? Not a lot, perhaps.
+What did we learn about the galaxy we reconstructed? Not a lot, perhaps.
 
-Inversions are most useful when combined with light profiles. For the complex galaxy we used throughout this tutorial,
-we can fit it with light profiles to quantify the properties of its `bulge` and `disk` components, whilst
-simultaneously fitting the clumps with the inversion so as to ensure they do not impact the fit.
+Inversions are most useful when combined with light profiles. For the complex galaxy we have used throughout this
+chapter, we can fit it with light profiles to quantify the properties of its `bulge` and `disk` components, whilst
+simultaneously fitting any residual structure with the inversion so as to ensure it does not impact the fit.
 
-To illustrate modeling using an inversion this tutorial therefore revisits the complex galaxy model-fit that we
-performed in tutorial 4 of chapter 3. This time, as you have probably guessed, we will fit part of the complex galaxy
-using an inversion.
+To illustrate modeling using an inversion, this tutorial therefore revisits the complex galaxy model-fit that we
+performed via search chaining at the end of chapter 2 (tutorials 9-10). This time, as you have probably guessed, we
+will fit part of the galaxy using an inversion.
 
 We will use search chaining to do this, first fitting the main galaxy components with light profiles, thereby
 initializing the bulge and disk components. In the later searches we will switch to an `Inversion`.
 
 __Contents__
 
-- **Initial Setup:** Load the complex galaxy dataset and apply a mask.
+- **Initial Setup:** Load the galaxy dataset and apply a mask.
+- **Dataset Auto-Simulation:** Automatically simulate the dataset if it does not already exist.
 - **Model + Search + Analysis + Model-Fit (Search 1):** Fit light profiles to the main galaxy components.
 - **Mesh Shape:** Discussion of how mesh shape affects the inversion.
 - **Model + Search + Analysis + Model-Fit (Search 2):** Fit with a pixelization for residual structure.
@@ -39,11 +40,10 @@ import autogalaxy.plot as aplt
 """
 __Initial Setup__
 
-we'll use complex galaxy data, where:
+we'll use the same galaxy data as the previous tutorials, where:
 
  - The galaxy's bulge is an `Sersic`.
  - The galaxy's disk is an `Exponential`.
- - The galaxy's has four star forming clumps which are `Sersic` profiles.
 """
 dataset_name = "simple"
 dataset_path = Path("dataset") / "imaging" / dataset_name
@@ -113,7 +113,7 @@ galaxy = af.Model(ag.Galaxy, redshift=0.5, bulge=bulge, disk=disk)
 model_1 = af.Collection(galaxies=af.Collection(galaxy=galaxy))
 
 search_1 = af.Nautilus(
-    path_prefix=Path("howtogalaxy", "chapter_4"),
+    path_prefix=Path("howtogalaxy", "chapter_3"),
     name="search[1]",
     unique_tag=dataset_name,
     n_live=100,
@@ -127,11 +127,11 @@ result_1 = search_1.fit(model=model_1, analysis=analysis_1)
 """
 __Mesh Shape__
 
-The `mesh_shape` parameter defines number of pixels used by the rectangular mesh to reconstruct the source,
-set below to 28 x 28. 
+The `mesh_shape` parameter defines the number of pixels used by the rectangular mesh to reconstruct the galaxy,
+set below to 28 x 28.
 
 The `mesh_shape` must be fixed before modeling and cannot be a free parameter of the model, because JAX uses the
-mesh shape to define static shaped arrays which use the mesh to reconstruct the source. For a rectangular
+mesh shape to define static shaped arrays which use the mesh to reconstruct the galaxy. For a rectangular
 mesh, the same number of pixels must be used in the y and x directions.
 """
 mesh_pixels_yx = 28
@@ -143,17 +143,18 @@ __Model + Search + Analysis + Model-Fit (Search 2)__
 We use the results of search 1 to create the model fitted in search 2, where:
 
  - The galaxy's bulge is an `Sersic` [0 parameters: parameters fixed from search 1].
- 
+
  - The galaxy's disk is an `Exponential` [0 parameters: parameters fixed from search 1].
 
- - The galaxy's clumps are reconstructed `RectangularAdaptDensity` mesh with resolution as free parameters [2 parameters].
+ - Residual galaxy structure is reconstructed using a `RectangularAdaptDensity` mesh with a fixed 28 x 28
+   shape [0 parameters].
 
- - This pixelization is regularized using a `Constant` scheme [1 parameter]. 
+ - This pixelization is regularized using a `GaussianKernel` scheme [2 parameters].
 
-The number of free parameters and therefore the dimensionality of non-linear parameter space is N=3.
+The number of free parameters and therefore the dimensionality of non-linear parameter space is N=2.
 
-This search allows us to very efficiently set up the resolution of the mesh and regularization coefficient 
-of the regularization scheme, before using these models to refit the galaxy mass model.
+This search allows us to very efficiently set up the regularization scheme's parameters, before refitting the
+galaxy's bulge and disk alongside the inversion in search 3.
 """
 pixelization = af.Model(
     ag.Pixelization,
@@ -172,7 +173,7 @@ galaxy = af.Model(
 model_2 = af.Collection(galaxies=af.Collection(galaxy=galaxy))
 
 search_2 = af.Nautilus(
-    path_prefix=Path("howtogalaxy", "chapter_4"),
+    path_prefix=Path("howtogalaxy", "chapter_3"),
     name="search[2]",
     unique_tag=dataset_name,
     n_live=50,
@@ -193,16 +194,17 @@ __Model + Search (Search 3)__
 We use the results of searches 1 and 2 to create the model fitted in search 3, where:
 
  - The galaxy's bulge is an `Sersic` [7 parameters: priors initialized from search 1].
- 
- - The galaxy's disk is an `Exponential` [6 parameters: priors initialized from search 1].
 
- - The galaxy's light uses a `RectangularAdaptDensity` mesh[parameters fixed to results of search 2].
+ - The galaxy's disk is an `Sersic` [7 parameters: priors initialized from search 1].
 
- - This pixelization is regularized using a `Constant` scheme [parameters fixed to results of search 2]. 
+ - Residual galaxy structure uses a `RectangularAdaptDensity` mesh with a fixed 28 x 28 shape [0 parameters].
 
-The number of free parameters and therefore the dimensionality of non-linear parameter space is N=13.
+ - This pixelization is regularized using a `GaussianKernel` scheme [2 parameters].
 
-This search allows us to refit the bulge and disk components with an inversion that takes care of the clumps.
+The number of free parameters and therefore the dimensionality of non-linear parameter space is N=16.
+
+This search allows us to refit the bulge and disk components with an inversion that takes care of any residual
+structure the light profiles do not capture.
 """
 bulge = af.Model(ag.lp.Sersic)
 bulge.ell_comps = result_1.model.galaxies.galaxy.bulge.ell_comps
@@ -228,7 +230,7 @@ galaxy = af.Model(
 model_3 = af.Collection(galaxies=af.Collection(galaxy=galaxy))
 
 search_3 = af.Nautilus(
-    path_prefix=Path("howtogalaxy", "chapter_4"),
+    path_prefix=Path("howtogalaxy", "chapter_3"),
     name="search[3]",
     unique_tag=dataset_name,
     n_live=100,
@@ -242,5 +244,13 @@ result_3 = search_3.fit(model=model_3, analysis=analysis_3)
 """
 __Wrap Up__
 
-And with that, we now have a pipeline to model galaxies using an inversion! 
+And with that, we now have a pipeline to model galaxies using an inversion!
+
+This concludes the pixelizations chapter. You now have every tool this chapter set out to teach: pixelizations and
+mappers (tutorials 1-2), inversions (tutorial 3), Bayesian regularization and the evidence (tutorials 4-5), and a
+search-chained pipeline which combines light profiles with an inversion (this tutorial).
+
+In chapter 4, we scale up from a single galaxy to the busier fields real imaging surveys deliver: datasets with
+extra galaxies near the main galaxy, blended multi-galaxy systems modeled simultaneously, and cluster fields with
+many member galaxies.
 """
