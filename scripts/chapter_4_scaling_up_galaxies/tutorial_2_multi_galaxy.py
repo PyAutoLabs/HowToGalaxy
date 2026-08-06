@@ -167,9 +167,7 @@ The joint fit has neither problem. Every pixel in the mask is modeled as the sum
 no flux is wrongly attributed and none is thrown away. Decomposing the blend *is* the fit — this is the whole
 point of the multi-galaxy regime, and it is why both galaxies must be in the model even if only one of them is
 the galaxy we ultimately care about scientifically.
-"""
 
-"""
 __Model__
 
 We now compose the model, and here the multi-galaxy regime shows its teeth: every galaxy needs its own free
