@@ -169,8 +169,8 @@ Therefore, we need to add the Poisson noise after blurring the galaxy image.
 
 We also need to consider the units of our image data. Let’s assume that the galaxy image is measured in units of 
 electrons per second ($e^- s^{-1}$), which is standard for CCD imaging data. To simulate the number of electrons 
-actually detected in each pixel, we multiply the image by the observation’s exposure time. This conversion changes t
-he units to the total number of electrons collected per pixel over the entire exposure time.
+actually detected in each pixel, we multiply the image by the observation’s exposure time. This conversion changes
+the units to the total number of electrons collected per pixel over the entire exposure time.
 
 Once the image is converted, we add Poisson noise, simulating the randomness in the photon-to-electron conversion 
 process. After adding the noise, we convert the image back to units of electrons per second for analysis, as 

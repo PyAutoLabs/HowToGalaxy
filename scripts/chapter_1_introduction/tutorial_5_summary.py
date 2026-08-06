@@ -1,5 +1,5 @@
 """
-Tutorial 9: Summary
+Tutorial 5: Summary
 ===================
 
 In this chapter, we have learnt that:
@@ -7,10 +7,10 @@ In this chapter, we have learnt that:
  1) **PyAutoGalaxy** uses Cartesian `Grid2D`'s of $(y,x)$ coordinates to evaluate galaxy luminous emission.
  2) These grids are combined with light profiles to compute images and other quantities.
  3) Profiles are grouped together to make galaxies.
- 4) Collections of galaxies (at the same redshift) can be made..
+ 4) Collections of galaxies (at the same redshift) can be made.
  5) The Universe's cosmology can be input into this `Galaxies` to convert its units to kiloparsecs.
  6) The galaxies's image can be used to simulate galaxy `Imaging` like it was observed with a real telescope.
- 7) This data can be fitted, so to as quantify how well a model galaxy system represents the observed image.
+ 7) This data can be fitted, so as to quantify how well a model galaxy system represents the observed image.
 
 In this summary, we'll go over all the different Python objects introduced throughout this chapter and consider how
 they come together as one.
@@ -73,7 +73,7 @@ galaxies = ag.Galaxies(galaxies=[galaxy_0, galaxy_1])
 """
 __Object Composition__
 
-Lets now consider how all of the objects we've covered throughout this chapter (`LightProfile`'s, `MassProfile`'s,
+Lets now consider how all of the objects we've covered throughout this chapter (`LightProfile`'s,
 `Galaxy`'s, `Galaxies`'s) come together.
 
 The `Galaxies` contain the `Galaxy`'s which contains the `Profile`'s:
@@ -102,8 +102,8 @@ aplt.plot_array(array=galaxies[0].image_2d_from(grid=grid), title="Image")
 Understanding how these objects decompose into the different components of a galaxy is important for general 
 **PyAutoGalaxy** use.
 
-As the galaxy systems that we analyse become more complex, it is useful to know how to decompose their light 
-profiles, galaxies and galaxies to extract different pieces of information about the galaxy. 
+As the galaxy systems that we analyse become more complex, it is useful to know how to decompose their light
+profiles and galaxies to extract different pieces of information about the galaxy.
 
 For example, we made our galaxy above with two light profiles, a `bulge` and `disk`. We can plot the image of 
 each component individually, now that we know how to break-up the different components of the galaxies.
@@ -115,11 +115,11 @@ aplt.plot_array(array=galaxies[0].disk.image_2d_from(grid=grid), title="Disk Ima
 """
 __Visualization__
 
-Furthermore, using the `MatPLot2D` and `Visuals2D` objects we can visualize any aspect we're interested 
-in and fully customize the figure. 
+Furthermore, using the arguments of the `aplt` plotting functions we can visualize any aspect we're interested
+in and fully customize the figure.
 
-Before beginning chapter 2 of **HowToGalaxy**, you should checkout the package `autogalaxy_workspace/plot`. 
-This provides a full API reference of every plotting option in **PyAutoGalaxy**, allowing you to create your own 
+Before beginning chapter 2 of **HowToGalaxy**, you should checkout the package `autogalaxy_workspace/*/guides/plot`.
+This provides a full API reference of every plotting option in **PyAutoGalaxy**, allowing you to create your own
 fully customized figures of galaxies with minimal effort!
 """
 aplt.plot_array(array=galaxies[0].bulge.image_2d_from(grid=grid), title="Bulge Image")
@@ -130,15 +130,15 @@ And, we're done, not just with the tutorial, but the chapter!
 __Code Design__
 
 To end, I want to quickly talk about the **PyAutoGalaxy** code-design and structure, which was really the main topic of
-this tutoriag.
+this tutorial.
 
-Throughout this chapter, we never talk about anything like it was code. We didn`t refer to  'variables', 'parameters`' 
-'functions' or 'dictionaries', did we? Instead, we talked about 'galaxies'. We discussed 
+Throughout this chapter, we never talk about anything like it was code. We didn't refer to 'variables', 'parameters',
+'functions' or 'dictionaries', did we? Instead, we talked about 'galaxies'. We discussed
 the objects that we, as scientists, think about when we consider a galaxy system.
 
-Software that abstracts the underlying code in this way follows an `object-oriented design`, and it is our hope 
+Software that abstracts the underlying code in this way follows an `object-oriented design`, and it is our hope
 with **PyAutoGalaxy** that we've made its interface (often called the API for short) very intuitive, whether you were
-previous familiar with galaxy morphology or a complete newcomer!
+previously familiar with galaxy morphology or a complete newcomer!
 
 __Source Code__
 
@@ -161,13 +161,13 @@ tested (check out the `test` directory if you're curious how to test code well!)
 
 __Wrap Up__
 
-You`ve learn a lot in this chapter, but what you have not learnt is how to 'model' a real galaxy.
+You've learnt a lot in this chapter, but what you have not learnt is how to 'model' a real galaxy.
 
 In the real world, we have no idea what the 'correct' combination of light profiles are that will give a good fit to 
 a galaxy. Modeling is the process of finding the model which provides a good fit and it is the topic of chapter 2 
 of **HowToGalaxy**.
 
-Finally, if you enjoyed doing the **HowToGalaxy** tutorials please git us a star on the **PyAutoGalaxy** GitHub
+Finally, if you enjoyed doing the **HowToGalaxy** tutorials please give us a star on the **PyAutoGalaxy** GitHub
 repository: 
 
  https://github.com/PyAutoLabs/PyAutoGalaxy

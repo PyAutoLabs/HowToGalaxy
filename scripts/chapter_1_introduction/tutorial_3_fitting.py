@@ -126,11 +126,8 @@ print(mask)  # 1 = True, meaning the pixel is masked. Edge pixels are indeed mas
 print(mask[48:53, 48:53])  # Central pixels are `False` and therefore unmasked.
 
 """
-We can visualize the mask over the galaxy image using an `Imaging`, which helps us adjust the mask as needed. 
-This is useful to ensure that the mask appropriately covers the galaxy's light and does not exclude important regions.
-
-To overlay objects like a mask onto a figure, we use the `Visuals2D` object. This tool allows us to add custom 
-visuals to any plot, providing flexibility in creating tailored visual representations.
+We can visualize the mask over the galaxy image, which helps us adjust the mask as needed. This is useful to ensure
+that the mask appropriately covers the galaxy's light and does not exclude important regions.
 """
 aplt.plot_array(array=dataset.data, title="Imaging Data With Mask")
 
@@ -141,8 +138,8 @@ that only the unmasked regions are considered during the analysis.
 dataset = dataset.apply_mask(mask=mask)
 
 """
-When we plot the masked imaging data again, the mask is now automatically included in the plot, even though we did 
-not explicitly pass it using the `Visuals2D` object. The plot also zooms into the unmasked area, showing only the 
+When we plot the masked imaging data again, the mask is now automatically included in the plot, even though we did
+not explicitly pass it to the plot function. The plot also zooms into the unmasked area, showing only the
 region where we will focus our analysis. This is particularly helpful when working with large images, as it centers 
 the view on the regions where the galaxy's signal is detected.
 """
@@ -175,7 +172,7 @@ print("Number of unmasked pixels:")
 print(dataset.data.native.shape)
 print(
     dataset.data.slim.shape
-)  # This should be lower than the total number of pixels, e.g., 100 x 100 = 10,000
+)  # This should be lower than the total number of pixels, e.g., 101 x 101 = 10,201
 
 """
 The `mask` object also has a `pixels_in_mask` attribute, which gives the number of unmasked pixels. This should 
@@ -232,8 +229,8 @@ __Fitting__
 
 Now that our data is masked, we are ready to proceed with the fitting process.
 
-Fitting the data is done using the `Galaxy` and `Galaxies objects that we introduced in tutorial 2. We will start by 
-setting up a `Galaxies`` object, using the same galaxy configuration that we previously used to simulate the 
+Fitting the data is done using the `Galaxy` and `Galaxies` objects that we introduced in tutorial 1. We will start by
+setting up a `Galaxies` object, using the same galaxy configuration that we previously used to simulate the
 imaging data. This setup will give us what is known as a 'perfect' fit, as the simulated and fitted models are identical.
 """
 galaxy = ag.Galaxy(
@@ -301,7 +298,7 @@ aplt.plot_array(array=dataset.data, title="Data")
 aplt.plot_array(array=fit.model_data, title="Model Image")
 
 """
-The `residual_map` is the different between the observed image and model image, showing where in the image the fit is
+The `residual_map` is the difference between the observed image and model image, showing where in the image the fit is
 good (e.g. low residuals) and where it is bad (e.g. high residuals).
 
 The expression for the residual map is simply:
@@ -322,7 +319,7 @@ aplt.plot_array(array=fit.residual_map, title="Residual Map")
 
 """
 Are these residuals indicative of a good fit to the data? Without considering the noise in the data, it's difficult 
-to ascertain. That is, its hard to ascenrtain if a residual value is large or small because this depends on the
+to ascertain. That is, its hard to ascertain if a residual value is large or small because this depends on the
 amount of noise in that pixel.
 
 The `normalized_residual_map` divides the residual-map by the noise-map, giving the residual in units of the noise.
@@ -476,7 +473,7 @@ and 'log_likelihood' before.
 These metrics are standard ways to quantify the quality of a model fit. They are applicable not only to 1D data but 
 also to more complex data structures like 2D images, 3D data cubes, or any other multidimensional datasets.
 
-__Incorrect Fit___
+__Incorrect Fit__
 
 In the previous section, we successfully created and fitted a galaxy model to the image data, resulting in an 
 excellent fit. The residual map and chi-squared map showed no significant discrepancies, indicating that the 

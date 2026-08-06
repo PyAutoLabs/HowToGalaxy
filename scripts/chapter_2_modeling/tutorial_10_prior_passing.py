@@ -6,7 +6,7 @@ In the previous tutorial, we used non-linear search chaining to break the model-
 non-linear searches. This used an initial search to fit a simple model, whose results were used to tune and
 initialize the priors of a more complex model that was fitted by the second search.
 
-However, the results were passed between searches were passed manually. I explicitly wrote out every result as a prior
+However, the results were passed between searches manually. I explicitly wrote out every result as a prior
 containing the values inferred in the first search. **PyAutoGalaxy** has an API for passing priors in a more generalized
 way, which is the topic of this tutorial.
 
@@ -37,7 +37,7 @@ __Initial Setup__
 
 we'll use the same galaxy data as the previous tutorial, where:
 
- - The galaxy's bulge is an `Sersic`.
+ - The galaxy's bulge is a `Sersic`.
  - The galaxy's disk is an `Exponential`.
  
 All the usual steps for setting up a model fit (masking, analysis, etc.) are included below.
@@ -144,7 +144,7 @@ We are now going to use the prior passing API to pass these results, in a way wh
 write out the inferred parameter values of each component. The details of how prior passing is performed will be 
 expanded upon at the end of the tutorial.
 
-We start with the bulge, which in the previous search was an `Sersic` with its centre fixed to (0.0, 0.0) 
+We start with the bulge, which in the previous search was a `Sersic` with its centre fixed to (0.0, 0.0) 
 and its `sersic_index` fixed to 4.0. The API for passing priors is shown below and there are two things worth noting:
 
  1) We pass the priors using the `model` attribute of the result. This informs **PyAutoGalaxy** to pass the result as a
@@ -165,7 +165,7 @@ bulge.sersic_index = af.TruncatedGaussianPrior(
 )
 
 """
-For the disk,  we are passing the result of an `Exponential` to an `Sersic`.
+For the disk, we are passing the result of an `Exponential` to a `Sersic`.
 
 We do not pass the `ell_comps` because this would pair them to the `bulge`, as was performed in the first 
 model-fit.
@@ -208,7 +208,7 @@ search_2 = af.Nautilus(
 print(
     "The non-linear search has begun running - checkout the output/howtogalaxy/chapter_2"
     " folder for live output of the results, images and model."
-    " This Jupyter notebook cell with progress once search has completed - this could take some time!"
+    " This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
 
 result_2 = search_2.fit(model=model_2, analysis=analysis_2)
@@ -250,8 +250,8 @@ parameters do not use the default priors we saw in search 1 (which are typically
 they use GaussianPrior`s where:
 
  - The mean values are the median PDF results of every parameter in search 1.
- - The sigma values are specified in the `width_modifier` field of the profile's entry in the `priors.yaml' config 
-   file (we will discuss why this is used in a moment).
+ - The sigma values are specified in the `width_modifier` field of the profile's entry in the `config/priors`
+   config files (we will discuss why this is used in a moment).
 
 Like the manual `GaussianPrior`'s that were used in the previous tutorial, the prior passing API sets up the prior on each
 parameter with a `GaussianPrior` centred on the high likelihood regions of parameter space!
@@ -276,8 +276,8 @@ By invoking the `model` attribute, the prior is passed following 3 rules:
  parameter space that correspond to highest log likelihood solutions in the previous search. Our priors therefore 
  correspond to the `correct` regions of parameter space.
 
- 3) The sigma of the Gaussian uses the value specified for the profile in the `config/priors/*.yaml` config file's 
- `width_modifer` field (check these files out now).
+ 3) The sigma of the Gaussian uses the value specified for the profile in the `config/priors/*.yaml` config file's
+ `width_modifier` field (check these files out now).
 
 The idea here is simple. We want a value of sigma that gives a `GaussianPrior` wide enough to search a broad 
 region of parameter space, so that the model can change if a better solution is nearby. However, we want it 
@@ -285,7 +285,7 @@ to be narrow enough that we don't search too much of parameter space, as this wi
 into an incorrect solution! 
 
 The `width_modifier` values in the priors config file have been chosen based on our experience as being a good
-balance broadly sampling parameter space but not being so narrow important solutions are missed.
+balance of broadly sampling parameter space but not being so narrow that important solutions are missed.
        
 There are two ways a value is specified using the priors/width file:
 
@@ -306,11 +306,8 @@ absolute errors on the centre.
 
 However, there are parameters where using an absolute value does not make sense. Intensity is a good example of this. 
 The intensity of an image depends on its units, S/N, galaxy brightness, etc. There is no single absolute value that 
-one can use to generically chain the intensity of any two proflies. Thus, it makes more sense to chain them using 
+one can use to generically chain the intensity of any two profiles. Thus, it makes more sense to chain them using
 the relative value from a previous search.
-
-We can customize how priors are passed from the results of a search and non-linear search by editing the
- `prior_passer` settings in the `general.yaml` config file.
 
 __EXAMPLE__
 
@@ -323,12 +320,12 @@ To pass this as a prior to search 2 we write:
 
 The prior on the galaxy's bulge sersic index in search 2 would thus be a `GaussianPrior` with mean=4.0. 
 
-The value of the Sersic index `width_modifier` in the priors config file sets sigma. The prior config file specifies 
-that we use an "Absolute" value of 0.8 to chain this prior. Thus, the `GaussianPrior` in search 2 would have a 
-mean=4.0 and sigma=0.8.
+The value of the Sersic index `width_modifier` in the priors config file sets sigma. The prior config file specifies
+that we use an "Absolute" value of 1.5 to chain this prior. Thus, the `GaussianPrior` in search 2 would have a
+mean=4.0 and sigma=1.5.
 
-If the prior config file had specified that we use an relative value of 0.8, the GaussianPrior in search 2 would have a 
-mean=4.0 and sigma = 4.0 * 0.8 = 3.2.
+If the prior config file had instead specified that we use a relative value of 0.8, the GaussianPrior in search 2 would
+have a mean=4.0 and sigma = 4.0 * 0.8 = 3.2.
 
 And with that, we're done. Chaining priors is a bit of an art form, but one that works really well. 
 """

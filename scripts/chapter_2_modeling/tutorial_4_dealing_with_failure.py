@@ -39,7 +39,7 @@ __Initial Setup__
 
 we'll use the same galaxy data as the previous tutorial, where:
 
- - The galaxy's bulge is an `Sersic`.
+ - The galaxy's bulge is a `Sersic`.
  - The galaxy's disk is an `Exponential`.
 """
 dataset_name = "simple"
@@ -131,10 +131,10 @@ bulge = af.Model(ag.lp.Sersic)
 disk = af.Model(ag.lp.Exponential)
 
 """
-By default, the prior on the $(y,x)$ coordinates of a `LightProfile` is a GaussianPrior with 
+By default, the prior on the $(y,x)$ coordinates of a `LightProfile` is a GaussianPrior with
 `mean=0.0` and `sigma=0.3`. However, visual inspection of our galaxy image tells us that its centre (based on the
-galaxy's luminous emission) is at x = 0.0" and y = 0.0", so lets reduce the `sigma` value on this prior so the
-non-linear search looks over a very narrow range of `centre` values in parameter space.
+galaxy's luminous emission) is at x = 0.0" and y = 0.0", so lets replace this prior with a narrow `UniformPrior`, so
+the non-linear search looks over a very narrow range of `centre` values in parameter space.
 """
 bulge.centre_0 = af.UniformPrior(lower_limit=-0.05, upper_limit=0.05)
 bulge.centre_1 = af.UniformPrior(lower_limit=-0.05, upper_limit=0.05)
@@ -142,8 +142,8 @@ disk.centre_0 = af.UniformPrior(lower_limit=-0.05, upper_limit=0.05)
 disk.centre_1 = af.UniformPrior(lower_limit=-0.05, upper_limit=0.05)
 
 """
-By default, the elliptical components of the of our galaxy's elliptical `LightProfile` are `TruncatedGaussianPrior`'s 
-with `mean=0.0` and `sigma=0.5`. Note that the solution `ell_comps=(0.0, 0.0)` corresponds to a spherical system
+By default, the elliptical components of our galaxy's elliptical `LightProfile` are `TruncatedGaussianPrior`'s
+with `mean=0.0` and `sigma=0.3`. Note that the solution `ell_comps=(0.0, 0.0)` corresponds to a spherical system
 and that all physical solutions (e.g. with axis-ratios running from 0.0 -> 1.0 and position angles 0.0 -> 180.0 degrees) 
 are encapsulated for solutions where each component runs from -1.0 -> 1.0). 
 
@@ -193,7 +193,7 @@ disk.effective_radius = af.TruncatedGaussianPrior(
 The `sersic_index` defines how concentrated the light profile is. In galaxy structure studies, values of Sersic index
 around 1.0 indicate a disk galaxy (which is the value the `Exponential` uses). 
 
-Higher values of 3 or 4 indicate an elliptical galaxy. **PyAutoGalaxy** assumes a `UniformPrior` between 0.8 and 8.0 
+Higher values of 3 or 4 indicate an elliptical galaxy. **PyAutoGalaxy** assumes a `UniformPrior` between 0.8 and 5.0
 by default on this parameter, as a user could model galaxies
 where the galaxy is of any morphology.
 
@@ -205,12 +205,7 @@ bulge.sersic_index = af.TruncatedGaussianPrior(
 
 """
 We now compose the overall model, where the galaxy model uses the `Model` components above which had their
-priors customizes.
-
-In this exercise, I'm not going to change any priors on the galaxy. Whilst modeling experts can look at a 
-galaxy and often tell you roughly where the galaxy is located, it is something of art 
-form. Furthermore, the source's morphology can be pretty complex, making it difficult to come up with a good source 
-prior!
+priors customized.
 """
 galaxy = af.Model(ag.Galaxy, redshift=0.5, bulge=bulge, disk=disk)
 
@@ -238,7 +233,7 @@ analysis = ag.AnalysisImaging(dataset=dataset, use_jax=True)
 print(
     "The non-linear search has begun running - checkout the workspace/output/howtogalaxy/chapter_2/tutorial_4_custom_priors"
     " folder for live output of the results, images and model."
-    " This Jupyter notebook cell with progress once search has completed - this could take some time!"
+    " This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
 
 result_custom_priors = search.fit(model=model, analysis=analysis)
@@ -272,8 +267,8 @@ Advantages:
 Disadvantages: 
 
  - If we specified a prior incorrectly the non-linear search will infer an incorrect solution.
- - The priors for the search were tailored to the specific galaxy we fitted. If we are fitting multiple galaxies, 
- we would have customize the priors for every single fit, for large samples of galaxies this would take a lot of time!
+ - The priors for the search were tailored to the specific galaxy we fitted. If we are fitting multiple galaxies,
+ we would have to customize the priors for every single fit, for large samples of galaxies this would take a lot of time!
 
 __Approach 2: Reducing Complexity__
 
@@ -325,7 +320,7 @@ search = af.Nautilus(
 print(
     "The non-linear search has begun running - checkout the workspace/output/howtogalaxy/chapter_2/tutorial_4_reducing_complexity"
     " folder for live output of the results, images and model."
-    " This Jupyter notebook cell with progress once search has completed - this could take some time!"
+    " This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
 
 result_bulge_disk_align = search.fit(model=model, analysis=analysis)
@@ -354,8 +349,8 @@ Again, lets consider the advantages and disadvantages of this approach:
 
 Advantages:
 
- - By reducing parameter space`s complexity we again had a higher chance of inferring the global maximum log 
- likelihood and the time required by the search to do this is reducing.
+ - By reducing parameter space`s complexity we again had a higher chance of inferring the global maximum log
+ likelihood and the time required by the search to do this is reduced.
  - Unlike tuned priors, the search was not specific to one galaxy and we could run it on many galaxy images.
     
 Disadvantages:
@@ -365,7 +360,7 @@ Disadvantages:
 __Approach 3: Look Harder__
 
 In approaches 1 and 2 we extended our non-linear search an olive branch and helped it find the highest log likelihood 
-regions of parameter space. In approach 3 ,we're going to tell it to just `look harder`.
+regions of parameter space. In approach 3, we're going to tell it to just `look harder`.
 
 Every non-linear search has settings which govern how thoroughly it searches parameter space, with the number of live
 points that was passed to `Nautilus` an example of such a setting. The more thoroughly the search looks, the more likely 
@@ -374,8 +369,8 @@ it is that it`ll find the global maximum model. However, the search will also ta
 We create a more thorough `nautilus` search, that uses `n_live=200`. What these settings
 are actually changing is discussed in the optional tutorial `HowToGalaxy/chapter_optional/tutorial_searches.ipynb`.
 
-Due to the long run times of this search, we comment it output below so it does not run. Feel free to undo these
-comments so the script runs faster.
+Due to the long run times of this search, we comment out the fit below so it does not run. Feel free to undo these
+comments if you wish to perform the search yourself.
 """
 galaxy = af.Model(ag.Galaxy, redshift=0.5, bulge=ag.lp.Sersic, disk=ag.lp.Exponential)
 
@@ -392,7 +387,7 @@ search = af.Nautilus(
 print(
     "The non-linear search has begun running - checkout the workspace/output/howtogalaxy/chapter_2/tutorial_4_look_harder"
     " folder for live output of the results, images and model."
-    " This Jupyter notebook cell with progress once search has completed - this could take some time!"
+    " This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
 
 # result_look_harder = search.fit(model=model, analysis=analysis)
@@ -416,7 +411,7 @@ Advantages:
 
 Disadvantage:
  
- - Its potentially expensive. Very expensive. For very complex models, the run times can hours, days, weeks or, dare 
+ - Its potentially expensive. Very expensive. For very complex models, the run times can be hours, days, weeks or, dare
  I say it, months!
 
 So, we can now fit galaxies. And when it fails, we know how to get it to work. 

@@ -7,7 +7,7 @@ In real observations we know that galaxies are observed to have multiple differe
 
 In this tutorial, we'll use a more realistic model, which consists of the following light profiles:
 
- - An `Sersic` light profile for the galaxy's bulge [7 parameters].
+ - A `Sersic` light profile for the galaxy's bulge [7 parameters].
  - An `Exponential` light profile for the galaxy's disk [6 parameters]
 
 This model has 13 free parameters, meaning that the parameter space and likelihood function it defines has a
@@ -36,9 +36,9 @@ import autofit as af
 """
 __Initial Setup__
 
-we'll use new galaxying data, where:
+we'll use new imaging data of a galaxy, where:
 
- - The galaxy's bulge is an `Sersic`.
+ - The galaxy's bulge is a `Sersic`.
  - The galaxy's disk is an `Exponential`.
 """
 dataset_name = "simple"
@@ -124,7 +124,7 @@ analysis = ag.AnalysisImaging(dataset=dataset, use_jax=True)
 print(
     "The non-linear search has begun running - checkout the autogalaxy_workspace/output/howtogalaxy/chapter_2/tutorial_3_realism_and_complexity"
     " folder for live output of the results, images and model."
-    " This Jupyter notebook cell with progress once search has completed - this could take some time!"
+    " This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
 
 result = search.fit(model=model, analysis=analysis)
@@ -179,9 +179,9 @@ search = af.Nautilus(
 )
 
 print(
-    "The non-linear search has begun running - checkout the autogalaxy_workspace/output/3_realism_and_complexity"
+    "The non-linear search has begun running - checkout the autogalaxy_workspace/output/howtogalaxy/chapter_2/tutorial_3_realism_and_complexity__local_maxima"
     " folder for live output of the results, images and model."
-    " This Jupyter notebook cell with progress once search has completed - this could take some time!"
+    " This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
 
 result_local_maxima = search.fit(model=model, analysis=analysis)
@@ -197,14 +197,14 @@ performed above.
 print(result_local_maxima.info)
 
 """
-Lats look at the fit to the `Imaging` data, which is clearly worse than our original fit above.
+Lets look at the fit to the `Imaging` data, which is clearly worse than our original fit above.
 """
 aplt.subplot_fit_imaging(fit=result_local_maxima.max_log_likelihood_fit)
 
 """
 Finally, just to be sure we hit a local maxima, lets compare the maximum log likelihood values of the two results 
 
-The local maxima value is significantly lower, confirming that our non-linear search simply failed to locate lens 
+The local maxima value is significantly lower, confirming that our non-linear search simply failed to locate galaxy
 models which fit the data better when it searched parameter space.
 """
 print("Likelihood of Global Model:")
@@ -220,7 +220,7 @@ sampling parameter space thoroughly. For modeling real galaxies we wouldn't do t
 inferring a local maxima is still very real, especially as we make our model more complex.
 
 Lets think about *complexity*. As we make our model more realistic, we also made it more complex. For this 
-tutorial, our non-linear parameter space went from 7 dimensions to 13. This means there was a much larger *volume* of 
+tutorial, our non-linear parameter space went from 6 dimensions to 13. This means there was a much larger *volume* of
 parameter space to search. As this volume grows, there becomes a higher chance that our non-linear search gets lost 
 and infers a local maxima, especially if we don't set it up with enough live points!
 
@@ -237,7 +237,7 @@ search finds the global-maximum log likelihood solution. First, think about the 
  2) The non-linear search failed because parameter space was too complex. Could we make it less complex, whilst 
  still keeping our model fairly realistic?
     
- 3) The galaxy in this example had only 7 non-linear parameters. Real galaxies may have multiple components (e.g. a 
- disk, bulge, bar, star-forming knot) and there may even be more than 1 galaxy! Do you think there is any hope of 
- us navigating a parameter space if the galaxies contributes 30+ parameters?
+ 3) The galaxy in this example had only 13 non-linear parameters. Real galaxies may have multiple components (e.g. a
+ disk, bulge, bar, star-forming knot) and there may even be more than 1 galaxy! Do you think there is any hope of
+ us navigating a parameter space if the galaxies contribute 30+ parameters?
 """

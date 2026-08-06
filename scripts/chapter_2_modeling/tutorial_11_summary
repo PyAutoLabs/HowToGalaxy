@@ -16,4 +16,5 @@ autogalaxy_workspace contains a number of scripts that can be easily adopted to 
 different approaches, models and non-linear searches. If you have your own galaxy data, I'd recommend you adapt these
 scripts to your data. If you don't have your own data, checkout the 'simulators' folder to simulate your own dataset!
 
-Alternatively, you may wish to continue on to chapter 3 on pixelized galaxy reconstructions.
+Alternatively, you may wish to continue on to chapter 3 on pixelized galaxy reconstructions, or chapter 4 on
+scaling up to systems with multiple galaxies.

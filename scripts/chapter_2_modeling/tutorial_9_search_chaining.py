@@ -24,7 +24,7 @@ analysis to a different galaxy. The less complex we make our model, the less rea
 much on searching parameter space for longer, we could end up with search`s that take days, weeks or months to run.
 
 In this tutorial, we are going to show how search chaining combines these 3 approaches such that we can fit
-complex and realistic models in a way that that can be generalized to many different galaxies. To do this,
+complex and realistic models in a way that can be generalized to many different galaxies. To do this,
 we'll run 2 searches, and chain the model inferred in the first search to the priors of the second search`s
 model.
 
@@ -64,7 +64,7 @@ __Initial Setup__
 
 we'll use the same galaxy data as tutorial 4 of this chapter, where:
 
- - The galaxy's bulge is an `Sersic`.
+ - The galaxy's bulge is a `Sersic`.
  - The galaxy's disk is an `Exponential`.
 """
 dataset_name = "simple"
@@ -180,7 +180,7 @@ Lets run the search, noting that our liberal approach to reducing the model comp
 print(
     "The non-linear search has begun running - checkout the output/howtogalaxy/chapter_2"
     " folder for live output of the results, images and model."
-    " This Jupyter notebook cell with progress once search has completed - this could take some time!"
+    " This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
 
 result_1 = search_1.fit(model=model_1, analysis=analysis_1)
@@ -209,7 +209,7 @@ a custom search that does exactly that.
 possibility that there might be a better solution nearby. In contrast, `UniformPrior`'s put hard limits on what values a 
 parameter can or can`t take. It makes it more likely we will accidentally cut-out the global maxima solution.
 
-Note that below the `disk` has become an `Sersic`.
+Note that below the `disk` has become a `Sersic`.
 """
 bulge = af.Model(ag.lp_linear.Sersic)
 disk = af.Model(ag.lp_linear.Sersic)
@@ -291,7 +291,7 @@ analysis_2 = ag.AnalysisImaging(dataset=dataset, use_jax=True)
 print(
     "The non-linear search has begun running - checkout the output/howtogalaxy/chapter_2"
     " folder for live output of the results, images and model."
-    " This Jupyter notebook cell with progress once search has completed - this could take some time!"
+    " This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
 
 result_2 = search_2.fit(model=model_2, analysis=analysis_2)
