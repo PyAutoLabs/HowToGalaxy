@@ -250,7 +250,9 @@ total_gaussians = 30
 
 # The sigma values of the Gaussians will be fixed to values spanning a tenth of the pixel scale to the mask radius, 3.0".
 mask_radius = 3.0
-log10_sigma_list = np.linspace(np.log10(dataset.pixel_scales[0] / 10.0), np.log10(mask_radius), total_gaussians)
+log10_sigma_list = np.linspace(
+    np.log10(dataset.pixel_scales[0] / 10.0), np.log10(mask_radius), total_gaussians
+)
 
 # By defining the centre here, it creates two free parameters that are assigned below to all Gaussians.
 
@@ -325,7 +327,9 @@ total_gaussians = 30
 
 # The sigma values of the Gaussians will be fixed to values spanning a tenth of the pixel scale to the mask radius, 3.0".
 mask_radius = 3.0
-log10_sigma_list = np.linspace(np.log10(dataset.pixel_scales[0] / 10.0), np.log10(mask_radius), total_gaussians)
+log10_sigma_list = np.linspace(
+    np.log10(dataset.pixel_scales[0] / 10.0), np.log10(mask_radius), total_gaussians
+)
 
 # By defining the centre here, it creates two free parameters that are assigned below to all Gaussians.
 
@@ -375,7 +379,9 @@ total_gaussians = 10
 
 # The sigma values of the Gaussians will be fixed to values spanning a tenth of the pixel scale to the mask radius, 3.0".
 mask_radius = 3.0
-log10_sigma_list = np.linspace(np.log10(dataset.pixel_scales[0] / 10.0), np.log10(mask_radius), total_gaussians)
+log10_sigma_list = np.linspace(
+    np.log10(dataset.pixel_scales[0] / 10.0), np.log10(mask_radius), total_gaussians
+)
 
 disk_gaussian_list = []
 

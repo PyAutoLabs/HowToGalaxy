@@ -330,7 +330,9 @@ This is the closest thing to an image of each galaxy as it would appear without 
 mask could ever have given us.
 """
 for i in range(len(galaxy_centres)):
-    aplt.subplot_fit_imaging_of_galaxy(fit=result.max_log_likelihood_fit, galaxy_index=i)
+    aplt.subplot_fit_imaging_of_galaxy(
+        fit=result.max_log_likelihood_fit, galaxy_index=i
+    )
 
 """
 With the blend decomposed, per-galaxy photometry is direct: each galaxy's model image contains only its own
