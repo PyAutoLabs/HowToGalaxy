@@ -161,3 +161,5 @@ The remaining tutorials of this chapter attack the other half of the product: se
 passing (tutorial 10) reduce the number of evaluations needed to fit complex models, laying the groundwork for the
 pixelized reconstructions of chapter 3.
 """
+
+# from autogalaxy import setup_notebook; setup_notebook()
