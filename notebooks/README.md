@@ -7,6 +7,7 @@ The `HowToGalaxy` folder contains **HowToGalaxy** lectures, which teach a new us
 - `chapter_3_pixelizations`: How to perform pixelized reconstructions of a galaxy.
 - `chapter_4_scaling_up_galaxies`: How to scale up modeling to multiple galaxies, from blended pairs to cluster fields.
 - `chapter_optional`: Optional tutorials.
+- `simulators`: Scripts used to simulate the galaxy datasets fitted throughout the **HowToGalaxy** lectures.
 
 # Full Explanation
 
