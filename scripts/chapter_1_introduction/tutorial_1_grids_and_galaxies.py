@@ -1,4 +1,4 @@
-"""
+r"""
 HowToGalaxy: Introduction
 =========================
 
@@ -147,7 +147,7 @@ center of the grid changes when you adjust the `centre` variable.
 """
 aplt.plot_grid(grid=grid_shifted, title="Grid Centered Around (0.3, 0.5)")
 
-"""
+r"""
 Next, we can rotate the grid by an angle `phi` (in degrees). The rotation is counter-clockwise from the positive x-axis.
 
 To rotate the grid:
@@ -179,7 +179,7 @@ changes when you adjust the `angle_degrees` variable.
 """
 aplt.plot_grid(grid=grid_rotated, title="Grid Rotated 60 Degrees")
 
-"""
+r"""
 Next, we convert the rotated grid to elliptical coordinates using:
 
 $\eta = \sqrt{(x_r)^2 + (y_r)^2/q^2}$
@@ -199,7 +199,7 @@ eta = np.sqrt((grid_rotated[:, 0]) ** 2 + (grid_rotated[:, 1]) ** 2 / axis_ratio
 print("First Ten Elliptical Coordinates:")
 print(eta[:10])
 
-"""
+r"""
 Above, the angle $\phi$ (in degrees) was used to rotate the grid, and the axis-ratio $q$ was used to convert the grid 
 to elliptical coordinates.
 
@@ -226,7 +226,7 @@ print("Elliptical Components:")
 print(ell_comps)
 
 
-"""
+r"""
 __Light Profiles__
 
 Galaxies are collections of stars, gas, dust, and other astronomical objects that emit light. Astronomers study this 

@@ -302,7 +302,7 @@ plt.colorbar()
 plt.show()
 plt.close()
 
-"""
+r"""
 __Data Vector (D)__
 
 We now pose the reconstruction as a linear inversion, converting the blurred mapping matrix, data and noise-map
@@ -335,7 +335,7 @@ plt.colorbar()
 plt.show()
 plt.close()
 
-"""
+r"""
 __Curvature Matrix (F)__
 
 The curvature matrix has dimensions `(total_mesh_pixels, total_mesh_pixels)` and is given by (WD03):
@@ -359,7 +359,7 @@ plt.colorbar()
 plt.show()
 plt.close()
 
-"""
+r"""
 __Unregularized Solve__
 
 The inversion seeks the mesh-pixel fluxes $s$ (a vector with one entry per mesh pixel) that minimize the
@@ -383,7 +383,7 @@ reconstruction = np.linalg.solve(curvature_matrix, data_vector)
 
 plot_mapper(mapper=mapper, solution_vector=reconstruction)
 
-"""
+r"""
 The reconstructed mesh-pixel fluxes are a noisy, unsmooth mess -- exactly the over-fitting we saw in tutorial 4
 when we lowered the regularization coefficient towards zero. The linear inversion is fitting the noise in the
 data, because this system of equations is ill-posed: we need a smoothness prior.
@@ -459,7 +459,7 @@ mapped_reconstructed_data = ag.Array2D(
 
 aplt.plot_array(array=mapped_reconstructed_data, title="Reconstructed Image")
 
-"""
+r"""
 __Likelihood Function__
 
 We now quantify the goodness-of-fit of the galaxy reconstruction, computing the quantity tutorial 4 called the
@@ -494,7 +494,7 @@ chi_squared = np.sum(chi_squared_map)
 
 print(chi_squared)
 
-"""
+r"""
 __Regularization Term__
 
 The second term, $s^{T} H s$, is the $\lambda \, G_{L}$ regularization penalty evaluated at the solution: the
@@ -509,7 +509,7 @@ regularization_term = np.matmul(
 
 print(regularization_term)
 
-"""
+r"""
 __Complexity Terms__
 
 Up to this point, nothing has justified our choice of `regularization_coefficient=1.0`. We cannot choose it using
