@@ -79,7 +79,7 @@ we again use the rectangular pixelization to create the mapper.
 
 (Ignore the regularization input below for now, we will cover this in the next tutorial).
 """
-mesh = ag.mesh.RectangularAdaptDensity(shape=(25, 25))
+mesh = ag.mesh.RectangularBilinearAdaptDensity(shape=(25, 25))
 
 pixelization = ag.Pixelization(mesh=mesh)
 
@@ -174,7 +174,7 @@ giving the galaxy a light profile, we simply pass it a `Pixelization` and regula
 galaxies.
 """
 pixelization = ag.Pixelization(
-    mesh=ag.mesh.RectangularAdaptDensity(shape=(25, 25)),
+    mesh=ag.mesh.RectangularBilinearAdaptDensity(shape=(25, 25)),
     regularization=ag.reg.Constant(coefficient=1.0),
 )
 
