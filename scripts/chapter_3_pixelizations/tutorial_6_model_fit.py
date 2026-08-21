@@ -146,7 +146,7 @@ We use the results of search 1 to create the model fitted in search 2, where:
 
  - The galaxy's disk is an `Exponential` [0 parameters: parameters fixed from search 1].
 
- - Residual galaxy structure is reconstructed using a `RectangularAdaptDensity` mesh with a fixed 28 x 28
+ - Residual galaxy structure is reconstructed using a `RectangularBilinearAdaptDensity` mesh with a fixed 28 x 28
    shape [0 parameters].
 
  - This pixelization is regularized using a `GaussianKernel` scheme [2 parameters].
@@ -158,7 +158,7 @@ galaxy's bulge and disk alongside the inversion in search 3.
 """
 pixelization = af.Model(
     ag.Pixelization,
-    mesh=ag.mesh.RectangularAdaptDensity(shape=mesh_shape),
+    mesh=ag.mesh.RectangularBilinearAdaptDensity(shape=mesh_shape),
     regularization=ag.reg.GaussianKernel,
 )
 
@@ -197,7 +197,7 @@ We use the results of searches 1 and 2 to create the model fitted in search 3, w
 
  - The galaxy's disk is an `Sersic` [7 parameters: priors initialized from search 1].
 
- - Residual galaxy structure uses a `RectangularAdaptDensity` mesh with a fixed 28 x 28 shape [0 parameters].
+ - Residual galaxy structure uses a `RectangularBilinearAdaptDensity` mesh with a fixed 28 x 28 shape [0 parameters].
 
  - This pixelization is regularized using a `GaussianKernel` scheme [2 parameters].
 
@@ -219,7 +219,7 @@ disk.effective_radius = result_1.model.galaxies.galaxy.disk.effective_radius
 
 pixelization = af.Model(
     ag.Pixelization,
-    mesh=ag.mesh.RectangularAdaptDensity(shape=mesh_shape),
+    mesh=ag.mesh.RectangularBilinearAdaptDensity(shape=mesh_shape),
     regularization=ag.reg.GaussianKernel,
 )
 

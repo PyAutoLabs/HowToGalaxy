@@ -37,13 +37,13 @@ to reconstruct the galaxy.
 There are multiple `Mesh`'s available in **PyAutoGalaxy**. For now, we'll keep it simple and use a rectangular
 grid, whose `shape` defines its $(y,x)$ dimensions. We will make it the same shape as the 2D grid.
 
-The `RectangularAdaptDensity` mesh adapts its pixels to the density of the masked image-plane
+The `RectangularBilinearAdaptDensity` mesh adapts its pixels to the density of the masked image-plane
 grid via the ray-guided transformed uniform (RTU) grid formulation of Enzi et al. (2026)
 (https://arxiv.org/abs/2606.30620), which should be cited in published work using this mesh.
 Note that whereas that paper pairs the RTU grid with a Gaussian-process prior, **PyAutoGalaxy**
 instead uses its own regularization schemes, introduced later in this chapter.
 """
-mesh = ag.mesh.RectangularAdaptDensity(shape=(100, 100))
+mesh = ag.mesh.RectangularBilinearAdaptDensity(shape=(100, 100))
 
 """
 We now pass the mesh to a `Pixelization`.
@@ -72,18 +72,18 @@ print(type(mapper))
 By plotting our mapper, we now see our `Pixelization`. Its a fairly boring grid of rectangular pixels.
 """
 plot_mapper(
-    mapper=mapper, title="Fairly Boring Grid2D of RectangularAdaptDensity Pixels"
+    mapper=mapper, title="Fairly Boring Grid2D of RectangularBilinearAdaptDensity Pixels"
 )
 
 """
 However, the `Mapper` does contain lots of interesting information about our `Pixelization`, for example its 
 pixelization_grid tells us where the pixel centers are located.
 """
-print("RectangularAdaptDensity Grid2D Pixel Centre 1:")
+print("RectangularBilinearAdaptDensity Grid2D Pixel Centre 1:")
 print(mapper.source_plane_mesh_grid[0])
-print("RectangularAdaptDensity Grid2D Pixel Centre 2:")
+print("RectangularBilinearAdaptDensity Grid2D Pixel Centre 2:")
 print(mapper.source_plane_mesh_grid[1])
-print("RectangularAdaptDensity Grid2D Pixel Centre 3:")
+print("RectangularBilinearAdaptDensity Grid2D Pixel Centre 3:")
 print(mapper.source_plane_mesh_grid[2])
 print("etc.")
 
@@ -113,13 +113,13 @@ We can over-lay this grid on the figure, which is starting to look a bit less bo
 plot_mapper(
     mapper=mapper,
     mesh_grid=mapper.source_plane_data_grid,
-    title="Even less Boring Grid2D of RectangularAdaptDensity Pixels",
+    title="Even less Boring Grid2D of RectangularBilinearAdaptDensity Pixels",
 )
 
 plot_mapper(
     mapper=mapper,
     mesh_grid=mapper.source_plane_data_grid,
-    title="Zoomed Grid2D of RectangularAdaptDensity Pixels",
+    title="Zoomed Grid2D of RectangularBilinearAdaptDensity Pixels",
 )
 
 """

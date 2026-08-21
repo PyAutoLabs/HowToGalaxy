@@ -141,7 +141,7 @@ The `mesh_shape` defines the number of pixels in the rectangular mesh used to re
 to 20 x 20 = 400 mesh pixels.
 
 We use the `RectangularUniform` mesh, where all rectangular mesh pixels have the same size, rather than the
-`RectangularAdaptDensity` mesh used in the previous tutorials. The uniform mesh keeps the geometry simple, and every
+`RectangularBilinearAdaptDensity` mesh used in the previous tutorials. The uniform mesh keeps the geometry simple, and every
 equation below applies unchanged to the adaptive meshes -- only the mesh pixel centres move.
 
 By default, mesh pixels at the edge of the mesh are forced to solutions of zero flux by the linear algebra solver.
@@ -190,7 +190,7 @@ To reconstruct the galaxy on a `RectangularUniform` mesh, we need the centres of
 We compute these by overlaying a uniform rectangular grid over the masked image grid, sized so the mesh fully
 contains the masked region without wasted edge pixels beyond it.
 """
-from autoarray.inversion.mesh.mesh.rectangular_adapt_density import overlay_grid_from
+from autoarray.inversion.mesh.mesh.rectangular_rtu_adapt_density import overlay_grid_from
 
 mesh_grid = overlay_grid_from(
     shape_native=mesh_shape, grid=masked_dataset.grids.pixelization
