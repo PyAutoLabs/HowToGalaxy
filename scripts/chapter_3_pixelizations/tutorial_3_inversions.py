@@ -137,12 +137,16 @@ them -- is derived step-by-step in tutorial 5.) To be good at modeling you do no
 how an inversion works, you simply need to be able to use an inversion to model a galaxy.
 
 To begin, lets consider some random mappings between our mapper`s pixelization pixels and the image.
+
+`mapper.mappings_from` returns one `Mapping` per group of pixelization pixels, which we pass straight to
+`subplot_image_and_mapper` as `regions=`. Each mapping is drawn in its own colour: the pixelization cell on the right,
+and the image-pixels which map into it on the left. Tutorial 2 covers this in detail.
 """
-pix_indexes = [[445], [285], [313], [132], [11]]
+pix_indexes = [[min(index, mapper.pixels - 1)] for index in [445, 285, 313, 132, 211]]
 
-indexes = mapper.slim_indexes_for_pix_indexes(pix_indexes=pix_indexes)
+mappings = mapper.mappings_from(pix_indexes=pix_indexes)
 
-aaplt.subplot_image_and_mapper(mapper=mapper, image=dataset.data)
+aaplt.subplot_image_and_mapper(mapper=mapper, image=dataset.data, regions=mappings)
 
 """
 These mappings are known before the inversion reconstructs the galaxy, which means before this inversion is performed 
