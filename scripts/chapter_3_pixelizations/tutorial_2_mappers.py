@@ -19,6 +19,7 @@ __Contents__
 # from autogalaxy import setup_notebook; setup_notebook()
 
 from pathlib import Path
+import numpy as np
 import autogalaxy as ag
 import autogalaxy.plot as aplt
 import autoarray.plot as aaplt
@@ -84,30 +85,45 @@ interpolator = mesh.interpolator_from(
 mapper = ag.Mapper(interpolator=interpolator)
 
 """
-We now plot the `Mapper` alongside the image we used to generate the grid.
-
-Using the `Visuals2D` object we are also going to highlight specific grid coordinates certain colors, such that we
-can see how they map from the image grid to the pixelization grid. 
+We now plot the `Mapper` alongside the image we used to generate the grid: the image on the left, and on the right the
+rectangular mesh the image-pixel coordinates land on.
 """
-indexes = [range(250), [150, 250, 350, 450, 550, 650, 750, 850, 950, 1050]]
-
 aaplt.subplot_image_and_mapper(mapper=mapper, image=dataset.data)
 
 
 """
-Using a mapper, we can now make these mappings appear the other way round. That is, we can input a pixelization pixel
-index (of our rectangular grid) and highlight how all of the image-pixels that it contains map to the image-plane. 
+That shows us the two grids, but not the thing which links them. A mapper's actual job is to record, for every
+pixelization pixel, which image-pixels fall inside it -- and we can ask it for exactly that.
 
-Lets map a central source pixel to the image. We observe that for a given rectangular pixelization
-pixel, there are four image pixels.
+`mapper.mappings_from` takes a list of pixelization-pixel index *groups* and returns one `Mapping` per group. Each
+`Mapping` carries `source_contours` (the outline of the pixelization cell(s) in the group) and `image_contours` (the
+outlines of the connected regions of image-pixels which map into it). Both are polygons in arc-seconds, so
+`subplot_image_and_mapper` can draw them in matched colours: the cell on the right, the image-pixels it owns on the
+left.
+
+Lets map the pixelization pixels at the centre of the mesh to the image. The mesh above adapts its resolution to the
+galaxy's light, so its central cells are far smaller than its outer ones -- a single central cell would be a speck on
+the figure. We therefore take the 25 cells closest to the mesh centre as one group, which draws as one visible patch.
 """
-pix_indexes = [[max(0, mapper.pixels // 2 - 1)]]
+mesh_grid = np.asarray(mapper.source_plane_mesh_grid)
 
-indexes = mapper.slim_indexes_for_pix_indexes(pix_indexes=pix_indexes)
+distances = np.hypot(mesh_grid[:, 0], mesh_grid[:, 1])
 
-aaplt.subplot_image_and_mapper(mapper=mapper, image=dataset.data)
+pix_indexes = [np.argsort(distances)[:25]]
+
+mappings = mapper.mappings_from(pix_indexes=pix_indexes)
+
+aaplt.subplot_image_and_mapper(mapper=mapper, image=dataset.data, regions=mappings)
 
 """
+On the right, a red patch of the pixelization. On the left, the same red marks the image-pixels which map into it,
+sitting exactly on the galaxy's bright centre. The colour is the statement: these image-pixels and those cells are the
+same thing, seen from the two sides of the mapper.
+
+Notice that the image-plane patch is a little wider than the cells strictly contain. This is because the pairing is
+not one-to-one: a bilinear interpolation scheme is used, so an image-pixel which lands just outside a cell is still
+paired with it, with a weight.
+
 Okay, so I think we can agree, mapper's map things! More specifically, they map pixelization pixels to multiple pixels 
 in the observed image of a galaxy.
 
@@ -145,22 +161,31 @@ aaplt.subplot_image_and_mapper(mapper=mapper, image=dataset.data)
 First, we can see a red circle of dots in both the image and pixelization, showing where the edge of the mask
 maps to in the pixelization.
 
-Now lets show that when we plot pixelization pixel indexes, they still appear in the same place in the image.
+Now lets show that when we draw pixelization pixels, they still appear in the same place in the image. We take the 100
+cells closest to the mesh centre and split them into four groups of 25, working outwards, so each group is drawn in
+its own colour.
 """
-pix_indexes = []
+mesh_grid = np.asarray(mapper.source_plane_mesh_grid)
 
-for pix_index in range(mapper.pixels):
-    if mapper.slim_indexes_for_pix_indexes(pix_indexes=[[pix_index]])[0]:
-        pix_indexes.append([pix_index])
+distances = np.hypot(mesh_grid[:, 0], mesh_grid[:, 1])
 
-    if len(pix_indexes) == 4:
-        break
+order = np.argsort(distances)
 
-indexes = mapper.slim_indexes_for_pix_indexes(pix_indexes=pix_indexes)
+pix_indexes = [order[index * 25 : (index + 1) * 25] for index in range(4)]
 
-aaplt.subplot_image_and_mapper(mapper=mapper, image=dataset.data)
+mappings = mapper.mappings_from(pix_indexes=pix_indexes)
+
+aaplt.subplot_image_and_mapper(mapper=mapper, image=dataset.data, regions=mappings)
 
 """
+Four groups, four colours, and each colour appears in exactly one place in the image -- unlike a strong lens, where
+the same source region appears in several images, an unlensed galaxy maps one-to-one. Groups which are neighbours in
+the pixelization own image-pixels which are neighbours in the image, so the colours nest outwards from the galaxy's
+centre in both panels.
+
+The mask has not moved anything: it has only removed the image-pixels outside it, so the cells beyond the mask's edge
+now own nothing at all.
+
 __Wrap Up__
 
 In this tutorial, we learnt about mappers, and we used them to understand how the image and pixelization map to one 
