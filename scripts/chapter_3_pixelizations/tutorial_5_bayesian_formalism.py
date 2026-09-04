@@ -190,7 +190,9 @@ To reconstruct the galaxy on a `RectangularUniform` mesh, we need the centres of
 We compute these by overlaying a uniform rectangular grid over the masked image grid, sized so the mesh fully
 contains the masked region without wasted edge pixels beyond it.
 """
-from autoarray.inversion.mesh.mesh.rectangular_rtu_adapt_density import overlay_grid_from
+from autoarray.inversion.mesh.mesh.rectangular_rtu_adapt_density import (
+    overlay_grid_from,
+)
 
 mesh_grid = overlay_grid_from(
     shape_native=mesh_shape, grid=masked_dataset.grids.pixelization

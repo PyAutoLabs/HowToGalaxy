@@ -72,7 +72,8 @@ print(type(mapper))
 By plotting our mapper, we now see our `Pixelization`. Its a fairly boring grid of rectangular pixels.
 """
 plot_mapper(
-    mapper=mapper, title="Fairly Boring Grid2D of RectangularBilinearAdaptDensity Pixels"
+    mapper=mapper,
+    title="Fairly Boring Grid2D of RectangularBilinearAdaptDensity Pixels",
 )
 
 """
