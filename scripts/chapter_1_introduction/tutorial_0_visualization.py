@@ -18,11 +18,16 @@ __Contents__
 # from autogalaxy import setup_notebook; setup_notebook()
 
 """
-If the printed working directory does not match the workspace path on your computer, you can manually set it
+__Directories__
+
+**HowToGalaxy** assumes the working directory is the `HowToGalaxy` repository root on your hard-disk, so that
+relative paths to `config/`, `dataset/` and `output/` resolve correctly.
+
+If the printed working directory does not match this path on your computer, you can manually set it
 as follows (the example below shows the path I would use on my laptop. The code is commented out so you do not
 use this path in this tutorial!
 """
-# workspace_path = "/Users/Jammy/Code/PyAuto/autogalaxy_workspace"
+# workspace_path = "/Users/Jammy/Code/PyAuto/HowToGalaxy"
 # #%cd $workspace_path
 # print(f"Working Directory has been set to `{workspace_path}`")
 
@@ -30,10 +35,10 @@ use this path in this tutorial!
 __Dataset__
 
 The `dataset_path` specifies where the dataset is located, which is the
-directory `autogalaxy_workspace/dataset/imaging/simple__sersic`.
+directory `dataset/imaging/simple__sersic` of the HowToGalaxy repository.
 
-There are many example simulated images of galaxies in this directory that will be used throughout the
-**HowToGalaxy** lectures.
+The simulated images of galaxies used throughout the **HowToGalaxy** lectures are written to the `dataset`
+directory at runtime by the simulator scripts in `scripts/simulators/`.
 """
 from pathlib import Path
 
@@ -99,7 +104,7 @@ be found in the `autogalaxy_workspace/*/guides/plot` package. You should check t
 Ideally, we would not specify these options every time we plot an image. Fortunately, default values can be fully
 customized via the config files.
 
-Checkout the `general.yaml` file in `autogalaxy_workspace/config/visualize`.
+Checkout the `general.yaml` file in `HowToGalaxy/config/visualize`.
 
 All default visualization values are here. There are a lot of entries, so lets focus on whats important for
 displaying figures:

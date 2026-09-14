@@ -286,7 +286,7 @@ Run the fit. Despite the model containing 11 galaxies, the parameter space is ba
 galaxy's — this is the catalogue tier doing its job.
 """
 print(
-    "The non-linear search has begun running - checkout the workspace/output/howtogalaxy/chapter_4/tutorial_3_cluster"
+    "The non-linear search has begun running - checkout the HowToGalaxy/output/howtogalaxy/chapter_4/tutorial_3_cluster"
     " folder for live output of the results, images and model."
     " This Jupyter notebook cell with progress once search has completed - this could take some time!"
 )

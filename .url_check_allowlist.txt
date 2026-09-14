@@ -11,4 +11,3 @@ http://geekfeminism.wikia.com/wiki/Conference_anti-harassment/Policy  # CODE_OF_
 
 # GitHub refs (workspaces / removed tutorials)
 https://github.com/Jammy2211/PyAutoLogo/blob/main/gifs/pyautogalaxy.gif?raw=true  # README.md:7
-https://github.com/PyAutoLabs/autogalaxy_workspace/blob/main/scripts/chapter_1_introduction/HubbleTuningFork.jpg  # scripts/chapter_1_introduction/tutorial_1_grids_and_galaxies.py:9

@@ -335,8 +335,8 @@ We will now save these simulated data to `.fits` files, the standard format used
 Most imaging data from telescopes like the Hubble Space Telescope (HST) are stored in this format.
 
 The `dataset_path` specifies where the data will be saved, in this case, in the directory 
-`autogalaxy_workspace/dataset/imaging/howtogalaxy/`, which contains many example images distributed with 
-the `autogalaxy_workspace`.
+`HowToGalaxy/dataset/imaging/howtogalaxy/`, which is where the datasets simulated by the **HowToGalaxy** 
+tutorials are written.
 
 The files are named `data.fits`, `noise_map.fits`, and `psf.fits`, and will be used in the next tutorial.
 """

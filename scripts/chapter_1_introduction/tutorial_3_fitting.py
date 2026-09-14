@@ -43,11 +43,11 @@ __Dataset__
 We begin by loading the imaging dataset that we will use for fitting in this tutorial. This dataset is identical to the 
 one we simulated in the previous tutorial, representing how a galaxy would appear if captured by a CCD camera.
 
-In the previous tutorial, we saved this dataset as .fits files in the `autogalaxy_workspace/dataset/imaging/howtogalaxy` 
+In the previous tutorial, we saved this dataset as .fits files in the `HowToGalaxy/dataset/imaging/howtogalaxy` 
 folder. The `.fits` format is commonly used in astronomy for storing image data along with metadata, making it a
 standard for CCD imaging.
 
-The `dataset_path` below specifies where these files are located: `autogalaxy_workspace/dataset/imaging/howtogalaxy/`.
+The `dataset_path` below specifies where these files are located: `HowToGalaxy/dataset/imaging/howtogalaxy/`.
 """
 dataset_path = Path("dataset", "imaging", "howtogalaxy")
 
