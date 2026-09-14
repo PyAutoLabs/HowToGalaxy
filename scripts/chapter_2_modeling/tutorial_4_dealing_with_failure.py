@@ -231,7 +231,7 @@ search = af.Nautilus(
 analysis = ag.AnalysisImaging(dataset=dataset, use_jax=True)
 
 print(
-    "The non-linear search has begun running - checkout the workspace/output/howtogalaxy/chapter_2/tutorial_4_custom_priors"
+    "The non-linear search has begun running - checkout the HowToGalaxy/output/howtogalaxy/chapter_2/tutorial_4_custom_priors"
     " folder for live output of the results, images and model."
     " This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
@@ -318,7 +318,7 @@ search = af.Nautilus(
 )
 
 print(
-    "The non-linear search has begun running - checkout the workspace/output/howtogalaxy/chapter_2/tutorial_4_reducing_complexity"
+    "The non-linear search has begun running - checkout the HowToGalaxy/output/howtogalaxy/chapter_2/tutorial_4_reducing_complexity"
     " folder for live output of the results, images and model."
     " This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
@@ -385,7 +385,7 @@ search = af.Nautilus(
 )
 
 print(
-    "The non-linear search has begun running - checkout the workspace/output/howtogalaxy/chapter_2/tutorial_4_look_harder"
+    "The non-linear search has begun running - checkout the HowToGalaxy/output/howtogalaxy/chapter_2/tutorial_4_look_harder"
     " folder for live output of the results, images and model."
     " This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )

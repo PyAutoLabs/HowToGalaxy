@@ -147,10 +147,10 @@ as recommended in the previous tutorial.
 
 We set up the `Nautilus` object with these parameters:
 
-- **`path_prefix`**: specifies the output directory, here set to `autogalaxy_workspace/output/howtogalaxy/chapter_2`.
+- **`path_prefix`**: specifies the output directory, here set to `HowToGalaxy/output/howtogalaxy/chapter_2`.
   
 - **`name`**: gives the search a descriptive name, which creates the full output path 
-as `autogalaxy_workspace/output/howtogalaxy/chapter_2/tutorial_2_practicalities`.
+as `HowToGalaxy/output/howtogalaxy/chapter_2/tutorial_2_practicalities`.
 
 - **`n_live`**: controls the number of live points Nautilus uses to sample parameter space.
 
@@ -179,7 +179,7 @@ profile, 80 live points is sufficient to achieve reliable results.
 
 __Iterations Per Update__
 
-Every N iterations, the non-linear search outputs the current results to the folder `autogalaxy_workspace/output`,
+Every N iterations, the non-linear search outputs the current results to the folder `HowToGalaxy/output`,
 which includes producing visualization. 
 
 Depending on how long it takes for the model to be fitted to the data (see discussion about run times below), 
@@ -262,7 +262,7 @@ for using super-computers for fitting tasks, as they require separate Python scr
 For tasks like loading results, inspecting data, plotting, and interpreting results, Jupyter notebooks remain ideal.
 """
 print(
-    "The non-linear search has begun running - checkout the autogalaxy_workspace/output/"
+    "The non-linear search has begun running - checkout the HowToGalaxy/output/"
     " folder for live output of the results, images and model."
     " This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
@@ -285,7 +285,7 @@ print(result.info)
 """
 __Output Folder__
 
-Now checkout the `autogalaxy_workspace/output` folder.
+Now checkout the `HowToGalaxy/output` folder.
 
 This is where the results of the search are written to hard-disk (in the `tutorial_2_practicalities` folder). 
 
@@ -308,7 +308,7 @@ the `dataset_name` to the search's `unique_tag`.
 
 __Output Folder Contents__
 
-Now this is running you should checkout the `autogalaxy_workspace/output` folder. This is where the results of the
+Now this is running you should checkout the `HowToGalaxy/output` folder. This is where the results of the
 search are written to hard-disk (in the `tutorial_2_practicalities` folder), where all outputs are human readable
 (e.g. as .json, .csv or text files).
 
@@ -368,7 +368,7 @@ __Other Practicalities__
 The following are examples of other practicalities which I will document fully in this example script in the future,
 but so far have no found the time:
 
-- `config`: The files in `autogalaxy_workspace/config` which control many aspects of how PyAutoGalaxy runs,
+- `config`: The files in `HowToGalaxy/config` which control many aspects of how PyAutoGalaxy runs,
  including visualization, the non-linear search settings.
 
 - `config/priors`: Folder containing the default priors on all model components.

@@ -132,7 +132,7 @@ search = af.Nautilus(
 analysis = ag.AnalysisImaging(dataset=dataset, use_jax=True)
 
 print(
-    "The non-linear search has begun running - checkout the workspace/output"
+    "The non-linear search has begun running - checkout the HowToGalaxy/output"
     "  folder for live output of the results, images and model."
     "  This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
@@ -162,7 +162,7 @@ search = af.Nautilus(
 )
 
 print(
-    "The non-linear search has begun running - checkout the workspace/output"
+    "The non-linear search has begun running - checkout the HowToGalaxy/output"
     "  folder for live output of the results, images and model."
     "  This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
@@ -238,7 +238,7 @@ search = af.Zeus(
 )
 
 print(
-    "Zeus has begun running - checkout the workspace/output"
+    "Zeus has begun running - checkout the HowToGalaxy/output"
     "  folder for live output of the results, images and model."
     "  This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )
@@ -259,7 +259,7 @@ search = af.Emcee(
 )
 
 print(
-    "The non-linear search has begun running - checkout the workspace/output"
+    "The non-linear search has begun running - checkout the HowToGalaxy/output"
     "  folder for live output of the results, images and model."
     "  This Jupyter notebook cell will progress once search has completed - this could take some time!"
 )

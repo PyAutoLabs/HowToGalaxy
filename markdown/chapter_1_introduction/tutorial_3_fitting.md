@@ -51,11 +51,11 @@ __Dataset__
 We begin by loading the imaging dataset that we will use for fitting in this tutorial. This dataset is identical to the 
 one we simulated in the previous tutorial, representing how a galaxy would appear if captured by a CCD camera.
 
-In the previous tutorial, we saved this dataset as .fits files in the `autogalaxy_workspace/dataset/imaging/howtogalaxy` 
+In the previous tutorial, we saved this dataset as .fits files in the `HowToGalaxy/dataset/imaging/howtogalaxy` 
 folder. The `.fits` format is commonly used in astronomy for storing image data along with metadata, making it a
 standard for CCD imaging.
 
-The `dataset_path` below specifies where these files are located: `autogalaxy_workspace/dataset/imaging/howtogalaxy/`.
+The `dataset_path` below specifies where these files are located: `HowToGalaxy/dataset/imaging/howtogalaxy/`.
 
 
 ```python
@@ -64,17 +64,18 @@ dataset_path = Path("dataset", "imaging", "howtogalaxy")
 
 __Dataset Auto-Simulation__
 
-If the dataset does not already exist on your system, it will be created by running the corresponding
-simulator script. This ensures that all example scripts can be run without manually simulating data first.
+The `howtogalaxy` dataset is the one built up and saved in tutorial 2 (`tutorial_2_data.py`). If it
+does not already exist on your system, it is created by running that script. This ensures every
+example script can be run without manually simulating data first.
 
 
 ```python
-if not dataset_path.exists():
+if ag.util.dataset.should_simulate(str(dataset_path)):
     import subprocess
     import sys
 
     subprocess.run(
-        [sys.executable, "scripts/simulators/simple.py"],
+        [sys.executable, "scripts/chapter_1_introduction/tutorial_2_data.py"],
         check=True,
     )
 
@@ -113,11 +114,11 @@ aplt.subplot_imaging_dataset(dataset=dataset)
 ```
 
     Value of first pixel in imaging data:
-    -0.003333333333333341
+    -0.026666666666666672
     Value of first pixel in noise map:
-    0.01795054935711501
+    0.015634719199411434
     Value of first pixel in PSF:
-    0.0
+    2.210334945638401e-12
 
 
 
@@ -155,44 +156,22 @@ print(mask)  # 1 = True, meaning the pixel is masked. Edge pixels are indeed mas
 print(mask[48:53, 48:53])  # Central pixels are `False` and therefore unmasked.
 ```
 
-    Mask2D([[False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False]])
-    []
+    Mask2D([[ True,  True,  True, ...,  True,  True,  True],
+           [ True,  True,  True, ...,  True,  True,  True],
+           [ True,  True,  True, ...,  True,  True,  True],
+           ...,
+           [ True,  True,  True, ...,  True,  True,  True],
+           [ True,  True,  True, ...,  True,  True,  True],
+           [ True,  True,  True, ...,  True,  True,  True]], shape=(101, 101))
+    [[False False False False False]
+     [False False False False False]
+     [False False False False False]
+     [False False False False False]
+     [False False False False False]]
 
 
-We can visualize the mask over the galaxy image using an `Imaging`, which helps us adjust the mask as needed. 
-This is useful to ensure that the mask appropriately covers the galaxy's light and does not exclude important regions.
-
-To overlay objects like a mask onto a figure, we use the `Visuals2D` object. This tool allows us to add custom 
-visuals to any plot, providing flexibility in creating tailored visual representations.
+We can visualize the mask over the galaxy image, which helps us adjust the mask as needed. This is useful to ensure
+that the mask appropriately covers the galaxy's light and does not exclude important regions.
 
 
 ```python
@@ -213,11 +192,11 @@ that only the unmasked regions are considered during the analysis.
 dataset = dataset.apply_mask(mask=mask)
 ```
 
-    2026-07-11 16:29:05,943 - autoarray.dataset.imaging.dataset - INFO - IMAGING - Data masked, contains a total of 225 image-pixels
+    2026-09-14 22:22:18,761 - autoarray.dataset.imaging.dataset - INFO - IMAGING - Data masked, contains a total of 2809 image-pixels
 
 
-When we plot the masked imaging data again, the mask is now automatically included in the plot, even though we did 
-not explicitly pass it using the `Visuals2D` object. The plot also zooms into the unmasked area, showing only the 
+When we plot the masked imaging data again, the mask is now automatically included in the plot, even though we did
+not explicitly pass it to the plot function. The plot also zooms into the unmasked area, showing only the
 region where we will focus our analysis. This is particularly helpful when working with large images, as it centers 
 the view on the regions where the galaxy's signal is detected.
 
@@ -242,36 +221,13 @@ print(dataset.mask)
 ```
 
     Mask2D:
-    Mask2D([[False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False, False,
-            False, False, False, False, False, False]])
+    Mask2D([[ True,  True,  True, ...,  True,  True,  True],
+           [ True,  True,  True, ...,  True,  True,  True],
+           [ True,  True,  True, ...,  True,  True,  True],
+           ...,
+           [ True,  True,  True, ...,  True,  True,  True],
+           [ True,  True,  True, ...,  True,  True,  True],
+           [ True,  True,  True, ...,  True,  True,  True]], shape=(101, 101))
 
 
 In earlier tutorials, we discussed how grids and arrays have `native` and `slim` representations:
@@ -295,12 +251,12 @@ print("Number of unmasked pixels:")
 print(dataset.data.native.shape)
 print(
     dataset.data.slim.shape
-)  # This should be lower than the total number of pixels, e.g., 100 x 100 = 10,000
+)  # This should be lower than the total number of pixels, e.g., 101 x 101 = 10,201
 ```
 
     Number of unmasked pixels:
-    (15, 15)
-    (225,)
+    (101, 101)
+    (2809,)
 
 
 The `mask` object also has a `pixels_in_mask` attribute, which gives the number of unmasked pixels. This should 
@@ -311,7 +267,7 @@ match the size of the `slim` data structure.
 print(dataset.data.mask.pixels_in_mask)
 ```
 
-    225
+    2809
 
 
 We can use the `slim` attribute to print the first unmasked values from the image and noise map:
@@ -325,9 +281,9 @@ print(dataset.noise_map.slim[0])
 ```
 
     First unmasked image value:
-    -0.003333333333333341
+    0.06666666666666665
     First unmasked noise map value:
-    0.01795054935711501
+    0.023570226039551584
 
 
 Additionally, we can verify that the `native` data structure has zeros at the edges where the mask is applied and 
@@ -343,9 +299,9 @@ print(dataset.data.native[centre])
 ```
 
     Example masked pixel in the image's native representation at its edge:
-    -0.003333333333333341
+    0.0
     Example unmasked pixel in the image's native representation at its center:
-    8.75
+    16.316666666666666
 
 
 __Masked Grid__
@@ -394,8 +350,8 @@ __Fitting__
 
 Now that our data is masked, we are ready to proceed with the fitting process.
 
-Fitting the data is done using the `Galaxy` and `Galaxies objects that we introduced in tutorial 2. We will start by 
-setting up a `Galaxies`` object, using the same galaxy configuration that we previously used to simulate the 
+Fitting the data is done using the `Galaxy` and `Galaxies` objects that we introduced in tutorial 1. We will start by
+setting up a `Galaxies` object, using the same galaxy configuration that we previously used to simulate the
 imaging data. This setup will give us what is known as a 'perfect' fit, as the simulated and fitted models are identical.
 
 
@@ -468,14 +424,12 @@ aplt.plot_array(array=fit.model_data, title="Model Image")
 ```
 
     First model image pixel:
-
-
-    0.9970308140413991
+    0.057497593627223016
 
 
 
     
-![png](tutorial_3_fitting_files/tutorial_3_fitting_37_2.png)
+![png](tutorial_3_fitting_files/tutorial_3_fitting_37_1.png)
     
 
 
@@ -503,7 +457,7 @@ aplt.plot_array(array=fit.model_data, title="Model Image")
     
 
 
-The `residual_map` is the different between the observed image and model image, showing where in the image the fit is
+The `residual_map` is the difference between the observed image and model image, showing where in the image the fit is
 good (e.g. low residuals) and where it is bad (e.g. high residuals).
 
 The expression for the residual map is simply:
@@ -526,9 +480,9 @@ aplt.plot_array(array=fit.residual_map, title="Residual Map")
 ```
 
     First residual-map pixel:
-    -1.0003641473747324
+    0.009169073039443636
     First residual-map pixel via fit:
-    -1.0003641473747324
+    0.009169073039443636
 
 
 
@@ -538,7 +492,7 @@ aplt.plot_array(array=fit.residual_map, title="Residual Map")
 
 
 Are these residuals indicative of a good fit to the data? Without considering the noise in the data, it's difficult 
-to ascertain. That is, its hard to ascenrtain if a residual value is large or small because this depends on the
+to ascertain. That is, its hard to ascertain if a residual value is large or small because this depends on the
 amount of noise in that pixel.
 
 The `normalized_residual_map` divides the residual-map by the noise-map, giving the residual in units of the noise.
@@ -564,9 +518,9 @@ aplt.plot_array(array=fit.normalized_residual_map, title="Normalized Residual Ma
 ```
 
     First normalized residual-map pixel:
-    -55.72888759408473
+    0.3890108234031206
     First normalized residual-map pixel via fit:
-    -55.72888759408473
+    0.3890108234031206
 
 
 
@@ -601,9 +555,9 @@ aplt.plot_array(array=fit.chi_squared_map, title="Chi-Squared Map")
 ```
 
     First chi-squared pixel:
-    3105.708912474131
+    0.15132942072477387
     First chi-squared pixel via fit:
-    3105.708912474131
+    0.15132942072477387
 
 
 
@@ -633,8 +587,8 @@ print("Chi-squared = ", chi_squared)
 print("Chi-squared via fit = ", fit.chi_squared)
 ```
 
-    Chi-squared =  2969344.8564160876
-    Chi-squared via fit =  2969344.8564160876
+    Chi-squared =  2977.0775143597593
+    Chi-squared via fit =  2977.0775143597593
 
 
 The reduced chi-squared is the `chi_squared` value divided by the number of data points (e.g., the number of pixels
@@ -653,7 +607,7 @@ reduced_chi_squared = chi_squared / dataset.mask.pixels_in_mask
 print("Reduced Chi-squared = ", reduced_chi_squared)
 ```
 
-    Reduced Chi-squared =  13197.088250738167
+    Reduced Chi-squared =  1.0598353557706512
 
 
 Another quantity that contributes to our final assessment of the goodness-of-fit is the `noise_normalization`.
@@ -678,8 +632,8 @@ print("Noise Normalization = ", noise_normalization)
 print("Noise Normalization via fit = ", fit.noise_normalization)
 ```
 
-    Noise Normalization =  -1242.2701057123368
-    Noise Normalization via fit =  -1242.2701057123368
+    Noise Normalization =  -13533.932356174824
+    Noise Normalization via fit =  -13533.932356174824
 
 
 From the `chi_squared` and `noise_normalization`, we can define a final goodness-of-fit measure known as 
@@ -700,8 +654,8 @@ print("Log Likelihood = ", log_likelihood)
 print("Log Likelihood via fit = ", fit.log_likelihood)
 ```
 
-    Log Likelihood =  -1484051.2931551877
-    Log Likelihood via fit =  -1484051.2931551877
+    Log Likelihood =  5278.427420907532
+    Log Likelihood via fit =  5278.427420907532
 
 
 In the previous discussion, we noted that a lower \(\chi^2\) value indicates a better fit of the model to the 
@@ -751,7 +705,7 @@ and 'log_likelihood' before.
 These metrics are standard ways to quantify the quality of a model fit. They are applicable not only to 1D data but 
 also to more complex data structures like 2D images, 3D data cubes, or any other multidimensional datasets.
 
-__Incorrect Fit___
+__Incorrect Fit__
 
 In the previous section, we successfully created and fitted a galaxy model to the image data, resulting in an 
 excellent fit. The residual map and chi-squared map showed no significant discrepancies, indicating that the 
@@ -806,9 +760,9 @@ print(fit_bad.log_likelihood)
 ```
 
     Previous Likelihood:
-    -1484051.2931551877
+    5278.427420907532
     New Likelihood:
-    -1564635.9594986455
+    1845.7216188557404
 
 
 As expected, we observe that the log likelihood has decreased! This decline confirms that our new model is indeed a 
@@ -861,10 +815,10 @@ print(fit_very_bad.log_likelihood)
 ```
 
     Previous Likelihoods:
-    -1484051.2931551877
-    -1564635.9594986455
+    5278.427420907532
+    1845.7216188557404
     New Likelihood:
-    -4260401.8922673315
+    -531204.4540934614
 
 
 __Model Fitting__
@@ -887,6 +841,15 @@ true parameters of this profile are unknown.
 dataset_name = "simple"
 dataset_path = Path("dataset") / "imaging" / dataset_name
 
+if ag.util.dataset.should_simulate(str(dataset_path)):
+    import subprocess
+    import sys
+
+    subprocess.run(
+        [sys.executable, "scripts/simulators/simple.py"],
+        check=True,
+    )
+
 dataset = ag.Imaging.from_fits(
     data_path=dataset_path / "data.fits",
     psf_path=dataset_path / "psf.fits",
@@ -906,7 +869,7 @@ aplt.subplot_imaging_dataset(dataset=dataset)
 
 ```
 
-    2026-07-11 16:29:10,659 - autoarray.dataset.imaging.dataset - INFO - IMAGING - Data masked, contains a total of 2828 image-pixels
+    2026-09-14 22:22:24,845 - autoarray.dataset.imaging.dataset - INFO - IMAGING - Data masked, contains a total of 2828 image-pixels
 
 
 
@@ -961,7 +924,7 @@ print(fit.log_likelihood)
 
 
     Log Likelihood:
-    -238826.9938543461
+    -244466.34178209922
 
 
 Manually guessing model parameters repeatedly is a very inefficient and slow way to find the best fit. If the model 
@@ -998,8 +961,3 @@ Let's summarise what we have covered:
   
 - **Model Fitting**: We performed a basic model fit on a simple dataset, adjusting the model parameters to improve the
   fit quality.
-
-
-```python
-
-```

@@ -23,22 +23,25 @@ __Contents__
 from autogalaxy import setup_notebook; setup_notebook()
 ```
 
-    2026-07-11 16:20:09,770 - matplotlib.font_manager - INFO - Failed to extract font properties from /usr/share/fonts/truetype/noto/NotoColorEmoji.ttf: Can not load face (unknown file format; error code 0x2)
-
-
-    2026-07-11 16:20:09,868 - matplotlib.font_manager - INFO - generated new fontManager
-
-
     Working Directory has been set to `HowToGalaxy`
 
 
-If the printed working directory does not match the workspace path on your computer, you can manually set it
+__Directories__
+
+**HowToGalaxy** assumes the working directory is the `HowToGalaxy` repository root on your hard-disk, so that
+relative paths to `config/`, `dataset/` and `output/` resolve correctly.
+
+If you do not have a **HowToGalaxy** clone, you can download it here:
+
+ https://github.com/PyAutoLabs/HowToGalaxy
+
+If the printed working directory does not match this path on your computer, you can manually set it
 as follows (the example below shows the path I would use on my laptop. The code is commented out so you do not
 use this path in this tutorial!
 
 
 ```python
-# workspace_path = "/Users/Jammy/Code/PyAuto/autogalaxy_workspace"
+# workspace_path = "/Users/Jammy/Code/PyAuto/HowToGalaxy"
 # #%cd $workspace_path
 # print(f"Working Directory has been set to `{workspace_path}`")
 ```
@@ -46,10 +49,10 @@ use this path in this tutorial!
 __Dataset__
 
 The `dataset_path` specifies where the dataset is located, which is the
-directory `autogalaxy_workspace/dataset/imaging/simple__sersic`.
+directory `dataset/imaging/simple__sersic` of the HowToGalaxy repository.
 
-There are many example simulated images of galaxies in this directory that will be used throughout the
-**HowToGalaxy** lectures.
+The simulated images of galaxies used throughout the **HowToGalaxy** lectures are written to the `dataset`
+directory at runtime by the simulator scripts in `scripts/simulators/`.
 
 
 ```python
@@ -68,7 +71,7 @@ simulator script. This ensures that all example scripts can be run without manua
 
 
 ```python
-if not dataset_path.exists():
+if ag.util.dataset.should_simulate(str(dataset_path)):
     import subprocess
     import sys
 
@@ -108,12 +111,12 @@ __Plot Customization__
 
 Does the figure display correctly on your computer screen?
 
-If not, you can customize common matplotlib options by passing them directly to `plot_array`:
+If not, you can customize common plot options by passing them directly to `plot_array`:
 
  - `title=`: Set the figure title.
- - `figsize=`: Control the figure size as a `(width, height)` tuple.
  - `colormap=`: Set the matplotlib colormap name (e.g. `"jet"`, `"gray"`).
- - `xlabel=`, `ylabel=`: Override the default axis labels.
+ - `use_log10=`: Plot the image on a log10 scale, revealing faint features.
+ - `vmin=`, `vmax=`: Override the minimum and maximum values of the colormap.
 
 
 ```python
@@ -129,32 +132,30 @@ aplt.plot_array(
     
 
 
-Many matplotlib options can be customized, but for now we're only concerned with making sure figures display clear in
+Many plot options can be customized, but for now we're only concerned with making sure figures display clearly in
 your Jupyter Notebooks. Nevertheless, a comprehensive API reference guide of all available plot arguments can
 be found in the `autogalaxy_workspace/*/guides/plot` package. You should check this out once you are more familiar with
 **PyAutoGalaxy**.
 
-Ideally, we would not specify a `figsize` every time we plot an image. Fortunately, default values can be fully
+Ideally, we would not specify these options every time we plot an image. Fortunately, default values can be fully
 customized via the config files.
 
-Checkout the `mat_wrap.yaml` file in `autogalaxy_workspace/config/visualize/mat_wrap`.
+Checkout the `general.yaml` file in `HowToGalaxy/config/visualize`.
 
-All default matplotlib values are here. There are a lot of entries, so lets focus on whats important for displaying
-figures:
+All default visualization values are here. There are a lot of entries, so lets focus on whats important for
+displaying figures:
 
- - mat_wrap.yaml -> Figure -> figure: -> figsize
- - mat_wrap.yaml -> YLabel -> figure: -> fontsize
- - mat_wrap.yaml -> XLabel -> figure: -> fontsize
- - mat_wrap.yaml -> TickParams -> figure: -> labelsize
- - mat_wrap.yaml -> YTicks -> figure: -> labelsize
- - mat_wrap.yaml -> XTicks -> figure: -> labelsize
+ - general.yaml -> general -> backend: the matplotlib backend used for visualization.
+ - general.yaml -> colormap: the default colormap of 2D plots.
+ - general.yaml -> subplot_shape_to_figsize_factor: controls the size of subplot figures.
+ - general.yaml -> colorbar: the font sizes of colorbar labels.
 
 Don't worry about all the other files or options listed for now, as they'll make a lot more sense once you are familiar
 with **PyAutoGalaxy**.
 
 If you had to change any of the above settings to get the figures to display clearly, you should update their values
 in the corresponding config files above (you will need to reset your Jupyter notebook server for these changes to
-take effect, so make sure you have the right values using the `figsize` argument in the cell above beforehand!).
+take effect, so make sure you have the right values using the arguments in the cell above beforehand!).
 
 __Subplots__
 
@@ -176,11 +177,12 @@ aplt.subplot_imaging_dataset(dataset=dataset)
 
 __Visuals__
 
-Visuals can be added to any figure by passing them as keyword arguments directly to `plot_array`.
+Visuals can be added to any figure by passing them as keyword arguments directly to `plot_array`, for
+example `grid=`, `positions=` and `lines=`. The `autogalaxy_workspace/*/guides/plot` examples illustrate every
+overlay argument.
 
-For example, we can plot a mask on the image above by passing `mask=mask`.
-
-The `visuals` example illustrates every overlay argument, for example `mask=`, `grid=`, `positions=`, `lines=`, etc.
+Some visuals appear automatically. For example, if we apply a mask to the dataset, figures of it zoom into the
+unmasked region and only show the unmasked data — as shown by the plot below, which applies an annular mask.
 
 
 ```python
@@ -191,12 +193,17 @@ mask = ag.Mask2D.circular_annular(
     outer_radius=3.0,
 )
 
-aplt.plot_array(array=dataset.data, title="Data")
+dataset = dataset.apply_mask(mask=mask)
+
+aplt.plot_array(array=dataset.data, title="Data With Annular Mask")
 ```
+
+    2026-09-14 22:41:17,361 - autoarray.dataset.imaging.dataset - INFO - IMAGING - Data masked, contains a total of 2796 image-pixels
+
 
 
     
-![png](tutorial_0_visualization_files/tutorial_0_visualization_17_0.png)
+![png](tutorial_0_visualization_files/tutorial_0_visualization_17_1.png)
     
 
 
@@ -206,8 +213,3 @@ Throughout lectures you'll see lots more visuals that are plotted on figures and
 
 Great! Hopefully, visualization in **PyAutoGalaxy** is displaying nicely for us to get on with the **HowToGalaxy**
 lecture series.
-
-
-```python
-
-```

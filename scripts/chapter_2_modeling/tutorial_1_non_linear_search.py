@@ -193,7 +193,7 @@ in this tutorial. This means the model we are going to fit is identical to the o
 allowing us to assess the fitting process under controlled conditions.
 
 The dataset, as well as all subsequent datasets used in future tutorials, is stored in 
-the `autogalaxy_workspace/dataset/imaging` folder. 
+the `HowToGalaxy/dataset/imaging` folder. 
 """
 dataset_name = "simple__sersic"
 dataset_path = Path("dataset") / "imaging" / dataset_name
