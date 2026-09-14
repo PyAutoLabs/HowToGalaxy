@@ -31,6 +31,10 @@ __Directories__
 **HowToGalaxy** assumes the working directory is the `HowToGalaxy` repository root on your hard-disk, so that
 relative paths to `config/`, `dataset/` and `output/` resolve correctly.
 
+If you do not have a **HowToGalaxy** clone, you can download it here:
+
+ https://github.com/PyAutoLabs/HowToGalaxy
+
 If the printed working directory does not match this path on your computer, you can manually set it
 as follows (the example below shows the path I would use on my laptop. The code is commented out so you do not
 use this path in this tutorial!
@@ -194,7 +198,7 @@ dataset = dataset.apply_mask(mask=mask)
 aplt.plot_array(array=dataset.data, title="Data With Annular Mask")
 ```
 
-    2026-09-14 22:21:02,918 - autoarray.dataset.imaging.dataset - INFO - IMAGING - Data masked, contains a total of 2796 image-pixels
+    2026-09-14 22:41:17,361 - autoarray.dataset.imaging.dataset - INFO - IMAGING - Data masked, contains a total of 2796 image-pixels
 
 
 

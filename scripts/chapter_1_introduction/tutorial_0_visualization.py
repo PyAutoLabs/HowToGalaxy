@@ -23,6 +23,10 @@ __Directories__
 **HowToGalaxy** assumes the working directory is the `HowToGalaxy` repository root on your hard-disk, so that
 relative paths to `config/`, `dataset/` and `output/` resolve correctly.
 
+If you do not have a **HowToGalaxy** clone, you can download it here:
+
+ https://github.com/PyAutoLabs/HowToGalaxy
+
 If the printed working directory does not match this path on your computer, you can manually set it
 as follows (the example below shows the path I would use on my laptop. The code is commented out so you do not
 use this path in this tutorial!
