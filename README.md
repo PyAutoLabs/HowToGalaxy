@@ -164,12 +164,12 @@ go after the relevant concept has been introduced.
 If you use **HowToGalaxy** or **PyAutoGalaxy** in your research, please cite the references listed in
 `CITATIONS.rst`.
 
-## Community & Support
+## Community & Contributing
 
-Support for **PyAutoGalaxy** is available via our Slack workspace. Slack is invitation-only; send an email
-if you'd like an invite.
+**PyAutoGalaxy** is built in the open by its users: everyone is welcome to ask questions,
+share what they have made with it, and contribute.
 
-For installation issues, bug reports, or feature requests, raise an issue on the
-[PyAutoGalaxy GitHub issues page](https://github.com/PyAutoLabs/PyAutoGalaxy/issues) (for library issues)
-or the [HowToGalaxy GitHub issues page](https://github.com/PyAutoLabs/HowToGalaxy/issues) (for tutorial
-content issues).
+Questions, ideas and bug reports: the [PyAutoLabs Discussions](https://github.com/orgs/PyAutoLabs/discussions).
+Chat with us on [Slack](https://join.slack.com/t/pyautolens/shared_invite/zt-2cufp4eyf-fXfgMxRGuvg~bMrI3uOAxg).
+
+Community-built tools and tutorials, and how to contribute: the [**PyAutoGalaxy** community page](https://pyautogalaxy.readthedocs.io/en/latest/general/community.html).
