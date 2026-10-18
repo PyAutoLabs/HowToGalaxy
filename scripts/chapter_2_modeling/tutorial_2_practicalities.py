@@ -363,6 +363,16 @@ parameter `n`). These mappings are specified in the `config/notation.yaml` file 
 The superscripts of labels are the path of names each component was given in the model (e.g. for the `Sersic`
 bulge, `galaxy.bulge`: the galaxy's name `galaxy` and its name `bulge` defined when making the `Model` above).
 
+Components of the same class are therefore told apart (every Gaussian of a basis is labelled by the galaxy and
+light profile it belongs to) and, when the model has more than one top-level component, each also gets its own
+corner plot in the output folder (`corner_anesthetic_<component>.png`, switched in `config/visualize/plots_search.yaml`).
+
+The parameters a model is sampled in are not always the ones it is read in: a profile's elliptical components are an
+axis ratio and a position angle. Passing `latent=True` to `corner_anesthetic` plots these latent parameters instead.
+The same figure is written to the output folder as `corner_anesthetic_latent.png` when `corner_anesthetic_latent`
+is switched on in `config/visualize/plots_search.yaml` (off by default), once the fit is complete, and the latent
+parameters are also written to `latent.csv` with the other latent variables.
+
 __Other Practicalities__
 
 The following are examples of other practicalities which I will document fully in this example script in the future,
