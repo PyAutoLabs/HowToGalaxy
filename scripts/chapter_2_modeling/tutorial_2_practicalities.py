@@ -370,8 +370,9 @@ corner plot in the output folder (`corner_anesthetic_<component>.png`, switched 
 The parameters a model is sampled in are not always the ones it is read in: a profile's elliptical components are an
 axis ratio and a position angle. Passing `latent=True` to `corner_anesthetic` plots these latent parameters instead.
 The same figure is written to the output folder as `corner_anesthetic_latent.png` when `corner_anesthetic_latent`
-is switched on in `config/visualize/plots_search.yaml` (off by default), once the fit is complete, and the latent
-parameters are also written to `latent.csv` with the other latent variables.
+is switched on in `config/visualize/plots_search.yaml` (off by default), once the fit is complete. With
+`latent_model_parameters` enabled, full-sample latent output (`latent_draw_via_pdf: false`) writes these columns
+to `files/latent/samples.csv`. Only the plot recentres periodic angles; saved values keep the conversion's range.
 
 __Other Practicalities__
 
