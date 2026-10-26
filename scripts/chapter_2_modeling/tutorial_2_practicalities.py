@@ -363,8 +363,9 @@ parameter `n`). These mappings are specified in the `config/notation.yaml` file 
 The superscripts of labels are the path of names each component was given in the model (e.g. for the `Sersic`
 bulge, `galaxy.bulge`: the galaxy's name `galaxy` and its name `bulge` defined when making the `Model` above).
 
-Components of the same class are therefore told apart (every Gaussian of a basis is labelled by the galaxy and
-light profile it belongs to) and, when the model has more than one top-level component, each also gets its own
+Components in different named galaxy or profile paths can be distinguished by their superscripts. Profiles within
+the same path, such as Gaussians in a basis, can share a superscript. When the model has more than one top-level
+component, each also gets its own
 corner plot in the output folder (`corner_anesthetic_<component>.png`, switched in `config/visualize/plots_search.yaml`).
 
 The parameters a model is sampled in are not always the ones it is read in: a profile's elliptical components are an
