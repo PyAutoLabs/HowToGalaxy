@@ -93,13 +93,11 @@ for the chapter 1 tutorials listed with a `markdown` link below; every other tut
   - Tutorial 5: Data and Likelihoods — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_2_modeling/tutorial_5_data_and_likelihoods.ipynb))
   - Tutorial 6: Search Chaining — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_2_modeling/tutorial_6_search_chaining.ipynb))
   - Tutorial 7: Summary — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_2_modeling/tutorial_7_summary.ipynb))
-- **[Chapter 3: Pixelizations](scripts/chapter_3_pixelizations/README.md)** — Pixelized galaxy reconstructions, inversions, regularization, and the Bayesian formalism.
-  - Tutorial 1: Pixelizations — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_3_pixelizations/tutorial_1_pixelizations.ipynb))
-  - Tutorial 2: Mappers — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_3_pixelizations/tutorial_2_mappers.ipynb))
-  - Tutorial 3: Inversions — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_3_pixelizations/tutorial_3_inversions.ipynb))
-  - Tutorial 4: Bayesian Regularization — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_3_pixelizations/tutorial_4_bayesian_regularization.ipynb))
-  - Tutorial 5: Bayesian Formalism — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_3_pixelizations/tutorial_5_bayesian_formalism.ipynb))
-  - Tutorial 6: Model Fit — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_3_pixelizations/tutorial_6_model_fit.ipynb))
+- **[Chapter 3: Pixelizations](scripts/chapter_3_pixelizations/README.md)** — Indexed mappings, inversions, regularization and MGE search chaining.
+  - Tutorial 1: Pixelizations — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_3_pixelizations/tutorial_1_pixelizations.ipynb))
+  - Tutorial 2: Bayesian Regularization — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_3_pixelizations/tutorial_2_bayesian_regularization.ipynb))
+  - Tutorial 3: Model Fit — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_3_pixelizations/tutorial_3_model_fit.ipynb))
+
 - **[Chapter 4: Scaling Up Galaxies](scripts/chapter_4_scaling_up_galaxies/README.md)** — Extra galaxies, blended multi-galaxy systems, and cluster fields.
   - Tutorial 1: Extra Galaxies — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_4_scaling_up_galaxies/tutorial_1_extra_galaxies.ipynb))
   - Tutorial 2: Multi Galaxy — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_4_scaling_up_galaxies/tutorial_2_multi_galaxy.ipynb))

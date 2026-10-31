@@ -1,25 +1,17 @@
-So, we've learnt how to model galaxies with light profiles, and how search chaining (introduced at the end of
-chapter 2, tutorial 6) lets us fit galaxies made of multiple components in stages.
+Look at a resolved galaxy image. Its broad light distribution may follow a smooth bulge and disc, while smaller regions contain bright star-forming knots, off-centre clumps or irregular extensions. A model can capture the overall galaxy yet leave these features clearly visible in the residual image.
 
-However, we saw a pretty huge barrier when trying to fit very complex galaxies: they require an unwieldy number
-of non-linear parameters. The non-linear parameter space becomes very complex, and even a well crafted chain of
-searches may not fix the problem.
+In Chapter 2, we introduced linear light profiles and multi-Gaussian expansions (MGEs). Combining Gaussians of different widths gives us a more flexible radial brightness distribution than a single Sérsic profile. Gaussian groups with different ellipticities and orientations can also describe changes in flattening and isophotal twists. Fixed widths and linearly solved intensities provide this flexibility without introducing a large number of non-linear parameters.
 
-In this chapter, we'll learn about pixelizations and inversions. These tools allow us to reconstruct components of a
-galaxy using a pixel-grid. This makes no assumption about the galaxy's morphology, breaking the simplifying assumptions
-inherent to analytic light profiles (e.g. symmetry).
+Our worked example nevertheless imposed a particular geometry: the Gaussians within each galaxy’s group shared a common centre and elliptical shape. Adding more Gaussians improves our control over the brightness distribution around that centre, but does not create independently positioned knots or several components with distinct centres.
 
-Remarkably, pixel grids use just a couple of non-linear parameters, meaning the 20+ non-linear parameters we required
-to fit complex galaxy structures before are going to be reduced to just 2 or 3!
+We could introduce offset Gaussian groups. The limitation is not that MGEs cannot represent multiple centres, but that increasingly complicated galaxies require us to choose and fit an increasingly elaborate arrangement of components.
 
-By combining these fits with parametric models, we are therefore able to fit certain structures (e.g. a bulge and disk)
-whilst using these non-parametric pixelizations to fit other components that may otherwise degrade the fit.
+Suppose the MGE reproduces the smooth galaxy light but leaves compact, structured residuals. These may indicate that the model needs more freedom to describe local features. They are not automatically evidence for additional galaxy components: an inaccurate PSF, background estimate, contaminating object or other data-treatment error can also leave structured residuals.
 
-In particular, you'll learn how we:
+In this chapter, we introduce pixelized reconstruction as another way to describe the galaxy’s light. We infer brightness values across a mesh without assigning a separate analytic centre and shape to every feature. The predicted image includes telescope blurring, so the reconstruction is an inferred description of the galaxy rather than simply a copy of the observed pixels.
 
-1) Pixelize a galaxy's image into a set of pixels that define mappings to image pixels.
-2) Invert this pixelization to fit the galaxy and thus reconstruct its light.
-3) Apply a smoothness prior on the galaxy reconstruction, called 'regularization', to ensure the solution is physical.
-4) Apply this prior in a Bayesian framework to objectively quantify the galaxy reconstruction's log likelihood.
-5) Write down the linear algebra and Bayesian evidence equations that underpin all of the above.
-6) Use these features in a PyAutoGalaxy modeling pipeline.
+This builds on the linear profiles of Chapter 2. Instead of solving for Gaussian intensities, we solve for the mesh brightness values. Their extra freedom can describe irregular structure, but can also fit noise. Regularization supplies a prior that controls variations between neighbouring brightness values.
+
+The reconstruction still depends on modelling choices, including the mesh, its resolution, regularization and the treatment of the data. We will learn to inspect how those choices affect both the reconstructed galaxy and the image residuals.
+
+MGE and other analytic profiles remain useful for describing and measuring smooth galaxy components. Pixelizations complement them when more complicated structure needs to be represented, including in models that combine analytic components with a pixelized reconstruction.

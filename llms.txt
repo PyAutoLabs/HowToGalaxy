@@ -26,7 +26,7 @@ real analysis?" below).
 
 - **Chapter 1 — Introduction** → [scripts/chapter_1_introduction/](scripts/chapter_1_introduction/): Galaxies from first principles: grids & galaxies, light profiles, simulating data, and fitting data. The conceptual foundation.
 - **Chapter 2 — Modeling** → [scripts/chapter_2_modeling/](scripts/chapter_2_modeling/): Fitting a galaxy model to data with a non-linear search — practicalities, difficult fits, linear profiles, data and likelihoods, and component-based search chaining.
-- **Chapter 3 — Pixelizations** → [scripts/chapter_3_pixelizations/](scripts/chapter_3_pixelizations/): Reconstructing irregular galaxy structure on a pixel-grid instead of with light profiles — mappers, inversions, Bayesian regularization, the Bayesian formalism.
+- **Chapter 3 — Pixelizations** → [scripts/chapter_3_pixelizations/](scripts/chapter_3_pixelizations/): Reconstructing galaxy structure on a mesh — indexed mappings, inversions, Bayesian regularization and combined MGE/pixelization search chaining.
 - **Chapter 4 — Scaling Up Galaxies** → [scripts/chapter_4_scaling_up_galaxies/](scripts/chapter_4_scaling_up_galaxies/): Beyond a single galaxy — extra galaxies, blended multi-galaxy systems, and cluster fields.
 
 ## I want to understand…
@@ -38,7 +38,7 @@ real analysis?" below).
 - **My fit found a wrong (local-maxima) solution — what do I do?** → [scripts/chapter_2_modeling/tutorial_3_why_modeling_is_hard.py](scripts/chapter_2_modeling/tutorial_3_why_modeling_is_hard.py): Prior tuning, reducing complexity, and looking harder.
 - **What are linear light profiles / MGE?** → [scripts/chapter_2_modeling/tutorial_4_linear_profiles.py](scripts/chapter_2_modeling/tutorial_4_linear_profiles.py): Solving intensities linearly; the Multi-Gaussian Expansion basis.
 - **How do I model an image with two galaxies?** → [scripts/chapter_4_scaling_up_galaxies/tutorial_2_multi_galaxy.py](scripts/chapter_4_scaling_up_galaxies/tutorial_2_multi_galaxy.py): Joint fitting of blended galaxies and their degeneracies.
-- **How do I reconstruct irregular structure on a pixel grid?** → [scripts/chapter_3_pixelizations/tutorial_1_pixelizations.py](scripts/chapter_3_pixelizations/tutorial_1_pixelizations.py) through [tutorial_4_bayesian_regularization.py](scripts/chapter_3_pixelizations/tutorial_4_bayesian_regularization.py).
+- **How do I reconstruct irregular structure on a pixel grid?** → [scripts/chapter_3_pixelizations/tutorial_1_pixelizations.py](scripts/chapter_3_pixelizations/tutorial_1_pixelizations.py) through [tutorial_3_model_fit.py](scripts/chapter_3_pixelizations/tutorial_3_model_fit.py).
 
 ## Ready for real analysis?
 
