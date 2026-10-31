@@ -1,53 +1,54 @@
 """
-Tutorial: Alternative Searches
-==============================
+Optional Tutorial: Alternative Searches
+=======================================
 
-Up to now, we've always used the non-linear search Nautilus and not considered the input parameters that control its
-sampling. In this tutorial, we'll consider how we can change these setting to balance finding the global maxima
-solution with fast run time.
-
-We will also discuss other types of non-linear searches, such as MCMC and optimizers, which we can use to perform
-modeling. So far, we have not found any of these alternatives to give anywhere near as robust and efficient results as
-Nautilus, and we recommend users use Nautilus unless they are particularly interested in investigating different
-model-fitting techniques.
+You can complete HowToGalaxy using Nautilus without studying search algorithms in detail. Return here if you want
+to understand the fast Prodigy stage of search chaining, or compare alternative approaches for your own work.
 
 __Contents__
 
-- **Nested Sampling:** Customize Nautilus settings and use Dynesty as an alternative nested sampler.
-- **Optimizers:** Use maximum likelihood optimizers like LBFGS for fast but less robust fitting.
-- **MCMC:** Use Markov Chain Monte Carlo methods like Emcee for parameter estimation.
+- **Optimisation:** Improve trial models towards a best fit with Prodigy.
+- **Nested Sampling:** Explore parameter ranges with Nautilus.
+- **MCMC:** Another way to estimate parameter distributions.
+
+__Optimisation__
+
+An optimiser repeatedly proposes changes to a trial galaxy, checks whether its score improves, and moves towards
+better solutions. Imagine adjusting the size and shape so that the predicted light increasingly resembles the
+image. Repeating this process aims to find the best-fitting model, rather than trying to describe every plausible
+model in detail. Individual steps need not always improve the likelihood.
+
+Prodigy uses gradients to choose useful directions. `MultiStartProdigy` repeats this from several starting models,
+reducing the risk that one poor start determines the answer. Its score includes prior weight as well as likelihood
+(a maximum-a-posteriori optimisation). It uses JAX, the numerical engine that accelerates these calculations and
+provides the gradients; you do not need to study JAX to run it.
+
+The result can give a useful galaxy size, but does not by itself tell us how precisely that size is measured.
+It also cannot guarantee the best solution was found. Inspect residuals and test different starts or settings.
 """
 
 # from autogalaxy import setup_notebook; setup_notebook()
 
 from pathlib import Path
+import numpy as np
+import autofit as af
 import autogalaxy as ag
 import autogalaxy.plot as aplt
-import autofit as af
 
 """
-we'll use the `simple__sersic` imaging data of a galaxy, where:
+__Dataset and Mask__
 
- - The galaxy's light is a `Sersic`.
+Load the imaging data and retain the region inside the circular mask. The simulator creates the data if needed.
+The image, noise map and PSF together describe the observation; none specifies which galaxy model we must fit.
 """
+
 dataset_name = "simple__sersic"
 dataset_path = Path("dataset") / "imaging" / dataset_name
-
-"""
-__Dataset Auto-Simulation__
-
-If the dataset does not already exist on your system, it will be created by running the corresponding
-simulator script. This ensures that all example scripts can be run without manually simulating data first.
-"""
 if ag.util.dataset.should_simulate(str(dataset_path)):
     import subprocess
     import sys
 
-    subprocess.run(
-        [sys.executable, "scripts/simulators/sersic.py"],
-        check=True,
-    )
-
+    subprocess.run([sys.executable, "scripts/simulators/sersic.py"], check=True)
 
 dataset = ag.Imaging.from_fits(
     data_path=dataset_path / "data.fits",
@@ -55,236 +56,106 @@ dataset = ag.Imaging.from_fits(
     psf_path=dataset_path / "psf.fits",
     pixel_scales=0.1,
 )
-
-"""
-we'll create and use a 2.6" `Mask2D`.
-"""
 mask = ag.Mask2D.circular(
-    shape_native=dataset.shape_native, pixel_scales=dataset.pixel_scales, radius=2.6
+    shape_native=dataset.shape_native, pixel_scales=dataset.pixel_scales, radius=3.0
 )
-
 dataset = dataset.apply_mask(mask=mask)
 
+"""
+__Over Sampling__
+
+The bright centre changes rapidly across a pixel. Adaptive over sampling evaluates it on a finer grid so that
+numerical inaccuracies do not masquerade as poor models. The outskirts need fewer evaluations.
+"""
+
+over_sample_size = ag.util.over_sample.over_sample_size_via_radial_bins_from(
+    grid=dataset.grid,
+    sub_size_list=[8, 4, 2],
+    radial_list=[0.3, 0.6],
+    centre_list=[(0.0, 0.0)],
+)
+dataset = dataset.apply_over_sampling(over_sample_size_lp=over_sample_size)
 aplt.subplot_imaging_dataset(dataset=dataset)
+
+model = af.Collection(
+    galaxies=af.Collection(
+        galaxy=af.Model(ag.Galaxy, redshift=0.5, bulge=ag.lp_linear.Sersic)
+    )
+)
+analysis = ag.AnalysisImaging(dataset=dataset, use_jax=True)
+search = af.MultiStartProdigy(
+    path_prefix=Path("howtogalaxy", "chapter_optional"),
+    name="tutorial_searches_prodigy",
+    unique_tag=dataset_name,
+    n_starts=24,
+    batch_size=4,
+    n_steps=300,
+)
+result_prodigy = search.fit(model=model, analysis=analysis)
+print(result_prodigy.info)
+aplt.subplot_fit_imaging(fit=result_prodigy.max_log_likelihood_fit)
 
 """
 __Nested Sampling__
 
-Lets first perform the model-fit using Nautilus, but look at different parameters that control how long it takes to run. 
-We'll therefore discuss in a bit more detail how Nautilus works, but still keep this description conceptually simple  
-and avoid technical terms and jargon. For a complete description of Nautilus you should check out the Nautilus 
-publication `https://arxiv.org/abs/2306.16923`.
+Nautilus spends effort exploring the range of plausible parameters, supporting uncertainty estimates as well as
+a best fit. This extra information is useful when making scientific measurements. It also estimates Bayesian
+evidence, used for model comparison, and has stopping criteria rather than a prescribed number of steps.
 
-nlive:
-
-Nautilus is a `nested sampling` algorithm. As we described in chapter 2, it throws down a set of `live points` in 
-parameter space, where each live point corresponds to a model with a given set of parameters. These points are
-initially distributed according to our priors, hence why tuning our priors allows us to sample parameter space faster.
- 
-The number of live points is set by the parameter `n_live`. More points provide a more thorough sampling of 
-parameter space, increasing the probability that we locate the global maxima solution. Therefore, if you think your 
-model-fit has gone to a local maxima, you should try increasing `n_live`. The downside of this is Nautilus will 
-take longer to sample parameter space and converge on a solution. Ideally, we will use as few live points as possible 
-to locate the global maxima as quickly as possible.
-
-f_live:
-
-A nested sampling algorithm estimates the *Bayesian Evidence* of the model-fit, which is a quantity the non-linear 
-search algorithms we introduce later do not. The Bayesian evidence quantifies how well the model as a whole fits
-the data, following a principle called Occam's Razor (`https://simple.wikipedia.org/wiki/Occam%27s_razor`). This 
-penalizes models for being more complex (e.g. more parameters) and requires that their additional complexity improve 
-their overall fit to the data compared to a simpler model. By comparing the Bayesian evidence of 
-different models one can objectively choose the model that best fits the data.
-
-A nested sampling algorithm stops sampling when it estimates that continuing sampling will not increase the Bayesian 
-evidence (called the `log_evidence`) by more than the `f_live`. As Nautilus progresses and converges on the
-solution, the rate of increase of the estimated Bayesian evidence slows down. Therefore, higher `f_live`s 
-mean Nautilus terminate sooner.
-    
-A high `f_live` will make the errors estimated on every parameter unreliable and its value must be kept 
-below 0.8 for reliable error estimates. However, when chaining searches, we typically *do not care* about the errors 
-in the first search, therefore setting a high evidence tolerance can be an effective means to make Nautilus converge
-faster (we'll estimate reliable errors in the second search when the `f_live` is 0.8 or less). 
-
-
-Lets perform two fits, where:
-
- - One has many live points and a higher evidence tolerance, causing the non-linear search to
- take a longer time to run.
-      
- - One has few live points, a high sampling efficiency and evidence tolerance, causing the non-linear search to
- converge and end quicker.
+Increase `n_live` when exploration is inadequate, but judge convergence from repeated fits and diagnostics as well.
+No fixed live-point count guarantees reliable uncertainties for every model. The following runs the same galaxy
+model with Nautilus so that you can inspect its fit and parameter ranges alongside the optimiser's result.
 """
-model = af.Collection(
-    galaxies=af.Collection(
-        galaxy=af.Model(ag.Galaxy, redshift=0.5, bulge=ag.lp.Sersic),
-    )
-)
 
 search = af.Nautilus(
     path_prefix=Path("howtogalaxy", "chapter_optional"),
-    name="tutorial_searches_slow",
+    name="tutorial_searches_nautilus",
     unique_tag=dataset_name,
-    n_live=400,
-    n_batch=50,  # GPU model fits are batched and run simultaneously (see chapter 2 tutorial 2).
+    n_live=200,
+    n_batch=50,
 )
-
-analysis = ag.AnalysisImaging(dataset=dataset, use_jax=True)
-
-print(
-    "The non-linear search has begun running - checkout the HowToGalaxy/output"
-    "  folder for live output of the results, images and model."
-    "  This Jupyter notebook cell will progress once search has completed - this could take some time!"
-)
-
-result_slow = search.fit(model=model, analysis=analysis)
+result_nautilus = search.fit(model=model, analysis=analysis)
+print(result_nautilus.info)
+aplt.subplot_fit_imaging(fit=result_nautilus.max_log_likelihood_fit)
 
 """
-Lets check that we get a good model and fit to the data.
-"""
-aplt.subplot_fit_imaging(fit=result_slow.max_log_likelihood_fit)
-
-"""
-We can use the result to tell us how many iterations Nautilus took to convergence on the solution.
-"""
-print("Total Nautilus Iterations (If you skip running the search, this is ~ 500000):")
-print(result_slow.samples.total_samples)
-
-"""
-Now lets run the search with fast settings, so we can compare the total number of iterations required.
-"""
-search = af.Nautilus(
-    path_prefix=Path("howtogalaxy", "chapter_optional"),
-    name="tutorial_searches_fast",
-    unique_tag=dataset_name,
-    n_live=75,
-    n_batch=50,  # GPU model fits are batched and run simultaneously (see chapter 2 tutorial 2).
-)
-
-print(
-    "The non-linear search has begun running - checkout the HowToGalaxy/output"
-    "  folder for live output of the results, images and model."
-    "  This Jupyter notebook cell will progress once search has completed - this could take some time!"
-)
-
-result_fast = search.fit(model=model, analysis=analysis)
-
-print("Search has finished run - you may now continue the notebook.")
-
-"""
-Lets check that this search, despite its faster sampling settings, still gives us the global maxima solution.
-"""
-aplt.subplot_fit_imaging(fit=result_fast.max_log_likelihood_fit)
-
-"""
-And now lets confirm it uses significantly fewer iterations.
-"""
-print("Total Nautilus Iterations:")
-print("Slow settings: ~500000")
-print(result_slow.samples.total_samples)
-print("Fast settings: ", result_fast.samples.total_samples)
-
-"""
-__Optimizers__
-
-Nested sampling algorithms like Nautilus provides the errors on all of the model parameters, by fully mapping out all 
-of the high likelihood regions of parameter space. This provides knowledge on the complete *range* of models that do 
-and do not provide high likelihood fits to the data, but takes many extra iterations to perform. If we require precise 
-error estimates (perhaps this is our final model fit before we publish the results in a paper), these extra
-iterations are acceptable. 
-
-However, we often don't care about the errors. For example, in the previous tutorial when chaining searches, the only
-result we used from the fit performed in the first search was the maximum log likelihood model, omitting the errors
-entirely! Its seems wasteful to use a nested sampling algorithm like Nautilus to map out the entirity of parameter
-space when we don't use this information!
-
-There are a class of non-linear searches called `optimizers`, which seek to optimize just one thing, the log
-likelihood. They want to find the model that maximizes the log likelihood, with no regard for the errors, thus not
-wasting time mapping out in intricate detail every facet of parameter space.
-
-PyAutoFit supports a number of optimizers, which can be used as an alternative to nested sampling when only the
-maximum likelihood model is needed. These include `LBFGS` and `BFGS` (from scipy), which descend the likelihood from a
-single starting point. A single-start optimizer generally needs a good starting point to work well, and in our
-experience the parameter spaces fitted by models are often too complex for it without careful setup of initialization
-priors.
-
-PyAutoFit also supports multi-start gradient optimizers (`MultiStartProdigy`, `MultiStartAdam`, `MultiStartADABelief`
-and `MultiStartLion`), which use JAX to launch many optimizations from starting points spread across parameter space
-in parallel and return the best one. This makes them far more robust to complex parameter spaces, and
-`MultiStartProdigy` is the optimizer used by many of the `start_here.py` examples in the `autogalaxy_workspace`. Like any optimizer, they
-return only the best-fit model with no errors. The `autogalaxy_workspace` script `scripts/guides/modeling/searches.py` describes
-every search, including these optimizers, in detail.
-
 __MCMC__
 
-For users familiar with Markov Chain Monte Carlo (MCMC) non-linear samplers, PyAutoFit supports the non-linear
-searches `Emcee` and `Zeus`. Like LBFGS, these also need a good starting point, and are generally less effective at
-modeling than Nautilus.
+Markov chain Monte Carlo methods explore distributions of parameters by proposing successive moves and accepting
+or rejecting them according to their probabilities. Emcee uses an ensemble of walkers. Walkers can move to lower
+likelihoods as well as higher ones; their aim is to sample the distribution, not only climb towards its peak.
 
-I've included an example runs of Emcee and Zeus below, where the model is set up using `UniformPriors` to give
-the starting point of the MCMC walkers. 
+A sensible starting region can help. Here the bounds describe an initial spread around values suggested by the
+image; they do not replace the model priors. This demonstration uses a finite number of steps, which is not a
+claim of convergence. Before interpreting uncertainty estimates, examine mixing, autocorrelation and whether
+longer runs agree. Multiple walkers do not guarantee escape from separated regions of good fits.
 """
-bulge = af.Model(ag.lp.Sersic)
-bulge.centre.centre_0 = af.UniformPrior(lower_limit=-0.1, upper_limit=0.1)
-bulge.centre.centre_1 = af.UniformPrior(lower_limit=-0.1, upper_limit=0.1)
-bulge.ell_comps.ell_comps_0 = af.UniformPrior(lower_limit=-0.3, upper_limit=0.3)
-bulge.ell_comps.ell_comps_1 = af.UniformPrior(lower_limit=-0.3, upper_limit=0.3)
-bulge.intensity = af.UniformPrior(lower_limit=0.5, upper_limit=1.5)
-bulge.effective_radius = af.UniformPrior(lower_limit=0.2, upper_limit=1.6)
-bulge.sersic_index = af.UniformPrior(lower_limit=3.0, upper_limit=5.0)
 
-galaxy = af.Model(ag.Galaxy, redshift=0.5, bulge=bulge)
-
-model = af.Collection(galaxies=af.Collection(galaxy=galaxy))
-
-search = af.Zeus(
-    path_prefix=Path("howtogalaxy", "chapter_optional"),
-    name="tutorial_searches_zeus",
-    unique_tag=dataset_name,
-    nwalkers=50,
-    nsteps=1000,
+initializer = af.InitializerParamBounds(
+    {
+        model.galaxies.galaxy.bulge.centre.centre_0: (-0.05, 0.05),
+        model.galaxies.galaxy.bulge.centre.centre_1: (-0.05, 0.05),
+        model.galaxies.galaxy.bulge.effective_radius: (0.5, 1.5),
+        model.galaxies.galaxy.bulge.sersic_index: (2.0, 5.0),
+    }
 )
-
-print(
-    "Zeus has begun running - checkout the HowToGalaxy/output"
-    "  folder for live output of the results, images and model."
-    "  This Jupyter notebook cell will progress once search has completed - this could take some time!"
-)
-
-result_zeus = search.fit(model=model, analysis=analysis)
-
-print("Zeus has finished run - you may now continue the notebook.")
-
-aplt.subplot_fit_imaging(fit=result_zeus.max_log_likelihood_fit)
-
-
 search = af.Emcee(
     path_prefix=Path("howtogalaxy", "chapter_optional"),
     name="tutorial_searches_emcee",
     unique_tag=dataset_name,
     nwalkers=50,
     nsteps=1000,
+    initializer=initializer,
 )
-
-print(
-    "The non-linear search has begun running - checkout the HowToGalaxy/output"
-    "  folder for live output of the results, images and model."
-    "  This Jupyter notebook cell will progress once search has completed - this could take some time!"
-)
-
 result_emcee = search.fit(model=model, analysis=analysis)
-
-print("The search has finished run - you may now continue the notebook.")
-
+print(result_emcee.info)
 aplt.subplot_fit_imaging(fit=result_emcee.max_log_likelihood_fit)
 
 """
 __Wrap Up__
 
-This tutorial showed how the same model can be fitted using different non-linear searches (e.g. `Nautilus`, `Zeus`,
-`Emcee`). Each search explores parameter space in a different way, and the best choice depends on the
-dimensionality and complexity of the model you are fitting.
-
-For the vast majority of models in **PyAutoGalaxy**, the default nested sampling search `Nautilus` is recommended, as
-it is robust, efficient and requires little manual tuning.
+A quick optimisation is useful when you need a fitted component or want to check a model setup. A sampler is useful
+when you need ranges of plausible parameters and uncertainty estimates. Both require checking the result.
+The workspace guide `autogalaxy_workspace/scripts/guides/modeling/searches.py` covers additional searches and settings.
+For the core lessons, keep your attention on the galaxy model and the quality of its fit.
 """
