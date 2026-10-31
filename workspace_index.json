@@ -3,15 +3,16 @@
     "contents": [
       "Directories",
       "Dataset",
-      "Plot Customization",
+      "Dataset Auto-Simulation",
       "Subplots",
+      "Plot Customization",
       "Visuals",
       "Wrap Up"
     ],
     "cross_refs": [],
     "notebook": "notebooks/chapter_1_introduction/tutorial_0_visualization.ipynb",
     "path": "scripts/chapter_1_introduction/tutorial_0_visualization.py",
-    "summary": "In this tutorial, we quickly cover visualization in **PyAutoGalaxy** and make sure images display clearly in your Jupyter notebook and on your computer screen.",
+    "summary": "Plot a simulated image with **PyAutoGalaxy**, compare views of the dataset, and adjust the display so you can inspect its structure. This tutorial introduces the plotting tools used throughout the course.",
     "title": "Tutorial 0: Visualization"
   },
   {
@@ -22,14 +23,19 @@
       "One Dimension Projection",
       "Galaxies",
       "Unit Conversion",
-      "Wrap Up"
+      "Wrap Up",
+      "Advanced Topics",
+      "Other Unit Conversion",
+      "Over Sampling"
     ],
     "cross_refs": [
-      "/guides/advanced/over_sampling.ipynb"
+      "//github.com/PyAutoLabs/autogalaxy_workspace/blob/main/scripts/guides/advanced/over_sampling.py",
+      "//github.com/PyAutoLabs/autogalaxy_workspace/blob/main/scripts/guides/units/cosmology.py",
+      "//github.com/PyAutoLabs/autogalaxy_workspace/blob/main/scripts/guides/units/flux.py"
     ],
     "notebook": "notebooks/chapter_1_introduction/tutorial_1_grids_and_galaxies.ipynb",
     "path": "scripts/chapter_1_introduction/tutorial_1_grids_and_galaxies.py",
-    "summary": "Nearly a century ago, Edwin Hubble famously classified galaxies into three distinct groups: ellipticals, spirals and irregulars. He produced a diagram of these galaxies, called the Hubble Tuning Fork, which is shown below and still discussed by astronomers in the modern day:",
+    "summary": "Galaxies have a wide range of appearances: some are smooth and rounded, while others have discs, spiral arms or irregular structure. These visible features make up a galaxy\u2019s **morphology**.",
     "title": "HowToGalaxy: Introduction"
   },
   {
