@@ -85,17 +85,14 @@ for the chapter 1 tutorials listed with a `markdown` link below; every other tut
   - Tutorial 3: Fitting — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_1_introduction/tutorial_3_fitting.ipynb) / [markdown](markdown/chapter_1_introduction/tutorial_3_fitting.md))
   - Tutorial 4: Methods — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_1_introduction/tutorial_4_methods.ipynb))
   - Tutorial 5: Summary — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_1_introduction/tutorial_5_summary.ipynb) / [markdown](markdown/chapter_1_introduction/tutorial_5_summary.md))
-- **[Chapter 2: Modeling](scripts/chapter_2_modeling/README.md)** — Bayesian inference, non-linear searches, galaxy modeling, search chaining, and prior passing.
-  - Tutorial 1: Non-linear Search — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_2_modeling/tutorial_1_non_linear_search.ipynb))
-  - Tutorial 2: Practicalities — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_2_modeling/tutorial_2_practicalities.ipynb))
-  - Tutorial 3: Realism and Complexity — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_2_modeling/tutorial_3_realism_and_complexity.ipynb))
-  - Tutorial 4: Dealing with Failure — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_2_modeling/tutorial_4_dealing_with_failure.ipynb))
-  - Tutorial 5: Linear Profiles — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_2_modeling/tutorial_5_linear_profiles.ipynb))
-  - Tutorial 6: Masking — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_2_modeling/tutorial_6_masking.ipynb))
-  - Tutorial 7: Results — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_2_modeling/tutorial_7_results.ipynb))
-  - Tutorial 8: Need for Speed — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_2_modeling/tutorial_8_need_for_speed.ipynb))
-  - Tutorial 9: Search Chaining — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_2_modeling/tutorial_9_search_chaining.ipynb))
-  - Tutorial 10: Prior Passing — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_2_modeling/tutorial_10_prior_passing.ipynb))
+- **[Chapter 2: Modeling](scripts/chapter_2_modeling/README.md)** — Practical galaxy models, data and likelihoods, linear profiles and search chaining.
+  - Tutorial 1: Non-linear Search — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_2_modeling/tutorial_1_non_linear_search.ipynb))
+  - Tutorial 2: Practicalities — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_2_modeling/tutorial_2_practicalities.ipynb))
+  - Tutorial 3: Why Modeling Is Hard — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_2_modeling/tutorial_3_why_modeling_is_hard.ipynb))
+  - Tutorial 4: Linear Profiles — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_2_modeling/tutorial_4_linear_profiles.ipynb))
+  - Tutorial 5: Data and Likelihoods — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_2_modeling/tutorial_5_data_and_likelihoods.ipynb))
+  - Tutorial 6: Search Chaining — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_2_modeling/tutorial_6_search_chaining.ipynb))
+  - Tutorial 7: Summary — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_2_modeling/tutorial_7_summary.ipynb))
 - **[Chapter 3: Pixelizations](scripts/chapter_3_pixelizations/README.md)** — Pixelized galaxy reconstructions, inversions, regularization, and the Bayesian formalism.
   - Tutorial 1: Pixelizations — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_3_pixelizations/tutorial_1_pixelizations.ipynb))
   - Tutorial 2: Mappers — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_3_pixelizations/tutorial_2_mappers.ipynb))
@@ -108,7 +105,9 @@ for the chapter 1 tutorials listed with a `markdown` link below; every other tut
   - Tutorial 2: Multi Galaxy — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_4_scaling_up_galaxies/tutorial_2_multi_galaxy.ipynb))
   - Tutorial 3: Cluster — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_4_scaling_up_galaxies/tutorial_3_cluster.ipynb))
 - **[Optional Tutorials](scripts/chapter_optional/)** — Alternative non-linear searches and advanced topics.
-  - Tutorial Optional: Searches — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_optional/tutorial_searches.ipynb))
+  - Alternative Searches — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_optional/tutorial_searches.ipynb))
+  - Need for Speed — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_optional/tutorial_need_for_speed.ipynb))
+  - Historical Prior Passing — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_optional/tutorial_prior_passing.ipynb)); not required reading.
 
 Model-fits can run faster on a GPU. In Colab, enable one via *Runtime* → *Change runtime type*
 → *Hardware accelerator* before running a notebook.

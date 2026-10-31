@@ -127,9 +127,9 @@ aaplt.subplot_of_mapper(inversion=inversion, mapper_index=0)
 There we have it, we have successfully reconstructed the galaxy using a rectangular pixel-grid, capturing the
 structure of its light without assuming an analytic form for it.
 
-Pretty great, huh? If you fitted this galaxy via search chaining at the end of chapter 2 (tutorials 9-10), you'll
-remember how much effort a good model image took. With an inversion, we can do this with ease and without having to
-perform model-fitting with 20+ parameters for the galaxy's light!
+Chapter 2's linear profiles tutorial showed how a common-centre MGE describes smooth changes in galaxy structure.
+Here the pixel grid can also describe irregular light without assigning a separate analytic profile and centre
+to every feature.
 
 We will now briefly discuss how an inversion actually works, however the explanation given in this tutorial will be
 overly-simplified. (The full linear algebra -- the mapping matrices, the linear solve and the equations behind

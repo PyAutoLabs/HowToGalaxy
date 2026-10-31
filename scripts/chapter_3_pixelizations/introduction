@@ -1,5 +1,5 @@
 So, we've learnt how to model galaxies with light profiles, and how search chaining (introduced at the end of
-chapter 2, tutorials 9-10) lets us fit galaxies made of multiple components in stages.
+chapter 2, tutorial 6) lets us fit galaxies made of multiple components in stages.
 
 However, we saw a pretty huge barrier when trying to fit very complex galaxies: they require an unwieldy number
 of non-linear parameters. The non-linear parameter space becomes very complex, and even a well crafted chain of

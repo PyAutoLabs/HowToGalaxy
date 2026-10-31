@@ -14,10 +14,9 @@ research.
 
 - Chapter 1: Introduction to galaxy morphology — grids, light profiles, galaxies, simulated data, and how
   fitting works.
-- Chapter 2: Bayesian inference and non-linear searches — how to fit a galaxy model to CCD imaging data.
-- Chapter 3: Search chaining — automated pipelines that fit complex systems by chaining multiple searches.
-- Chapter 4: Pixelized galaxy reconstruction — reconstructing galaxies with irregular morphology using
-  inversions and regularization.
+- Chapter 2: Practical galaxy modelling — data, models, likelihoods, linear profiles and search chaining.
+- Chapter 3: Pixelized galaxy reconstruction — irregular morphology, inversions and regularization.
+- Chapter 4: Scaling up galaxies — modelling multiple galaxies and cluster fields.
 
 Each chapter is organised into numbered tutorial files: `chapter_<N>_<name>/tutorial_<M>_<topic>.py` (Python script)
 or the matching `.ipynb` in `notebooks/`. Tutorials build on each other within a chapter and assume you have
@@ -33,7 +32,7 @@ We recommend working through the tutorials in order:
 3. Work through `chapter_2_modeling`.
 4. At this point you can start modeling real galaxies using scripts in the separate
    `autogalaxy_workspace` repository — you know enough to be productive.
-5. Come back for `chapter_3_search_chaining` and `chapter_4_pixelizations` when you want to tackle more
+5. Come back for `chapter_3_pixelizations` and `chapter_4_scaling_up_galaxies` when you want to tackle more
    complex systems.
 
 __Notebooks vs Scripts__

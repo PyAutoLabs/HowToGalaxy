@@ -3,7 +3,7 @@ The `HowToGalaxy` folder contains **HowToGalaxy** lectures, which teach a new us
 # Folders
 
 - `chapter_1_introduction`: An introduction to galaxy morphology and structure using **PyAutoGalaxy**.
-- `chapter_2_modeling`: How to model galaxies, including a primer on Bayesian non-linear analysis.
+- `chapter_2_modeling`: How to model galaxies, with data, models, Analysis objects and searches.
 - `chapter_3_pixelizations`: How to perform pixelized reconstructions of a galaxy.
 - `chapter_4_scaling_up_galaxies`: How to scale up modeling to multiple galaxies, from blended pairs to cluster fields.
 - `chapter_optional`: Optional tutorials.
@@ -77,9 +77,9 @@ In chapter 1, we'll learn about galaxy structure and **PyAutoGalaxy**. At the en
 
 # OVERVIEW OF CHAPTER 2 (Beginner)
 
-**Bayesian Inference and Non-linear Searches**
+**Practical Galaxy Modeling**
 
-In chapter 2, we'll cover Bayesian inference and model-fitting via a non-linear search. We will use these tools to
+In chapter 2, we'll learn practical model-fitting via a non-linear search. We will use these tools to
 fit CCD imaging data of a galaxy with a model. At the end, you'll understand:
 
 1. The concept of a non-linear search and non-linear parameter space.
@@ -87,7 +87,7 @@ fit CCD imaging data of a galaxy with a model. At the end, you'll understand:
 3. The trade-off between realism and complexity when choosing a model.
 4. Why an incorrect model may be inferred and how to prevent this from happening.
 5. The challenges that are involved in inferring a robust model in a computationally reasonable run-time.
-6. How to chain non-linear searches together to build automated modeling pipelines with prior passing.
+6. How to chain searches to fit components separately and simplify later fits.
 
 **Once completed, you'll be ready to model your own galaxies with PyAutoGalaxy!**
 

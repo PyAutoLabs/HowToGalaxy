@@ -2,85 +2,43 @@
 Tutorial 2: Practicalities
 ==========================
 
-In the last tutorial, we introduced foundational statistical concepts essential for model-fitting, such as parameter
-spaces, likelihoods, priors, and non-linear searches. Understanding these statistical concepts is crucial for
-performing model fits effectively.
-
-However, achieving successful model-fitting also requires practical skills, including how to manage outputs,
-review results, interpret model quality, and ensure run-times are efficient enough for your scientific needs.
-
-This tutorial will focus on these practical aspects of model-fitting, including:
-
-- How to save results to your hard disk.
-- How to navigate the output folder and examine model-fit results to assess quality.
-- How to estimate the run-time of a model-fit before initiating it, and change settings to make it faster or run the analysis in parallel.
+A galaxy can contain a compact bulge and an extended disk. We now fit both, while learning how to run a search,
+manage its memory use and inspect its output. These practical skills let us assess a model as the fit progresses.
 
 __Contents__
 
-This tutorial is split into the following sections:
-
- **PyAutoFit:** The parent package of PyAutoGalaxy, which handles practicalities of model-fitting.
- **Initial Setup:** Load the dataset we'll fit a model to using a non-linear search.
- **Mask:** Apply a mask to the dataset.
- **Over Sampling:** Apply adaptive over sampling to the dataset.
- **Model:** Introduce the model we will fit to the data.
- **Search:** Setup the non-linear search, Nautilus, used to fit the model to the data.
- **Search Settings:** Discuss the settings of the non-linear search, including the number of live points.
- **Iterations Per Update:** How often the non-linear search outputs the current results to hard-disk.
- **Analysis:** Create the Analysis object which contains the `log_likelihood_function` that the non-linear search calls.
- **Run Times:** Estimate the run-time of the model-fit before initiating it.
- **Model-Fit:** Fit the model to the data.
- **Result Info:** Print the results of the model-fit to the terminal.
- **Output Folder:** Inspect the output folder where results are stored.
- **Unique Identifier:** Discussion of the unique identifier of the model-fit which names the folder in the output directory.
- **Output Folder Contents:** What is output to the output folder (model results, visualization, etc.).
- **Result:** Plot the best-fit model to the data.
+- **Dataset and Mask:** Inspect a galaxy with a bulge and disk.
+- **Model:** Make the model more realistic.
+- **Search Settings:** Balance exploration, batching and output updates.
+- **Analysis and Run Times:** Understand the cost of a fit.
+- **VRAM Use:** Check memory before fitting.
+- **Output Folder:** Find summaries, images and saved results.
+- **Unique Identifier:** Understand separate fits and resuming.
+- **Results and Configuration:** Inspect the fit and find further tools.
 """
 
 # from autogalaxy import setup_notebook; setup_notebook()
 
 from pathlib import Path
+import numpy as np
+import autofit as af
 import autogalaxy as ag
 import autogalaxy.plot as aplt
 
 """
-__PyAutoFit__
+__Dataset and Mask__
 
-Modeling uses the probabilistic programming language
-[PyAutoFit](https://github.com/PyAutoLabs/PyAutoFit), an open-source project that allows complex model
-fitting techniques to be straightforwardly integrated into scientific modeling software. 
-
-The majority of tools that make model-fitting practical are provided by PyAutoFit, for example it handles
-all output of the non-linear search to hard-disk, the visualization of results and the estimation of run-times.
+Load the imaging data and retain the region inside the circular mask. The simulator creates the data if needed.
+The image, noise map and PSF together describe the observation; none specifies which galaxy model we must fit.
 """
-import autofit as af
 
-"""
-__Initial Setup__
-
-Lets first load the `Imaging` dataset we'll fit a model with using a non-linear search. 
-
-This is the same dataset we fitted in the previous tutorial, and we'll repeat the same fit, as we simply want
-to illustrate the practicalities of model-fitting in this tutorial.
-"""
-dataset_name = "simple__sersic"
+dataset_name = "simple"
 dataset_path = Path("dataset") / "imaging" / dataset_name
-
-"""
-__Dataset Auto-Simulation__
-
-If the dataset does not already exist on your system, it will be created by running the corresponding
-simulator script. This ensures that all example scripts can be run without manually simulating data first.
-"""
 if ag.util.dataset.should_simulate(str(dataset_path)):
     import subprocess
     import sys
 
-    subprocess.run(
-        [sys.executable, "scripts/simulators/sersic.py"],
-        check=True,
-    )
-
+    subprocess.run([sys.executable, "scripts/simulators/simple.py"], check=True)
 
 dataset = ag.Imaging.from_fits(
     data_path=dataset_path / "data.fits",
@@ -88,316 +46,207 @@ dataset = ag.Imaging.from_fits(
     psf_path=dataset_path / "psf.fits",
     pixel_scales=0.1,
 )
-
-aplt.subplot_imaging_dataset(dataset=dataset)
-
-"""
-__Mask__
-
-We again apply a 3.0" mask to the dataset.
-"""
 mask = ag.Mask2D.circular(
-    shape_native=dataset.shape_native, pixel_scales=dataset.pixel_scales, radius=3.0
+    shape_native=dataset.shape_native, pixel_scales=dataset.pixel_scales, radius=2.5
 )
-
 dataset = dataset.apply_mask(mask=mask)
-
-aplt.subplot_imaging_dataset(dataset=dataset)
 
 """
 __Over Sampling__
 
-Over sampling is a numerical technique where the images of light profiles and galaxies are evaluated 
-on a higher resolution grid than the image data to ensure the calculation is accurate. 
-
-For a new user, the details of over-sampling are not important, therefore just be aware that below we make it so that 
-all calculations use an adaptive over sampling scheme which ensures high accuracy and precision.
-
-Once you are more experienced, you should read up on over-sampling in more detail via 
-the `autogalaxy_workspace/*/guides/advanced/over_sampling.ipynb` notebook.
+The bright centre changes rapidly across a pixel. Adaptive over sampling evaluates it on a finer grid so that
+numerical inaccuracies do not masquerade as poor models. The outskirts need fewer evaluations.
 """
+
 over_sample_size = ag.util.over_sample.over_sample_size_via_radial_bins_from(
     grid=dataset.grid,
     sub_size_list=[8, 4, 2],
     radial_list=[0.3, 0.6],
     centre_list=[(0.0, 0.0)],
 )
-
 dataset = dataset.apply_over_sampling(over_sample_size_lp=over_sample_size)
-
+aplt.subplot_imaging_dataset(dataset=dataset)
 
 """
 __Model__
 
-We compose the model using the same API as the previous tutorial.
+Look at the bright central light and the more extended emission around it. A single Sersic profile need not
+capture both structures. We represent the bulge with a Sersic and the disk with an Exponential profile, as in the
+simulator. Real galaxies need not separate this neatly, but this controlled example lets us practise modelling.
 
-This model is the same as the previous tutorial, a single `Galaxy` with a `Sersic` light profile.
+Here we use ordinary light profiles, so both intensities are searched along with the shapes. There are 13 free
+parameters: seven for the bulge and six for the disk. Greater realism has also given the search more to explore.
+Tutorial 4 returns to linear profiles and shows how to reduce this burden.
 """
-galaxy_model = af.Model(ag.Galaxy, redshift=0.5, bulge=ag.lp_linear.Sersic)
 
-model = af.Collection(galaxies=af.Collection(galaxy=galaxy_model))
-
+galaxy = af.Model(ag.Galaxy, redshift=0.5, bulge=ag.lp.Sersic, disk=ag.lp.Exponential)
+model = af.Collection(galaxies=af.Collection(galaxy=galaxy))
 print(model.info)
 
 """
-__Search__
-
-To fit the model, we now create the non-linear search object, selecting the nested sampling algorithm, Nautilus, 
-as recommended in the previous tutorial.
-
-We set up the `Nautilus` object with these parameters:
-
-- **`path_prefix`**: specifies the output directory, here set to `HowToGalaxy/output/howtogalaxy/chapter_2`.
-  
-- **`name`**: gives the search a descriptive name, which creates the full output path 
-as `HowToGalaxy/output/howtogalaxy/chapter_2/tutorial_2_practicalities`.
-
-- **`n_live`**: controls the number of live points Nautilus uses to sample parameter space.
-
 __Search Settings__
 
-Nautilus samples parameter space by placing "live points" representing different galaxy models. Each point has an 
-associated `log_likelihood` that reflects how well it fits the data. By mapping where high-likelihood solutions are 
-located, it can focus on searching those regions.
+We use 200 live points for this more complex model. More live points generally improve exploration at the cost
+of more work; fewer may be faster but can miss good solutions. The appropriate value depends on the model and
+data, and must be judged from the results rather than a universal rule.
 
-The main setting to balance is the **number of live points**. More live points allow Nautilus to map parameter space 
-more thoroughly, increasing accuracy but also runtime. Fewer live points reduce run-time but may make the search less 
-reliable, possibly getting stuck in local maxima.
+`n_batch=50` lets the search evaluate batches of trial models using the accelerated likelihood. This can make good
+use of a GPU, but larger batches need more memory. Batching does not replace adequate exploration with live points.
 
-The ideal number of live points depends on model complexity. More parameters generally require more live points, but
-the default of 3000 is more than sufficient for most galaxy models. Lower values can still yield reliable results, particularly
-for simpler models. For this example (6 parameters), we reduce the live points to 80 to speed up runtime without 
-compromising accuracy.
-
-Tuning non-linear search settings (e.g., the number of live points) to match model complexity is essential. We aim 
-for enough live points to ensure accurate results (i.e., finding a global maximum) but not so many that runtime 
-is excessive.
-
-In practice, the optimal number of live points is often found through trial and error, guided by summary statistics 
-on how well the search is performing, which we’ll cover below. For this single Sersic model with a linear light 
-profile, 80 live points is sufficient to achieve reliable results.
+`path_prefix` groups related fits, `name` identifies this tutorial and `unique_tag` identifies the dataset.
+Together they organise the output folders described below.
 
 __Iterations Per Update__
 
-Every N iterations, the non-linear search outputs the current results to the folder `HowToGalaxy/output`,
-which includes producing visualization. 
+`iterations_per_quick_update=2500` controls quick output updates after roughly this many likelihood evaluations.
+Full updates have their own setting, `iterations_per_full_update`. The two update types do different amounts of
+work, so this does not mean that every saved product is regenerated every 2500 evaluations.
 
-Depending on how long it takes for the model to be fitted to the data (see discussion about run times below), 
-this can take up a large fraction of the run-time of the non-linear search.
-
-For this fit, the fit is very fast, thus we set a high value of `iterations_per_quick_update=2500` to ensure these updates
-do not slow down the overall speed of the model-fit.
-
-**If the iteration per update is too low, the model-fit may be significantly slowed down by the time it takes to
-output results and visualization frequently to hard-disk. If your fit is consistent displaying a log saying that it
-is outputting results, try increasing this value to ensure the model-fit runs efficiently.**
+Frequent plotting and disk writes can dominate a fast fit. Increase the update interval if output takes too much
+of the runtime; decrease it if you need more frequent feedback while diagnosing a fit.
 """
+
 search = af.Nautilus(
     path_prefix=Path("howtogalaxy", "chapter_2"),
     name="tutorial_2_practicalities",
     unique_tag=dataset_name,
-    n_live=80,
-    n_batch=50,  # GPU model fits are batched and run simultaneously, see the run times section below.
+    n_live=200,
+    n_batch=50,
     iterations_per_quick_update=2500,
 )
 
 """
 __Analysis__
 
-We again create the `AnalysisImaging` object which contains the `log_likelihood_function` that the non-linear search
-calls to fit the model to the data.
+The model defines possible bulges and disks; `AnalysisImaging` compares their predicted light with this masked
+dataset. The search itself does not need to know how a galaxy image is calculated.
 """
+
 analysis = ag.AnalysisImaging(dataset=dataset, use_jax=True)
 
 """
 __Run Times__
 
-Another key practicality in model-fitting is the run-time of the model-fit. Modeling can be a computationally 
-expensive process, whereby the fitting of complex models to high resolution datasets run times may be of order hours, 
-days or weeks.
+Two important costs are how expensive the likelihood is to evaluate and how many evaluations the search needs.
+More pixels, finer over sampling and more elaborate models can increase the first; difficult parameter spaces
+and more thorough search settings can increase the second.
 
-Run times are dictated by two factors:
+With JAX, compilation adds an initial cost, after which compiled calculations are reused. Batches can evaluate
+several models together, so timing one ordinary `FitImaging` call is not a reliable prediction of search runtime.
+Use a representative run on your own machine and inspect `search.summary`, allowing for compilation, search work
+and output overhead. There is no fixed runtime or evaluations-per-parameter rule that applies to every fit.
 
- - **The log likelihood evaluation time:** the time it takes for a single `instance` of the model to be fitted to 
-   the dataset such that a log likelihood is returned.
+__VRAM Use__
 
- - **The number of iterations (e.g. log likelihood evaluations) performed by the non-linear search:** more complex
-   models require more iterations to converge to a solution (and as discussed above, settings like the number of live
-   points also control this).
-
-For this analysis, the log likelihood evaluation time is ~0.05 seconds, which is extremely fast for model fitting. 
-
-The more advanced fitting techniques discussed later in this chapter (e.g. multi Gaussian expansions, shapelets) and
-the pixelizations of chapter 3 have longer log likelihood evaluation times. However, on GPU, they can be so fast that
-they may not produce significantly longer overall run-times.
-
-To estimate the expected overall run time of the model-fit we multiply the log likelihood evaluation time by an 
-estimate of the number of iterations the non-linear search will perform, which is around 50000 to 100000 for this model.
-
-Tests thus far reveal CPU run times are around 30 minutes, and GPU run times around 10 minutes.
-
-__Model-Fit__
-
-To begin the model-fit, we pass the model and analysis objects to the search, which performs a non-linear search to 
-identify models that best fit the data.
-
-Running model fits via non-linear search can take significant time. While the fit in this tutorial should 
-complete in a few minutes, more complex models may require longer run times. In Jupyter notebooks, this can be 
-limiting, as the notebook cell will only complete once the fit finishes, preventing you from advancing through the 
-tutorial or running additional code.
-
-To work around this, we recommend running tutorial scripts as standalone Python scripts, found 
-in the `scripts/` folder of the HowToGalaxy repository. These scripts mirror the notebook tutorials but run independently of 
-Jupyter notebooks. For example, you can start a script with:
-
-`python3 scripts/chapter_2_modeling/tutorial_2_practicalities.py`
-
-Using scripts allows results to be saved to the hard drive in the `output` folder, enabling you to inspect results 
-immediately once the script completes. When rerun, the script loads results directly from disk, so any Jupyter 
-notebook cells will quickly load and display the complete model-fit results if they’re already saved.
-
-This approach not only avoids the slowdowns associated with notebook cells during lengthy runs but is also essential 
-for using super-computers for fitting tasks, as they require separate Python scripts.
-
-For tasks like loading results, inspecting data, plotting, and interpreting results, Jupyter notebooks remain ideal.
+A GPU has a finite amount of memory, often called VRAM. Larger datasets, models and batches need more of it.
+The following estimates memory for the likelihood calculation at the chosen batch size:
 """
-print(
-    "The non-linear search has begun running - checkout the HowToGalaxy/output/"
-    " folder for live output of the results, images and model."
-    " This Jupyter notebook cell will progress once search has completed - this could take some time!"
-)
+
+analysis.print_vram_use(model=model, batch_size=search.batch_size)
+
+"""
+This is a likelihood estimate, not a promise about the total memory required by the process. Compilation,
+other arrays and other programs also need space. On a CPU, available system memory is the relevant limit.
+If memory is tight, try reducing `n_batch` from 50 to 10 before removing useful data or simplifying the science.
+
+__Model Fit__
+
+Run the fit below. A notebook cell waits until it finishes, but output appears on disk while it runs.
+You can instead run `python scripts/chapter_2_modeling/tutorial_2_practicalities.py` from the repository root.
+Scripts and notebooks save to the same output location when run with the same settings and working directory.
+A script does not inherently make the inference faster; it is often more convenient for long unattended fits.
+"""
 
 result = search.fit(model=model, analysis=analysis)
-
-print("Search has finished run - you may now continue the notebook.")
-
-"""
-__Result Info__
-
-A concise readable summary of the results is given by printing its `info` attribute.
-
-[Above, we discussed that the `info_whitespace_length` parameter in the config files could be changed to make
-the `model.info` attribute display optimally on your computer. This attribute also controls the whitespace of the
-`result.info` attribute.]
-"""
 print(result.info)
 
 """
 __Output Folder__
 
-Now checkout the `HowToGalaxy/output` folder.
+Open `output` in the repository root. The layout below shows the main products of a completed fit; the exact
+images and optional files depend on configuration and which updates have run.
 
-This is where the results of the search are written to hard-disk (in the `tutorial_2_practicalities` folder). 
+```text
+output/
++-- howtogalaxy/
+    +-- chapter_2/
+        +-- simple/                         # unique_tag
+            +-- tutorial_2_practicalities/  # name
+                +-- <unique_identifier>/
+                    +-- model.info
+                    +-- model.results
+                    +-- search.summary
+                    +-- search.log
+                    +-- image/
+                    |   +-- dataset.png
+                    |   +-- dataset.fits
+                    |   +-- fit.png
+                    |   +-- fit.fits
+                    +-- files/
+                        +-- model.json
+                        +-- galaxies.json
+                        +-- search.json
+                        +-- samples.csv
+                        +-- samples_info.json
+                        +-- samples_summary.json
+                        +-- covariance.csv
+                        +-- dataset_identity.json
+                        +-- search_internal/
+```
 
-Once completed images, results and information about the fit appear in this folder, meaning that you don't need 
-to keep running Python code to see the result.
+`model.info` records the model and priors. `model.results` summarises inferred parameters and uncertainties.
+`image/fit.png` lets you inspect the current best fit without writing Python. `search.summary` helps assess search
+progress and runtime, while `search.log` records messages. The `files` directory stores machine-readable results;
+search-specific checkpoint files support resuming an interrupted fit.
 
 __Unique Identifier__
 
-In the output folder, you will note that results are in a folder which is a collection of random characters. This acts 
-as a `unique_identifier` of the model-fit, where this identifier is generated based on the model, search and dataset 
-that are used in the fit.
- 
-An identical combination of model, search and dataset generates the same identifier, meaning that rerunning the
-script will use the existing results to resume the model-fit. In contrast, if you change the model, search or dataset,
-a new unique identifier will be generated, ensuring that the model-fit results are output into a separate folder. 
+The identifier is derived from identifying model and search settings, including the tag. It is not a random name.
+Repeating the same setup finds the same output, allowing an interrupted search to resume when its checkpoint is
+intact, or a completed result to load rather than run again. Changing identifying settings creates another folder.
 
-We additionally want the unique identifier to be specific to the dataset fitted, so that if we fit different datasets
-with the same model and search results are output to a different folder. We achieved this for the fit above by passing 
-the `dataset_name` to the search's `unique_tag`.
+`unique_tag=dataset_name` keeps datasets separate. The identifier does not automatically hash every data pixel,
+mask choice or Analysis setting. If you change these while keeping the same model and search, use a new name or
+tag so that you cannot accidentally reuse an old result. Keep enough information to reproduce each analysis.
 
-__Output Folder Contents__
+__Results__
 
-Now this is running you should checkout the `HowToGalaxy/output` folder. This is where the results of the
-search are written to hard-disk (in the `tutorial_2_practicalities` folder), where all outputs are human readable
-(e.g. as .json, .csv or text files).
-
-As the fit progresses, results are written to the `output` folder on the fly using the highest likelihood model found
-by the non-linear search so far. This means you can inspect the results of the model-fit as it runs, without having to
-wait for the non-linear search to terminate.
- 
-The `output` folder includes:
-
- - `model.info`: Summarizes the model, its parameters and their priors discussed in the next tutorial.
- 
- - `model.results`: Summarizes the highest likelihood model inferred so far including errors.
- 
- - `images`: Visualization of the highest likelihood model-fit to the dataset, (e.g. a fit subplot showing the 
- galaxies, model data and residuals).
- 
- - `files`: A folder containing .fits files of the dataset, the model as a human-readable .json file, 
- a `.csv` table of every non-linear search sample and other files containing information about the model-fit.
- 
- - `search.summary`: A file providing summary statistics on the performance of the non-linear search.
- 
- - `search_internal`: Internal files of the non-linear search (in this case Nautilus) used for resuming the fit and
-  visualizing the search.
-
-__Result__
-
-The `search.fit` method produces a `result` object, packed with useful information about the model fit that we’ll 
-explore in detail in a later tutorial.
-
-One component of the `result` object we’ll use now is the `FitImaging` object, which corresponds to the set of model 
-parameters that yielded the maximum log-likelihood solution. Plotting this object lets us visually inspect how well 
-the model fits the data.
-
-In this example, the fit to the data is excellent, with residuals near zero, as expected since the same model was 
-used both to simulate and fit the data.
+The result gives us the maximum-likelihood fit and galaxies, plus samples from which parameter estimates and
+uncertainties are calculated. For this course, our priority is learning to obtain reliable fits.
 """
+
 aplt.subplot_fit_imaging(fit=result.max_log_likelihood_fit)
 
 """
-The Probability Density Functions (PDF's) of the results can be plotted using Nautilus's in-built visualization 
-library, which is wrapped via the `corner_anesthetic` function.
+Inspect the central bulge, disk and residuals. A visually good fit is encouraging, but another search may find a
+better solution. The next tutorial explores that failure mode.
 
-The PDF shows the 1D and 2D probabilities estimated for every parameter after the model-fit. The two dimensional 
-figures can show the degeneracies between different parameters, for example how increasing the intensity $I$ of the
-galaxy and decreasing its effective radius $R_{Eff}$ lead to similar likelihoods and probabilities.
+Once you can fit real data reliably, use `autogalaxy_workspace/scripts/guides/results/start_here.py` to learn
+how to load, manipulate and combine results, including database tools for larger samples.
 
-This PDF will be discussed more in the next tutorial.
+__Parameter Plots__
 
-The plot is labeled with short hand parameter names (e.g. `sersic_index` is mapped to the short hand
-parameter `n`). These mappings are specified in the `config/notation.yaml` file and can be customized by users.
+The output also includes corner plots showing ranges of plausible parameters and relationships between them.
+For example, the bulge's intensity and effective radius can trade off while producing similar images.
+The `corner_anesthetic` plotting function can show these distributions. With `latent=True`, it displays derived
+quantities such as axis ratio and position angle instead of the sampled elliptical components.
 
-The superscripts of labels are the path of names each component was given in the model (e.g. for the `Sersic`
-bulge, `galaxy.bulge`: the galaxy's name `galaxy` and its name `bulge` defined when making the `Model` above).
+Labels are controlled by `config/notation.yaml`. Component names become superscripts, distinguishing the bulge
+from the disk. Search plot switches, including the optional latent corner plot, are in
+`config/visualize/plots_search.yaml`. These plots become useful once you have checked the fit itself.
 
-Components in different named galaxy or profile paths can be distinguished by their superscripts. Profiles within
-the same path, such as Gaussians in a basis, can share a superscript. When the model has more than one top-level
-component, each also gets its own
-corner plot in the output folder (`corner_anesthetic_<component>.png`, switched in `config/visualize/plots_search.yaml`).
+__Configuration and Storage__
 
-The parameters a model is sampled in are not always the ones it is read in: a profile's elliptical components are an
-axis ratio and a position angle. Passing `latent=True` to `corner_anesthetic` plots these latent parameters instead.
-The same figure is written to the output folder as `corner_anesthetic_latent.png` when `corner_anesthetic_latent`
-is switched on in `config/visualize/plots_search.yaml` (off by default), once the fit is complete. With
-`latent_model_parameters` enabled, full-sample latent output (`latent_draw_via_pdf: false`) writes these columns
-to `files/latent/samples.csv`. Only the plot recentres periodic angles; saved values keep the conversion's range.
+The `config` directory controls defaults for priors, search settings, plotting and output. The
+`info_whitespace_length` setting in `config/general.yaml` adjusts the spacing of model and result summaries.
+Restart a notebook kernel when changing configuration that is loaded at startup.
 
-__Other Practicalities__
-
-The following are examples of other practicalities which I will document fully in this example script in the future,
-but so far have no found the time:
-
-- `config`: The files in `HowToGalaxy/config` which control many aspects of how PyAutoGalaxy runs,
- including visualization, the non-linear search settings.
-
-- `config/priors`: Folder containing the default priors on all model components.
-
-- `results`: How to load the results of a model-fit from the output folder to a Python script or Jupyter notebook.
-
-- `output.yaml`: What files are output to control file size.
+`config/output.yaml` controls which products are retained. In particular, `search_internal: false` removes
+search internals after completion to save space; keep them if you need the search-specific state later.
+Do not remove the checkpoints of an unfinished fit you intend to resume.
 
 __Wrap Up__
 
-This tutorial has illustrated how to handle a number of practicalities that are key to performing model-fitting
-effectively. These include:
-
-- How to save results to your hard disk.
-
-- How to navigate the output folder and examine model-fit results to assess quality.
-
-- How to estimate the run-time of a model-fit before initiating it, and change settings to make it faster or run the
-  analysis in parallel.
+We have fitted a more realistic model and learnt where to inspect its progress, results and resource use.
+Now we will deliberately give the search too little exploration and learn how to diagnose and improve the fit.
 """

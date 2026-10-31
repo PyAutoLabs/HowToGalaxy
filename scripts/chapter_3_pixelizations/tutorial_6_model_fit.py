@@ -12,9 +12,8 @@ Inversions are most useful when combined with light profiles. For the complex ga
 chapter, we can fit it with light profiles to quantify the properties of its `bulge` and `disk` components, whilst
 simultaneously fitting any residual structure with the inversion so as to ensure it does not impact the fit.
 
-To illustrate modeling using an inversion, this tutorial therefore revisits the complex galaxy model-fit that we
-performed via search chaining at the end of chapter 2 (tutorials 9-10). This time, as you have probably guessed, we
-will fit part of the galaxy using an inversion.
+We now apply the search-chaining approach introduced in chapter 2 tutorial 6 to this chapter's complex galaxy.
+Here we will fit part of the galaxy using an inversion.
 
 We will use search chaining to do this, first fitting the main galaxy components with light profiles, thereby
 initializing the bulge and disk components. In the later searches we will switch to an `Inversion`.

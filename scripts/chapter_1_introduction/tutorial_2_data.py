@@ -373,8 +373,8 @@ Below, we load a simulated interferometer dataset (creating it first via the `sc
 script if it does not exist on your hard-disk, using the same auto-simulation idiom as later tutorials) and plot
 its dirty images — the closest an interferometer dataset comes to the CCD images we simulated above.
 
-HowToGalaxy will not cover interferometry any further than this. The lecture series teaches galaxy modeling using
-CCD imaging, and everything you learn transfers to visibility-space fitting. If you need to model interferometer
+HowToGalaxy teaches model fitting using CCD imaging, with a brief reminder of visibility-space likelihoods in
+chapter 2. The modelling tools transfer to visibility-space fitting. If you need to model interferometer
 data, go to the `autogalaxy_workspace/scripts/interferometer` package, which is the dedicated resource for
 uv-plane galaxy modeling.
 """
