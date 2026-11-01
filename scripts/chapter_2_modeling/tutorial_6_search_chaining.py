@@ -15,11 +15,19 @@ more robust and manageable. It does not depend on automatically narrowing the pr
 
 __Contents__
 
-- **Dataset:** Keep both galaxies in the fit.
-- **Search 1:** Obtain a useful description of the neighbour.
+- **Dataset and Mask:** Load the imaging data and select the region to fit.
+- **Over Sampling:** Evaluate rapidly changing central light on a finer grid.
+- **Keep Both Galaxies:** Retain both objects in the data and model them together.
+- **Search 1 Model:** Build the initial target and neighbouring-galaxy model.
+- **Fast First Search:** Use multi-start optimisation to obtain an initial fit.
 - **Inspect Before Chaining:** Check that the first result is suitable to fix.
-- **Search 2:** Fix the neighbour's geometry and refine the target.
-- **Limits and Pipelines:** Understand the assumptions and extend the workflow.
+- **Fix the Neighbour:** Carry fitted neighbour geometry into the second search.
+- **Search 2 Model:** Use a more flexible light model for the target galaxy.
+- **More Thorough Second Search:** Estimate the target parameters with Nautilus.
+- **Benefits and Limits:** Explain the uncertainty conditional on fixed component geometry.
+- **From Searches to Pipelines:** Find reusable sequences of model fits in the workspace.
+- **Wrap Up:** Review the lesson and its connection to the next topic.
+
 """
 
 # from autogalaxy import setup_notebook; setup_notebook()

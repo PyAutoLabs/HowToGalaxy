@@ -11,11 +11,15 @@ to start modelling galaxies. Alternative searches are covered in the optional se
 __Contents__
 
 - **Parameter Space:** The galaxy models we can explore.
+- **Non-linear Search:** Introduce the search used to explore the model parameters.
 - **Dataset and Mask:** The observation we will fit.
-- **Model and Priors:** The components and possible parameter values.
+- **Over Sampling:** Evaluate rapidly changing central light on a finer grid.
+- **Model:** Define the components and free parameters of the model.
+- **Priors:** Describe the allowed values of each free parameter.
 - **Analysis:** The interface between a model and the data.
 - **Nested Sampling:** Use Nautilus to explore possible models.
 - **Result:** Inspect the fit and the uncertainty in its parameters.
+- **Wrap Up:** Review the lesson and its connection to the next topic.
 
 __Parameter Space__
 
