@@ -60,15 +60,9 @@ __Dataset Auto-Simulation__
 The next cell runs the simulator if the example dataset needs to be generated. You do not need to run the
 simulator separately.
 """
-if ag.util.dataset.should_simulate(str(dataset_path)):
-    import subprocess
-    import sys
-
-    # Use the same Python interpreter as this tutorial.
-    subprocess.run(
-        [sys.executable, "scripts/simulators/sersic.py"],
-        check=True,
-    )
+ag.util.dataset.simulate_if_needed(
+    dataset_path, simulator="scripts/simulators/sersic.py"
+)
 
 
 """

@@ -51,8 +51,9 @@ import autogalaxy.plot as aplt
 import autoarray.plot as aaplt
 
 dataset_path = Path("dataset") / "imaging" / "simple"
-if ag.util.dataset.should_simulate(str(dataset_path)):
-    subprocess.run([sys.executable, "scripts/simulators/simple.py"], check=True)
+ag.util.dataset.simulate_if_needed(
+    dataset_path, simulator="scripts/simulators/simple.py"
+)
 dataset = ag.Imaging.from_fits(
     data_path=dataset_path / "data.fits",
     noise_map_path=dataset_path / "noise_map.fits",
