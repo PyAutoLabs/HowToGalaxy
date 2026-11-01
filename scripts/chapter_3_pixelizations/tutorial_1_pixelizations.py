@@ -2,23 +2,45 @@
 Tutorial 1: Pixelizations, Mappers and Inversions
 =================================================
 
-Look at a resolved galaxy image. Its broad light distribution may follow a smooth bulge and disc, while smaller regions contain bright star-forming knots, off-centre clumps or irregular extensions. A model can capture the overall galaxy yet leave these features clearly visible in the residual image.
+Look at a resolved galaxy image. Its broad light distribution may follow a smooth bulge and disc, while smaller
+regions contain bright star-forming knots, off-centre clumps or irregular extensions. A model can capture the
+overall galaxy yet leave these features clearly visible in the residual image.
 
-In Chapter 2, we introduced linear light profiles and multi-Gaussian expansions (MGEs). Combining Gaussians of different widths gives us a more flexible radial brightness distribution than a single Sérsic profile. Gaussian groups with different ellipticities and orientations can also describe changes in flattening and isophotal twists. Fixed widths and linearly solved intensities provide this flexibility without introducing a large number of non-linear parameters.
+In Chapter 2, we introduced linear light profiles and multi-Gaussian expansions (MGEs). Combining Gaussians of
+different widths gives us a more flexible radial brightness distribution than a single Sérsic profile. Gaussian
+groups with different ellipticities and orientations can also describe changes in flattening and isophotal twists.
+Fixed widths and linearly solved intensities provide this flexibility without introducing a large number of
+non-linear parameters.
 
-Our worked example nevertheless imposed a particular geometry: the Gaussians within each galaxy’s group shared a common centre and elliptical shape. Adding more Gaussians improves our control over the brightness distribution around that centre, but does not create independently positioned knots or several components with distinct centres.
+Our worked example nevertheless imposed a particular geometry: the Gaussians within each galaxy’s group shared a
+common centre and elliptical shape. Adding more Gaussians improves our control over the brightness distribution
+around that centre, but does not create independently positioned knots or several components with distinct centres.
 
-We could introduce offset Gaussian groups. The limitation is not that MGEs cannot represent multiple centres, but that increasingly complicated galaxies require us to choose and fit an increasingly elaborate arrangement of components.
+We could introduce offset Gaussian groups. The limitation is not that MGEs cannot represent multiple centres, but
+that increasingly complicated galaxies require us to choose and fit an increasingly elaborate arrangement of
+components.
 
-Suppose the MGE reproduces the smooth galaxy light but leaves compact, structured residuals. These may indicate that the model needs more freedom to describe local features. They are not automatically evidence for additional galaxy components: an inaccurate PSF, background estimate, contaminating object or other data-treatment error can also leave structured residuals.
+Suppose the MGE reproduces the smooth galaxy light but leaves compact, structured residuals. These may indicate
+that the model needs more freedom to describe local features. They are not automatically evidence for additional
+galaxy components: an inaccurate PSF, background estimate, contaminating object or other data-treatment error can
+also leave structured residuals.
 
-In this chapter, we introduce pixelized reconstruction as another way to describe the galaxy’s light. We infer brightness values across a mesh without assigning a separate analytic centre and shape to every feature. The predicted image includes telescope blurring, so the reconstruction is an inferred description of the galaxy rather than simply a copy of the observed pixels.
+In this chapter, we introduce pixelized reconstruction as another way to describe the galaxy’s light. We infer
+brightness values across a mesh without assigning a separate analytic centre and shape to every feature. The
+predicted image includes telescope blurring, so the reconstruction is an inferred description of the galaxy rather
+than simply a copy of the observed pixels.
 
-This builds on the linear profiles of Chapter 2. Instead of solving for Gaussian intensities, we solve for the mesh brightness values. Their extra freedom can describe irregular structure, but can also fit noise. Regularization supplies a prior that controls variations between neighbouring brightness values.
+This builds on the linear profiles of Chapter 2. Instead of solving for Gaussian intensities, we solve for the mesh
+brightness values. Their extra freedom can describe irregular structure, but can also fit noise. Regularization
+supplies a prior that controls variations between neighbouring brightness values.
 
-The reconstruction still depends on modelling choices, including the mesh, its resolution, regularization and the treatment of the data. We will learn to inspect how those choices affect both the reconstructed galaxy and the image residuals.
+The reconstruction still depends on modelling choices, including the mesh, its resolution, regularization and the
+treatment of the data. We will learn to inspect how those choices affect both the reconstructed galaxy and the
+image residuals.
 
-MGE and other analytic profiles remain useful for describing and measuring smooth galaxy components. Pixelizations complement them when more complicated structure needs to be represented, including in models that combine analytic components with a pixelized reconstruction.
+MGE and other analytic profiles remain useful for describing and measuring smooth galaxy components. Pixelizations
+complement them when more complicated structure needs to be represented, including in models that combine analytic
+components with a pixelized reconstruction.
 
 We will build the connection between image coordinates, mesh indexes, reconstructed brightnesses and the model
 image. Our worked dataset is deliberately a simple smooth bulge and disc: it makes these ingredients easy to see
@@ -32,9 +54,7 @@ __Contents__
 - **An inversion:** Infer brightnesses, accounting for noise and telescope blurring.
 - **A model image:** Inspect the reconstruction and residuals separately.
 - **Using FitImaging:** Put these ingredients into a galaxy model.
-"""
 
-"""
 __The image and its coordinates__
 
 The simulator supplies a Sérsic bulge and exponential disc. The circular mask selects the image pixels used in the
@@ -117,8 +137,8 @@ for mesh_index in mesh_indexes:
 """
 __Following the mappings__
 
-An image-pixel index and mesh index refer to different things. The mapper stores the relationship between them.
-We can follow it in the opposite direction: select mesh points and find the image pixels receiving a contribution.
+An image-pixel index and mesh index refer to different things. The mapper stores the relationship between them. We
+can follow it in the opposite direction: select mesh points and find the image pixels receiving a contribution.
 
 Matching colours identify the selected mesh groups and their associated image regions. These are interpolation
 contributions, rather than a strict claim that every image coordinate lies inside a coloured cell. Nearby mesh
@@ -158,17 +178,17 @@ aaplt.subplot_image_and_mapper(
 """
 __An inversion__
 
-The mapper tells us how brightness would contribute to the image, but has not yet determined those brightnesses.
-An inversion combines the mappings with the observed data, noise and PSF to infer the mesh values together.
-Like the Gaussian intensities in Chapter 2, these values enter the predicted image linearly. Linear algebra handles
-this large set of brightnesses without giving a non-linear search a free parameter for every mesh point.
+The mapper tells us how brightness would contribute to the image, but has not yet determined those brightnesses. An
+inversion combines the mappings with the observed data, noise and PSF to infer the mesh values together. Like the
+Gaussian intensities in Chapter 2, these values enter the predicted image linearly. Linear algebra handles this
+large set of brightnesses without giving a non-linear search a free parameter for every mesh point.
 
 We also supplied `Constant` regularization with coefficient `1.0`. This smoothness prior discourages unsupported
 variations between neighbours. The next tutorial explores why it is needed and how to choose its strength.
 
-Here there is only one mapper, so entry `j` in the reconstruction belongs to mesh index `j`. These values are jointly
-inferred: interpolation and telescope blurring couple their effects on the image, while regularization couples
-neighbouring brightnesses. They are not independent measurements of the selected coloured regions.
+Here there is only one mapper, so entry `j` in the reconstruction belongs to mesh index `j`. These values are
+jointly inferred: interpolation and telescope blurring couple their effects on the image, while regularization
+couples neighbouring brightnesses. They are not independent measurements of the selected coloured regions.
 """
 
 inversion = ag.Inversion(dataset=dataset, linear_obj_list=[mapper])
@@ -190,9 +210,9 @@ aaplt.plot_mapper(
 """
 __A model image__
 
-The brightness reconstruction lives on the mesh. Mapping it onto the image grid and convolving with the PSF produces
-the model image that we compare to the observations. Telescope blurring is already included in the inversion's solve;
-it is not an extra correction applied after fitting an unblurred model to blurred data.
+The brightness reconstruction lives on the mesh. Mapping it onto the image grid and convolving with the PSF
+produces the model image that we compare to the observations. Telescope blurring is already included in the
+inversion's solve; it is not an extra correction applied after fitting an unblurred model to blurred data.
 
 The next figures distinguish the unblurred prediction, blurred model and residuals. A compact reconstructed feature
 can be less distinct in the observed image because the PSF spreads its light. Inspect coherent residuals as well as
@@ -218,7 +238,8 @@ We exposed the mapper and inversion to understand what they do. In everyday mode
 `Galaxy` and let `FitImaging` construct these ingredients. This evaluates a specified model; it is not a non-linear
 search. The reconstruction still depends on the mesh, resolution, regularization and data treatment.
 
-**🤖 Ask AI:** Why is a reconstructed brightness on the mesh different from a measured image-pixel value, even though
+**🤖 Ask AI:** Why is a reconstructed brightness on the mesh different from a measured image-pixel value, even
+though
 we are modelling a directly observed galaxy without lensing?
 """
 
