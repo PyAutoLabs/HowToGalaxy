@@ -42,11 +42,9 @@ The image, noise map and PSF together describe the observation; none specifies w
 
 dataset_name = "simple"
 dataset_path = Path("dataset") / "imaging" / dataset_name
-if ag.util.dataset.should_simulate(str(dataset_path)):
-    import subprocess
-    import sys
-
-    subprocess.run([sys.executable, "scripts/simulators/simple.py"], check=True)
+ag.util.dataset.simulate_if_needed(
+    dataset_path, simulator="scripts/simulators/simple.py"
+)
 
 dataset = ag.Imaging.from_fits(
     data_path=dataset_path / "data.fits",

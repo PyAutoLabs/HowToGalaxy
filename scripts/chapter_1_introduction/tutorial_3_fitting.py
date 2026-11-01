@@ -58,14 +58,9 @@ The `howtogalaxy` dataset is the one built up and saved in tutorial 2 (`tutorial
 does not already exist on your system, it is created by running that script. This ensures every
 example script can be run without manually simulating data first.
 """
-if ag.util.dataset.should_simulate(str(dataset_path)):
-    import subprocess
-    import sys
-
-    subprocess.run(
-        [sys.executable, "scripts/chapter_1_introduction/tutorial_2_data.py"],
-        check=True,
-    )
+ag.util.dataset.simulate_if_needed(
+    dataset_path, simulator="scripts/chapter_1_introduction/tutorial_2_data.py"
+)
 
 
 dataset = ag.Imaging.from_fits(
@@ -572,14 +567,9 @@ true parameters of this profile are unknown.
 dataset_name = "simple"
 dataset_path = Path("dataset") / "imaging" / dataset_name
 
-if ag.util.dataset.should_simulate(str(dataset_path)):
-    import subprocess
-    import sys
-
-    subprocess.run(
-        [sys.executable, "scripts/simulators/simple.py"],
-        check=True,
-    )
+ag.util.dataset.simulate_if_needed(
+    dataset_path, simulator="scripts/simulators/simple.py"
+)
 
 dataset = ag.Imaging.from_fits(
     data_path=dataset_path / "data.fits",

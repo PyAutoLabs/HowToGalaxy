@@ -37,11 +37,9 @@ The image, noise map and PSF together describe the observation; none specifies w
 
 dataset_name = "simple__sersic"
 dataset_path = Path("dataset") / "imaging" / dataset_name
-if ag.util.dataset.should_simulate(str(dataset_path)):
-    import subprocess
-    import sys
-
-    subprocess.run([sys.executable, "scripts/simulators/sersic.py"], check=True)
+ag.util.dataset.simulate_if_needed(
+    dataset_path, simulator="scripts/simulators/sersic.py"
+)
 
 dataset = ag.Imaging.from_fits(
     data_path=dataset_path / "data.fits",
@@ -118,11 +116,9 @@ Check the mask against the image rather than assuming a circular region removes 
 
 dataset_name = "extra_galaxy"
 dataset_path = Path("dataset") / "imaging" / dataset_name
-if ag.util.dataset.should_simulate(str(dataset_path)):
-    import subprocess
-    import sys
-
-    subprocess.run([sys.executable, "scripts/simulators/extra_galaxy.py"], check=True)
+ag.util.dataset.simulate_if_needed(
+    dataset_path, simulator="scripts/simulators/extra_galaxy.py"
+)
 dataset = ag.Imaging.from_fits(
     data_path=dataset_path / "data.fits",
     noise_map_path=dataset_path / "noise_map.fits",

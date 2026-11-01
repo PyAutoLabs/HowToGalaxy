@@ -380,14 +380,9 @@ uv-plane galaxy modeling.
 """
 dataset_path = Path("dataset") / "interferometer" / "simple"
 
-if ag.util.dataset.should_simulate(str(dataset_path)):
-    import subprocess
-    import sys
-
-    subprocess.run(
-        [sys.executable, "scripts/simulators/interferometer.py"],
-        check=True,
-    )
+ag.util.dataset.simulate_if_needed(
+    dataset_path, simulator="scripts/simulators/interferometer.py"
+)
 
 real_space_mask = ag.Mask2D.circular(
     shape_native=(100, 100),
