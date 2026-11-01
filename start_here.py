@@ -6,6 +6,28 @@ Welcome to **HowToGalaxy** — the `PyAutoGalaxy` tutorial lecture series on mod
 
 This script gives you a one-page overview of the series and points you to the first tutorial.
 
+__HowToGalaxy and Natural Language__
+
+**PyAutoGalaxy** can be used by describing an analysis in natural language to an AI coding agent, which writes and runs
+the **PyAutoGalaxy** code for you. Natural language does not remove the need for expertise: to direct an analysis well,
+and to recognise when a result is wrong, you still need to understand the science, the modeling assumptions and
+how uncertainty is quantified.
+
+That is what **HowToGalaxy** is for. It teaches galaxy structure and morphology from first principles, with real **PyAutoGalaxy** Python that you
+run and explore yourself, so that you can then describe a galaxy model in natural language with expertise, or write it
+in Python directly. Python is not going anywhere: every lecture is ordinary **PyAutoGalaxy** code.
+
+You can also study with the [PyAutoGalaxy AI Assistant](https://github.com/PyAutoLabs/autogalaxy_assistant) in teacher
+mode, which explains concepts, equations, code and results as you go. Open Claude Code, Codex or another AI coding
+agent and paste:
+
+> I want to work through the HowToGalaxy lectures (https://github.com/PyAutoLabs/HowToGalaxy) with the
+> PyAutoGalaxy Assistant: https://github.com/PyAutoLabs/autogalaxy_assistant
+> First clone that repository, cd into it and follow its AGENTS.md.
+>
+> Enter teacher mode. Show me where to find the lectures and how to use Jupyter Notebook or
+> Markdown, then help me with questions as I go.
+
 __HowToGalaxy__
 
 **HowToGalaxy** is a four-chapter guide which takes you, step by step, from knowing nothing about galaxy
