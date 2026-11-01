@@ -1,8 +1,8 @@
 # HowToGalaxy
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/start_here.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.1.1/start_here.ipynb)
 
-[Start Here on Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/start_here.ipynb) |
+[Start Here on Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.1.1/start_here.ipynb) |
 [Installation Guide](https://pyautogalaxy.readthedocs.io/en/latest/installation/overview.html) |
 [PyAutoGalaxy readthedocs](https://pyautogalaxy.readthedocs.io/en/latest/index.html) |
 [Browse Chapter 1 With Images](markdown/README.md) |
@@ -78,15 +78,15 @@ output figures inline. Nothing runs and nothing installs — you just read it. T
 skimming a tutorial before running it, or for reading on a phone. Markdown pages currently exist only
 for the chapter 1 tutorials listed with a `markdown` link below; every other tutorial is Colab-only.
 
-**[Start Here](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/start_here.ipynb)** — a one-page overview of the whole series.
+**[Start Here](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.1.1/start_here.ipynb)** — a one-page overview of the whole series.
 
 - **[Chapter 1: Introduction](scripts/chapter_1_introduction/README.md)** — Grids, light profiles, galaxies, simulated imaging data, and fitting.
-  - Tutorial 0: Visualization — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_1_introduction/tutorial_0_visualization.ipynb) / [markdown](markdown/chapter_1_introduction/tutorial_0_visualization.md))
-  - Tutorial 1: Grids and Galaxies — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_1_introduction/tutorial_1_grids_and_galaxies.ipynb) / [markdown](markdown/chapter_1_introduction/tutorial_1_grids_and_galaxies.md))
-  - Tutorial 2: Data — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_1_introduction/tutorial_2_data.ipynb) / [markdown](markdown/chapter_1_introduction/tutorial_2_data.md))
-  - Tutorial 3: Fitting — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_1_introduction/tutorial_3_fitting.ipynb) / [markdown](markdown/chapter_1_introduction/tutorial_3_fitting.md))
-  - Tutorial 4: Methods — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_1_introduction/tutorial_4_methods.ipynb))
-  - Tutorial 5: Summary — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_1_introduction/tutorial_5_summary.ipynb) / [markdown](markdown/chapter_1_introduction/tutorial_5_summary.md))
+  - Tutorial 0: Visualization — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.1.1/notebooks/chapter_1_introduction/tutorial_0_visualization.ipynb) / [markdown](markdown/chapter_1_introduction/tutorial_0_visualization.md))
+  - Tutorial 1: Grids and Galaxies — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.1.1/notebooks/chapter_1_introduction/tutorial_1_grids_and_galaxies.ipynb) / [markdown](markdown/chapter_1_introduction/tutorial_1_grids_and_galaxies.md))
+  - Tutorial 2: Data — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.1.1/notebooks/chapter_1_introduction/tutorial_2_data.ipynb) / [markdown](markdown/chapter_1_introduction/tutorial_2_data.md))
+  - Tutorial 3: Fitting — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.1.1/notebooks/chapter_1_introduction/tutorial_3_fitting.ipynb) / [markdown](markdown/chapter_1_introduction/tutorial_3_fitting.md))
+  - Tutorial 4: Methods — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.1.1/notebooks/chapter_1_introduction/tutorial_4_methods.ipynb))
+  - Tutorial 5: Summary — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.1.1/notebooks/chapter_1_introduction/tutorial_5_summary.ipynb) / [markdown](markdown/chapter_1_introduction/tutorial_5_summary.md))
 - **[Chapter 2: Modeling](scripts/chapter_2_modeling/README.md)** — Practical galaxy models, data and likelihoods, linear profiles and search chaining.
   - Tutorial 1: Non-linear Search — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_2_modeling/tutorial_1_non_linear_search.ipynb))
   - Tutorial 2: Practicalities — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_2_modeling/tutorial_2_practicalities.ipynb))
@@ -101,9 +101,9 @@ for the chapter 1 tutorials listed with a `markdown` link below; every other tut
   - Tutorial 3: Model Fit — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_3_pixelizations/tutorial_3_model_fit.ipynb))
 
 - **[Chapter 4: Scaling Up Galaxies](scripts/chapter_4_scaling_up_galaxies/README.md)** — Extra galaxies, blended multi-galaxy systems, and cluster fields.
-  - Tutorial 1: Extra Galaxies — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_4_scaling_up_galaxies/tutorial_1_extra_galaxies.ipynb))
-  - Tutorial 2: Multi Galaxy — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_4_scaling_up_galaxies/tutorial_2_multi_galaxy.ipynb))
-  - Tutorial 3: Cluster — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.10.29.1/notebooks/chapter_4_scaling_up_galaxies/tutorial_3_cluster.ipynb))
+  - Tutorial 1: Extra Galaxies — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.1.1/notebooks/chapter_4_scaling_up_galaxies/tutorial_1_extra_galaxies.ipynb))
+  - Tutorial 2: Multi Galaxy — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.1.1/notebooks/chapter_4_scaling_up_galaxies/tutorial_2_multi_galaxy.ipynb))
+  - Tutorial 3: Cluster — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.1.1/notebooks/chapter_4_scaling_up_galaxies/tutorial_3_cluster.ipynb))
 - **[Optional Tutorials](scripts/chapter_optional/)** — Alternative non-linear searches and advanced topics.
   - Alternative Searches — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_optional/tutorial_searches.ipynb))
   - Need for Speed — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_optional/tutorial_need_for_speed.ipynb))
