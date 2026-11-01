@@ -103,11 +103,15 @@
   {
     "contents": [
       "Parameter Space",
+      "Non-linear Search",
       "Dataset and Mask",
-      "Model and Priors",
+      "Over Sampling",
+      "Model",
+      "Priors",
       "Analysis",
       "Nested Sampling",
-      "Result"
+      "Result",
+      "Wrap Up"
     ],
     "cross_refs": [],
     "notebook": "notebooks/chapter_2_modeling/tutorial_1_non_linear_search.ipynb",
@@ -118,13 +122,20 @@
   {
     "contents": [
       "Dataset and Mask",
+      "Over Sampling",
       "Model",
       "Search Settings",
-      "Analysis and Run Times",
+      "Iterations Per Update",
+      "Analysis",
+      "Run Times",
       "VRAM Use",
+      "Model Fit",
       "Output Folder",
       "Unique Identifier",
-      "Results and Configuration"
+      "Results",
+      "Parameter Plots",
+      "Configuration and Storage",
+      "Wrap Up"
     ],
     "cross_refs": [
       "autogalaxy_workspace/scripts/guides/results/start_here.py",
@@ -137,13 +148,18 @@
   },
   {
     "contents": [
+      "Dataset and Mask",
+      "Over Sampling",
       "A Reference Fit",
       "An Inadequate Search",
-      "Local Maxima",
-      "Prior Tuning",
-      "Reducing Complexity",
-      "Look Harder",
-      "Benefits and Weaknesses"
+      "Compare the Fits",
+      "Global and Local Maxima",
+      "Approach 1: Prior Tuning",
+      "Approach 2: Reducing Complexity",
+      "Approach 3: Look Harder",
+      "Benefits and Weaknesses",
+      "Model Limitations",
+      "Wrap Up"
     ],
     "cross_refs": [],
     "notebook": "notebooks/chapter_2_modeling/tutorial_3_why_modeling_is_hard.ipynb",
@@ -153,12 +169,20 @@
   },
   {
     "contents": [
+      "Dataset and Mask",
+      "Over Sampling",
       "Linear Light Profiles",
-      "Results and Intensities",
+      "Search and Analysis",
+      "Intensities",
+      "Visualisation",
       "Galaxy Structure",
       "Basis",
       "Two Gaussian Groups",
-      "Benefits and Limitations"
+      "MGE Result",
+      "Benefits and Limitations",
+      "Non-negative Intensities",
+      "Other Basis Functions",
+      "Wrap Up"
     ],
     "cross_refs": [
       "autogalaxy_workspace/scripts/imaging/features/multi_gaussian_expansion/modeling.py",
@@ -171,11 +195,15 @@
   },
   {
     "contents": [
+      "Dataset and Mask",
+      "Over Sampling",
       "Masking",
+      "Contaminating Light",
       "Extra Galaxy Noise Scaling",
-      "Analysis",
+      "Analysis as the Interface",
       "Interferometer Data",
-      "Multiple Datasets"
+      "Multiple Datasets",
+      "Wrap Up"
     ],
     "cross_refs": [
       "autogalaxy_workspace/scripts/interferometer/modeling.py"
@@ -187,11 +215,18 @@
   },
   {
     "contents": [
-      "Dataset",
-      "Search 1",
+      "Dataset and Mask",
+      "Over Sampling",
+      "Keep Both Galaxies",
+      "Search 1 Model",
+      "Fast First Search",
       "Inspect Before Chaining",
-      "Search 2",
-      "Limits and Pipelines"
+      "Fix the Neighbour",
+      "Search 2 Model",
+      "More Thorough Second Search",
+      "Benefits and Limits",
+      "From Searches to Pipelines",
+      "Wrap Up"
     ],
     "cross_refs": [
       "scripts/guides/modeling/chaining.py"

@@ -8,13 +8,21 @@ manage its memory use and inspect its output. These practical skills let us asse
 __Contents__
 
 - **Dataset and Mask:** Inspect a galaxy with a bulge and disk.
+- **Over Sampling:** Evaluate rapidly changing central light on a finer grid.
 - **Model:** Make the model more realistic.
 - **Search Settings:** Balance exploration, batching and output updates.
-- **Analysis and Run Times:** Understand the cost of a fit.
+- **Iterations Per Update:** Control how often the search updates its output.
+- **Analysis:** Connect model predictions to the data and evaluate their likelihood.
+- **Run Times:** Understand the costs that determine how long a fit takes.
 - **VRAM Use:** Check memory before fitting.
+- **Model Fit:** Run the search using the model and analysis.
 - **Output Folder:** Find summaries, images and saved results.
 - **Unique Identifier:** Understand separate fits and resuming.
-- **Results and Configuration:** Inspect the fit and find further tools.
+- **Results:** Inspect the fitted model and its parameter samples.
+- **Parameter Plots:** Inspect parameter uncertainties and relationships in the output plots.
+- **Configuration and Storage:** Configure saved output and retained search checkpoints.
+- **Wrap Up:** Review the lesson and its connection to the next topic.
+
 """
 
 # from autogalaxy import setup_notebook; setup_notebook()

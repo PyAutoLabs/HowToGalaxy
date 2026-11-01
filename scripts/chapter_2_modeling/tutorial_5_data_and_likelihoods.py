@@ -1,6 +1,6 @@
 """
 Tutorial 5: Data and Likelihoods
-===============================
+================================
 
 So far we have changed the galaxy model and the search. Now consider the other side of the fit: the measurements
 we include and how they are compared with a prediction. The data, model and Analysis object have distinct jobs.
@@ -8,11 +8,16 @@ This separation lets the same modelling tools work with different observations a
 
 __Contents__
 
+- **Dataset and Mask:** Load the imaging data and select the region to fit.
+- **Over Sampling:** Evaluate rapidly changing central light on a finer grid.
 - **Masking:** Retain useful constraints without fitting unrelated objects.
+- **Contaminating Light:** Recognise light from objects outside the target model.
 - **Extra Galaxy Noise Scaling:** Reduce the weight of contaminated pixels.
-- **Analysis:** Connect the prepared data to the model.
+- **Analysis as the Interface:** Connect the chosen data treatment to the model likelihood.
 - **Interferometer Data:** Apply the same modelling pattern to visibilities.
 - **Multiple Datasets:** A pointer to advanced joint modelling.
+- **Wrap Up:** Review the lesson and its connection to the next topic.
+
 """
 
 # from autogalaxy import setup_notebook; setup_notebook()

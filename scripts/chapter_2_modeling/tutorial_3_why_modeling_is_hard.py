@@ -12,13 +12,19 @@ right, what it is missing and which assumptions might help.
 
 __Contents__
 
+- **Dataset and Mask:** Load the imaging data and select the region to fit.
+- **Over Sampling:** Evaluate rapidly changing central light on a finer grid.
 - **A Reference Fit:** Repeat the practicalities model for comparison.
 - **An Inadequate Search:** Explore the same model with only 14 live points.
-- **Local Maxima:** Understand how an apparently plausible fit can be wrong.
-- **Prior Tuning:** Use visual impressions to guide exploration.
-- **Reducing Complexity:** Test shared bulge and disk geometry.
-- **Look Harder:** Give the full model more thorough exploration.
+- **Compare the Fits:** Look for residual structure and compare inferred parameters.
+- **Global and Local Maxima:** Distinguish the best solution from nearby likelihood peaks.
+- **Approach 1: Prior Tuning:** Use visual inspection to motivate narrower priors.
+- **Approach 2: Reducing Complexity:** Link component geometry to reduce the number of free parameters.
+- **Approach 3: Look Harder:** Give the original model more live points.
 - **Benefits and Weaknesses:** Balance realism, reliability and runtime.
+- **Model Limitations:** Recognise structures that the chosen profiles cannot describe.
+- **Wrap Up:** Review the lesson and its connection to the next topic.
+
 """
 
 # from autogalaxy import setup_notebook; setup_notebook()

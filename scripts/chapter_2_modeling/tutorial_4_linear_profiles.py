@@ -11,12 +11,21 @@ represent galaxy structure without asking Nautilus to search every Gaussian's br
 
 __Contents__
 
+- **Dataset and Mask:** Load the imaging data and select the region to fit.
+- **Over Sampling:** Evaluate rapidly changing central light on a finer grid.
 - **Linear Light Profiles:** Fit shapes while solving intensities directly.
-- **Results and Intensities:** Retrieve and plot the solved profiles.
+- **Search and Analysis:** Fit a model whose intensities are solved within the likelihood.
+- **Intensities:** Retrieve the solved intensities from the fitted profiles.
+- **Visualisation:** Plot profiles with their solved intensities and inspect the fit.
 - **Galaxy Structure:** Motivate a more flexible description of the light.
 - **Basis:** Build and inspect a group of Gaussians.
 - **Two Gaussian Groups:** Represent different central and outer shapes.
+- **MGE Result:** Inspect the fitted Gaussian light distribution and residuals.
 - **Benefits and Limitations:** Understand what an MGE can and cannot describe.
+- **Non-negative Intensities:** Constrain solved intensities to represent physical light emission.
+- **Other Basis Functions:** Find other ways to expand a galaxy’s light distribution.
+- **Wrap Up:** Review the lesson and its connection to the next topic.
+
 """
 
 # from autogalaxy import setup_notebook; setup_notebook()
