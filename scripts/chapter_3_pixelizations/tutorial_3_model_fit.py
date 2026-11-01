@@ -3,17 +3,17 @@ Tutorial 3: Model Fit
 =====================
 
 A pixelization can describe a galaxy without assigning an analytic centre and shape to every visible feature.
-However, analytic profiles remain useful when we want to describe its smooth components. In this tutorial we combine
-an MGE with a pixelization and use search chaining to put the smooth light model in place first.
+However, analytic profiles remain useful when we want to describe its smooth components. In this tutorial we
+combine an MGE with a pixelization and use search chaining to put the smooth light model in place first.
 
 This is a continuation of Chapter 2's linear profiles. Gaussian widths are fixed, Gaussian intensities are solved
 linearly, and the search explores their shared geometry. The second fit adds mesh brightnesses and searches for the
 regularization coefficient. We actually perform both fits, so the second model inherits a fitted MGE.
 
 Our smooth bulge-and-disc simulation is a controlled starting point. A pixelization need not reveal new clumps in
-such data: inspect whether it captures genuine residual structure or merely compensates for modelling choices.
-For irregular observed galaxies, the same procedure offers extra spatial freedom without choosing a separate
-analytic profile for every knot.
+such data: inspect whether it captures genuine residual structure or merely compensates for modelling choices. For
+irregular observed galaxies, the same procedure offers extra spatial freedom without choosing a separate analytic
+profile for every knot.
 
 __Contents__
 
@@ -102,8 +102,8 @@ aplt.subplot_fit_imaging(fit=result_1.max_log_likelihood_fit)
 __Search 2: Add the pixelization__
 
 Inspect the MGE residuals before adding freedom. Compact coherent residuals might need a more flexible brightness
-description, but PSF or background errors can also leave structure. A pixelization can absorb those errors too;
-a better-looking fit does not identify their cause.
+description, but PSF or background errors can also leave structure. A pixelization can absorb those errors too; a
+better-looking fit does not identify their cause.
 
 We now hold the MGE geometry at `result_1.instance` and add a rectangular brightness mesh. The mesh shape is fixed
 before the search; JAX needs this array shape to remain static. The regularization coefficient is inferred, and the
@@ -155,8 +155,8 @@ aaplt.plot_mapper(
 __Search 3: Refine both components__
 
 Fixing geometry helped us get started, but its uncertainty should not disappear from a final scientific analysis.
-Using `result_1.model` returns the MGE geometry to the search with priors informed by the first fit. We also pass the
-regularization model from the second fit. Their linear intensities continue to be solved for each proposal.
+Using `result_1.model` returns the MGE geometry to the search with priors informed by the first fit. We also pass
+the regularization model from the second fit. Their linear intensities continue to be solved for each proposal.
 
 Search chaining is a practical way to initialize this combined model. Priors passed between searches should be
 checked: if an initial analytic fit was inadequate, it can provide an overconfident starting point. In that case,
@@ -195,13 +195,13 @@ aaplt.plot_mapper(
 """
 __Wrap Up__
 
-The MGE describes smooth light while the mesh gives the combined model more spatial freedom. Their decomposition
-is not automatically unique: a pixelization can represent some light that an MGE could also explain. Regularization,
+The MGE describes smooth light while the mesh gives the combined model more spatial freedom. Their decomposition is
+not automatically unique: a pixelization can represent some light that an MGE could also explain. Regularization,
 mesh resolution and analytic-model choices affect which component receives it.
 
-Inspect the residuals, the pixelized component and the inferred MGE geometry together. A small residual map does not
-guarantee unbiased component measurements. Check that scientific conclusions remain stable under reasonable mesh,
-regularization and prior changes, and use the posterior samples when reporting uncertainty.
+Inspect the residuals, the pixelized component and the inferred MGE geometry together. A small residual map does
+not guarantee unbiased component measurements. Check that scientific conclusions remain stable under reasonable
+mesh, regularization and prior changes, and use the posterior samples when reporting uncertainty.
 
 **🤖 Ask AI:** Why can the total galaxy image be well constrained while the division of its light between an MGE and
 a pixelization remains uncertain?
