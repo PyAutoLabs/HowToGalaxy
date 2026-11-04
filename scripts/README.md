@@ -4,9 +4,10 @@ The `HowToGalaxy` folder contains **HowToGalaxy** lectures, which teach a new us
 
 - `chapter_1_introduction`: An introduction to galaxy morphology and structure using **PyAutoGalaxy**.
 - `chapter_2_modeling`: How to model galaxies, with data, models, Analysis objects and searches.
-- `chapter_3_pixelizations`: How to perform pixelized reconstructions of a galaxy.
+- `chapter_3_pixelizations`: Reconstruct complex galaxy light, choose regularization using Bayesian
+  evidence, diagnose fit problems and adapt the mesh and smoothing.
 - `chapter_4_scaling_up_galaxies`: How to scale up modeling to multiple galaxies, from blended pairs to cluster fields.
-- `chapter_optional`: Optional tutorials.
+- `chapter_optional`: Alternative searches, runtime and historical prior passing.
 - `simulators`: Scripts used to simulate the galaxy datasets fitted throughout the **HowToGalaxy** lectures.
 
 # Full Explanation
@@ -95,15 +96,15 @@ fit CCD imaging data of a galaxy with a model. At the end, you'll understand:
 
 **Using an inversion to perform a pixelized morphology reconstruction**
 
-In chapter 3, we'll learn how to reconstruct the morphological features of a galaxy using a pixel-grid, ensuring
-that we can fit an accurate model to galaxies with complex and irregular morphologies. You'll learn how to:
+In chapter 3, we'll reconstruct complex galaxy light using a pixel-grid, compare reconstructions using Bayesian
+evidence, and investigate where the mesh and smoothing limit the fit. You'll learn how to:
 
-1. Pixelize a galaxy reconstruction into pixels.
-2. Perform a linear inversion using this pixelization to reconstruct the galaxy's light.
-3. Apply a smoothness prior on the galaxy reconstruction, called regularization.
-4. Apply smoothing within a Bayesian framework to objectively quantify the reconstruction's complexity.
-5. Write down the linear algebra and Bayesian evidence equations that underpin the whole framework.
-6. Use these features to fit a model via non-linear searches.
+1. Connect reconstruction mesh points to image pixels through mappings.
+2. Solve for the galaxy's brightness using a linear inversion.
+3. Apply regularization and compare log evidences to choose its strength.
+4. Diagnose compact-galaxy fit problems that remain after choosing the regularization coefficient.
+5. Combine Delaunay meshes, Hilbert brightness adaptation and adaptive Split regularization.
+6. Fit a smooth analytic light component alongside a pixelization.
 
 # OVERVIEW OF CHAPTER 4 (Advanced)
 

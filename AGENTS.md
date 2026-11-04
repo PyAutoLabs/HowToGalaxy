@@ -9,11 +9,12 @@ instructions for this repo.
 
 - `scripts/` — Runnable Python tutorial scripts:
   - `chapter_1_introduction/` — Grids, light profiles, galaxies, data, fitting
-  - `chapter_2_modeling/` — Non-linear searches, Bayesian inference, galaxy modeling
-  - `chapter_3_pixelizations/` — Pixelized reconstruction, inversions, regularization, the Bayesian
-    formalism
+  - `chapter_2_modeling/` — Non-linear searches, practicalities, difficult fits, linear profiles,
+    data and likelihoods, component-based search chaining
+  - `chapter_3_pixelizations/` — Pixelized reconstruction, mappings, inversions, evidence-guided
+    regularization, fit problems, adaptive reconstruction and combined analytic/pixelized fits
   - `chapter_4_scaling_up_galaxies/` — Extra galaxies, blended multi-galaxy systems, cluster fields
-  - `chapter_optional/` — Alternative searches and advanced topics
+  - `chapter_optional/` — Alternative searches, runtime and historical prior passing
   - `simulators/` — Simulator scripts that generate the tutorial datasets at runtime
 - `notebooks/` — Jupyter versions, generated from `scripts/` (do not edit directly)
 - `config/` — PyAutoGalaxy configuration YAML

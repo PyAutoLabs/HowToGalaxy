@@ -26,7 +26,7 @@ real analysis?" below).
 
 - **Chapter 1 — Introduction** → [scripts/chapter_1_introduction/](scripts/chapter_1_introduction/): Galaxies from first principles: grids & galaxies, light profiles, simulating data, and fitting data. The conceptual foundation.
 - **Chapter 2 — Modeling** → [scripts/chapter_2_modeling/](scripts/chapter_2_modeling/): Fitting a galaxy model to data with a non-linear search — practicalities, difficult fits, linear profiles, data and likelihoods, and component-based search chaining.
-- **Chapter 3 — Pixelizations** → [scripts/chapter_3_pixelizations/](scripts/chapter_3_pixelizations/): Reconstructing galaxy structure on a mesh — indexed mappings, inversions, Bayesian regularization, fit problems, adaptive reconstruction and combined MGE/pixelization search chaining.
+- **Chapter 3 — Pixelizations** → [scripts/chapter_3_pixelizations/](scripts/chapter_3_pixelizations/): Reconstructing galaxy structure on a mesh — indexed mappings, inversions, evidence-guided regularization, fit problems, adaptive reconstruction and combined analytic/pixelized fits.
 - **Chapter 4 — Scaling Up Galaxies** → [scripts/chapter_4_scaling_up_galaxies/](scripts/chapter_4_scaling_up_galaxies/): Beyond a single galaxy — extra galaxies, blended multi-galaxy systems, and cluster fields.
 
 ## I want to understand…
@@ -40,6 +40,7 @@ real analysis?" below).
 - **How do I model an image with two galaxies?** → [scripts/chapter_4_scaling_up_galaxies/tutorial_2_multi_galaxy.py](scripts/chapter_4_scaling_up_galaxies/tutorial_2_multi_galaxy.py): Joint fitting of blended galaxies and their degeneracies.
 - **How do I reconstruct irregular structure on a pixel grid?** → [scripts/chapter_3_pixelizations/tutorial_1_pixelizations.py](scripts/chapter_3_pixelizations/tutorial_1_pixelizations.py) through [tutorial_5_model_fit.py](scripts/chapter_3_pixelizations/tutorial_5_model_fit.py).
 
+- **How do I choose the regularization strength?** → [tutorial_2_bayesian_regularization.py](scripts/chapter_3_pixelizations/tutorial_2_bayesian_regularization.py): Compare log evidences and inspect how mesh resolution affects the preferred coefficient.
 - **Why does a regularized reconstruction still leave residuals?** → [tutorial_3_fit_problems.py](scripts/chapter_3_pixelizations/tutorial_3_fit_problems.py): Mesh resolution, concentrated light and the limits of smoothing.
 - **How can the mesh and smoothing follow galaxy brightness?** → [tutorial_4_adaptive_reconstruction.py](scripts/chapter_3_pixelizations/tutorial_4_adaptive_reconstruction.py): Hilbert sampling and adaptive regularization, compared using log evidence.
 
