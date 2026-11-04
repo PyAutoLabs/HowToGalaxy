@@ -2,14 +2,20 @@
 Tutorial 2: Bayesian Regularization
 ==================================
 
+Choose the regularization strength by comparing log evidences, then examine how mesh resolution changes that choice.
+
 __Contents__
 
-- Interpolation and our starting reconstruction.
-- Reducing and increasing regularization.
-- Bayesian evidence and a coefficient experiment.
-- Inspecting the preferred reconstruction.
-- Linear brightnesses and non-linear model choices.
-- Comparing mesh resolutions.
+- Interpolation and Bayesian regularization
+- Interpolation and our starting reconstruction
+- Reducing regularization
+- Increasing regularization
+- Bayesian evidence
+- Exploring the regularization coefficient
+- Inspecting the preferred reconstruction
+- What is linear, and what requires a search?
+- Mesh resolution and regularization belong together
+- Wrap Up
 
 __Interpolation and Bayesian regularization__
 
@@ -268,31 +274,28 @@ a more strongly regularized reconstruction?
 
 __Bayesian evidence__
 
-For inversions, we therefore need more than image agreement to choose an appropriate level of regularization.
+Our regularization coefficient is a Goldilocks choice. Too little smoothing lets the reconstruction follow noise;
+too much flattens brightness variations needed to explain the galaxy. We want the amount that is “just right” for
+the image, mesh and prior we have supplied.
 
-We use the **Bayesian evidence**, which accounts for both the fit to the image and the galaxy prior. It helps us
-compare reconstructions that have different amounts of freedom, rather than simply choosing whichever one follows
-the observed pixel values most closely.
+We choose it by maximizing the **Bayesian evidence**. For a specified mesh and regularization coefficient, the
+evidence accounts for the image fit and the range of brightness patterns allowed by the reconstruction prior.
+The inversion solves for the mesh brightnesses; the evidence calculation also includes the normalization and
+complexity terms associated with that reconstruction. It is not simply chi-squared with a smoothing penalty added.
 
-There are two useful parts to this intuition.
+Weak regularization permits a wider range of brightness patterns. A better image fit must justify that extra
+freedom. Strong regularization restricts those patterns, but loses evidence if it prevents the reconstruction from
+explaining the galaxy. The evidence weighs these effects together.
 
-First, the reconstruction must explain the image. If strong regularization prevents it from reproducing genuine
-galaxy structure, the resulting residuals count against that choice. Preferring a smooth galaxy is not useful if
-that galaxy cannot explain the observed galaxy.
+Complexity is therefore not just a count of mesh points. Our three fits have the same number of brightness values,
+but regularization changes how independently they can vary.
 
-Second, allowing a more flexible galaxy comes at a cost. Weak regularization permits many more patterns of
-brightness across neighbouring mesh points. Some of that extra freedom may be needed to describe the galaxy, but
-some may only help reproduce the particular noise fluctuations in this image.
+In **PyAutoGalaxy**, `fit.log_evidence` returns the natural logarithm of the evidence. Taking the logarithm preserves
+the ranking: **the largest log evidence selects the preferred coefficient among those evaluated**. Values may be
+positive or negative; we compare their differences, not their distance from zero.
 
-Evidence weighs the improvement in fit against the freedom allowed by the prior. An improvement must be sufficient
-to justify that additional flexibility.
-
-This is also why complexity is not simply the number of mesh points. Our three examples have exactly the same mesh.
-Stronger regularization ties neighbouring brightnesses together more closely, reducing their freedom to vary
-independently. We can therefore change the effective flexibility of the reconstruction without changing the number
-of mesh points.
-
-Let’s compare the evidence values returned by `FitImaging`.
+Let’s calculate those values for the weak, starting and strong coefficients. We keep the same data, noise, mask and
+mesh so that we can interpret this as a comparison of regularization choices.
 """
 log_evidences = []
 
@@ -304,6 +307,8 @@ for label, coefficient, current_fit in fit_comparisons:
 
 best_index = int(np.argmax(log_evidences))
 best_label, best_coefficient, _ = fit_comparisons[best_index]
+for (label, coefficient, _), log_evidence in zip(fit_comparisons, log_evidences):
+    print(f"{label}: difference from highest log evidence={log_evidence - max(log_evidences):.3f}")
 
 print(
     f"\nHighest evidence among these examples: "
@@ -409,6 +414,7 @@ else:
     preferred_fit = fit_with_coefficient(coefficient=preferred_coefficient)
 
 print("Preferred sampled coefficient:", preferred_coefficient)
+print("Highest sampled log evidence:", float(evidence_grid[best_index]))
 
 if best_index in (0, len(coefficient_grid) - 1):
     print(
@@ -428,8 +434,9 @@ aaplt.plot_mapper(
 aplt.subplot_fit_imaging(fit=preferred_fit)
 
 """
-A preferred coefficient does not establish that every visible feature in the galaxy is real. The reconstruction
-remains conditional on the galaxy mesh, noise map and telescope blurring.
+Choosing the highest log evidence selects a smoothing strength for this model. It does not identify whether a
+particular knot or faint extension is reliable. Examine the corresponding residuals, and check whether that
+structure persists when reasonable mesh, noise and PSF assumptions are varied.
 
 Nor does a good-looking galaxy excuse coherent residuals in the image. The galaxy and residual plots provide
 complementary information: one shows what we inferred, while the other shows what that inference leaves
@@ -598,8 +605,9 @@ for shape, values in sorted(evidence_by_shape.items()):
 fit = preferred_fit
 
 """
-Throughout this tutorial, we evaluated reconstructions of a specified galaxy dataset. In the next tutorial, we use
-a non-linear search and combine an MGE with a pixelization through search chaining.
+Throughout this tutorial, we evaluated reconstructions of a specified galaxy dataset. In the next tutorial, we reconstruct
+three increasingly compact galaxies to see why the preferred coefficient can still leave a poor fit. We then
+introduce adaptive meshes and smoothing, before returning to the combined MGE–pixelization search in Tutorial 5.
 
 For readers who want the underlying equations, the workspace's [pixelization likelihood
 guide](https://github.com/PyAutoLabs/autogalaxy_workspace/blob/main/scripts/imaging/features/pixelization/likelihood_function.py)

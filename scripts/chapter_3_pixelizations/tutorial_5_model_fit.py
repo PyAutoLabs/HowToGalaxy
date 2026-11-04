@@ -1,6 +1,11 @@
 """
-Tutorial 3: Model Fit
+Tutorial 5: Model Fit
 =====================
+
+Tutorials 3 and 4 explored mesh resolution and adaptive smoothing using a galaxy reconstructed entirely on a mesh.
+We now return to the complementary question of how to combine a smooth analytic component with a pixelization.
+The rectangular mesh here keeps that decomposition experiment simple; inspect its residuals and revisit the
+adaptive choices from Tutorial 4 when the pixelized component needs more spatially varying resolution.
 
 A pixelization can describe a galaxy without assigning an analytic centre and shape to every visible feature.
 However, analytic profiles remain useful when we want to describe its smooth components. In this tutorial we
@@ -17,11 +22,11 @@ profile for every knot.
 
 __Contents__
 
-- **Dataset:** Load, mask and oversample the image.
-- **Search 1:** Fit the smooth galaxy light with an MGE.
-- **Search 2:** Add a regularized pixelization using the fitted MGE geometry.
-- **Search 3:** Refine the MGE geometry together with the pixelization.
-- **Interpretation:** Inspect both the residuals and the component decomposition.
+- Search 1: Fit the MGE
+- Search 2: Add the pixelization
+- Search 3: Refine both components
+- Wrap Up
+
 """
 
 from pathlib import Path

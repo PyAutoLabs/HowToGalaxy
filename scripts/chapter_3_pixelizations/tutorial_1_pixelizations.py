@@ -48,17 +48,21 @@ before applying them to more complicated galaxy structure.
 
 __Contents__
 
-- **The image and its coordinates:** Load and mask the data.
-- **A brightness mesh:** Distinguish image indexes from mesh indexes.
-- **Following the mappings:** Highlight which image pixels receive each mesh contribution.
-- **An inversion:** Infer brightnesses, accounting for noise and telescope blurring.
-- **A model image:** Inspect the reconstruction and residuals separately.
-- **Using FitImaging:** Put these ingredients into a galaxy model.
+- The image and its coordinates
+- A brightness mesh
+- Following the mappings
+- An inversion
+- Keeping brightnesses non-negative
+- Where the image weakly constrains the mesh
+- A model image
+- Using FitImaging
+- Wrap Up
 
 __The image and its coordinates__
 
 The simulator supplies a Sérsic bulge and exponential disc. The circular mask selects the image pixels used in the
-fit. We use one sample per image pixel for the indexed illustrations; accurate scientific modelling should also
+fit. It also affects the mesh extent: including distant blank sky spreads a fixed number of mesh points over a
+larger area. Inspect the mask against the galaxy before deciding whether more mesh points are needed. We use one sample per image pixel for the indexed illustrations; accurate scientific modelling should also
 check image integration. Each unmasked pixel has a position and a flattened index. These indexes describe the data,
 not the separate mesh we are about to construct.
 """
@@ -209,6 +213,43 @@ aaplt.plot_mapper(
 )
 
 """
+__Keeping brightnesses non-negative__
+
+By default, the inversion constrains reconstructed brightnesses to be non-negative; zero is allowed. This prevents
+it from explaining the observed image by adding negative galaxy light.
+
+Positivity and regularization do different jobs. Positivity restricts the allowed brightnesses, whereas
+regularization discourages large differences between neighbours. Non-negative values can still fit noise, so the
+positivity constraint does not remove the need for smoothing.
+
+__Where the image weakly constrains the mesh__
+
+Some mesh points contribute to many image pixels, while others have little direct support. We can sum the absolute
+mapping weights for each mesh point and compare that support with its reconstructed brightness.
+
+The next cell counts effectively unmapped points and prints the five least-supported values. There may be no
+exactly unmapped points in this example; the diagnostic does not assume otherwise.
+"""
+
+mapping_support = np.sum(np.abs(np.asarray(mapper.mapping_matrix)), axis=0)
+unsupported = np.flatnonzero(mapping_support <= 1.0e-12)
+least_supported = np.argsort(mapping_support)[:5]
+print("Mesh points with effectively zero mapping weight:", len(unsupported))
+for mesh_index in least_supported:
+    print(
+        f"Mesh index {mesh_index}: total mapping weight={mapping_support[mesh_index]:.6g}, "
+        f"reconstructed brightness={reconstruction[mesh_index]:.6g}"
+    )
+
+"""
+A point with no direct mapping cannot have its brightness determined directly by the image. Neighbouring values,
+regularization, positivity and any boundary constraints can instead influence it. For weakly supported points,
+both the data and those constraints matter.
+
+This weight sum is a geometric diagnostic, not a brightness uncertainty. It does not include image noise, PSF
+blurring or correlations between inferred values. In particular, a finely sampled reconstruction does not give
+independent measurements of features smaller than the telescope resolution.
+
 __A model image__
 
 The brightness reconstruction lives on the mesh. Mapping it onto the image grid and convolving with the PSF
