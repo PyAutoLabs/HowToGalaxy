@@ -134,9 +134,7 @@ You can also set `colormap="gray"` to display the image in greyscale. For persis
 
 **🤖 Ask AI:** Why can logarithmic colour scaling make faint structure easier to see without increasing its
 signal-to-noise ratio?
-"""
 
-"""
 __Visuals__
 
 A mask selects which pixels to use. Here an annular mask keeps a ring between 0.3 and 3.0 arcseconds from
@@ -159,9 +157,7 @@ aplt.plot_array(array=masked_dataset.data, title="Data With Annular Mask")
 """
 Compare the masked plot with the original image: the central light is excluded from this view, not removed
 from the original dataset. We keep the masked version in `masked_dataset` so `dataset` remains available.
-"""
 
-"""
 __Wrap Up__
 
 You have plotted an image, compared dataset panels and changed the display without changing the pixel values.

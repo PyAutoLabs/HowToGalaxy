@@ -19,9 +19,6 @@ __Contents__
 - Why maximizing the evidence does not remove the compromise
 - Wrap Up
 
-"""
-
-r"""
 __When the best coefficient is not enough__
 
 We have learned how to reconstruct a galaxy and choose its regularization coefficient using Bayesian evidence.
@@ -54,9 +51,7 @@ We will work through:
 - Motivating adaptation to the galaxy’s brightness distribution.
 
 ---
-"""
 
-r"""
 __Three progressively compact galaxies__
 
 We use three Sérsic profiles with the same centre and elliptical shape.
@@ -106,9 +101,7 @@ r"""
 There is no lensing transformation. All three images use the same sky coordinates, while the spatial resolution needed to describe their light changes.
 
 ---
-"""
 
-r"""
 __Simulating the images__
 
 We now simulate the three galaxy images using the same image grid and telescope blurring.
@@ -205,9 +198,7 @@ We now have three datasets with common image sampling, PSF, mask and noise reali
 Next, we will reconstruct them using the same rectangular mesh and constant regularization scheme. For each dataset, we will scan the coefficient and inspect its evidence-preferred reconstruction.
 
 We will compare alternative reconstructions **within each dataset**. We will not rank the three different simulated galaxies against one another using their absolute evidence values.
-"""
 
-r"""
 __Reconstructing the galaxies__
 
 We will reconstruct all three galaxies using a `25 × 25` rectangular mesh and `Constant` regularization.
@@ -246,9 +237,7 @@ This is the limitation we want to explore. The galaxy can become smaller and mor
 For now, the only reconstruction setting we vary is the regularization coefficient.
 
 ---
-"""
 
-r"""
 __Finding the preferred regularization__
 
 As in tutorial 2, we evaluate a range of coefficients and compare their log evidences. We do this separately for each dataset: a coefficient suitable for the extended galaxy need not be suitable for either compact galaxy.
@@ -332,9 +321,7 @@ Each plot has its own maximum subtracted. We are examining how regularization af
 We can now inspect the reconstructions knowing that we have selected their smoothing strengths systematically.
 
 ---
-"""
 
-r"""
 __Starting with the extended galaxy__
 
 Let’s begin with the extended galaxy.
@@ -385,9 +372,7 @@ r"""
 A value around one is a useful reference for noise-level residuals, but it does not tell us whether those residuals form a spatial pattern. Keep the residual map alongside this number.
 
 This extended-galaxy fit provides our baseline. Next, we will make the galaxy more compact without giving the mesh any additional resolution, and examine where the reconstruction begins to struggle.
-"""
 
-r"""
 __Making the galaxy more compact__
 
 Now inspect the compact galaxy.
@@ -436,9 +421,7 @@ If structured residuals remain, remember what we have already controlled: the im
 The question is therefore no longer simply “Have we chosen the wrong coefficient?” We need to ask whether our mesh and regularization scheme can represent this galaxy adequately.
 
 ---
-"""
 
-r"""
 __A very compact galaxy__
 
 Our final galaxy has an effective radius of just `0.1` arcsec and a Sérsic index of `4.0`. Its light rises steeply towards the centre, placing a greater demand on the reconstruction.
@@ -495,9 +478,7 @@ Use these numbers alongside the maps. They summarize the overall residual amplit
 These galaxies also have different brightness distributions and signal-to-noise ratios. We should not interpret the comparison as a measurement of galaxy-size effects alone. Its purpose is to expose the practical difficulty of reconstructing increasingly concentrated light with an unchanged mesh and one smoothing coefficient.
 
 ---
-"""
 
-r"""
 __Why the mesh becomes a limitation__
 
 Let’s examine the first problem: where our galaxy pixels are placed.
@@ -540,9 +521,7 @@ For a directly observed galaxy, finer mesh sampling does not create information 
 This motivates adapting the mesh to the **galaxy’s brightness distribution**, which we will explore in the next tutorial.
 
 First, there is a second limitation to understand. Even with enough mesh points, should we apply the same regularization coefficient to the bright centre and faint outskirts?
-"""
 
-r"""
 __Why one regularization coefficient becomes a compromise__
 
 Suppose we had enough mesh points to resolve the galaxy’s bright centre. Would that solve the problem?
@@ -616,9 +595,7 @@ Does weaker regularization help reproduce the central peak? Does it also introdu
 These changes need not be equally visible in every dataset. The important point is that changing one coefficient changes the smoothing preference everywhere, even though different galaxy regions may benefit from different strengths.
 
 ---
-"""
 
-r"""
 __Why maximizing the evidence does not remove the compromise__
 
 Why does the Bayesian evidence not simply select a coefficient that fixes both regions?
@@ -658,9 +635,7 @@ An **adaptive regularization scheme** gives us more control. It can allow weaker
 The evidence still decides whether that additional flexibility is useful. We compare the constant and adaptive schemes on the same dataset, allowing their parameters to vary appropriately. Adaptation is a way to improve the available reconstructions, rather than a guarantee that every fit will improve.
 
 ---
-"""
 
-r"""
 __Wrap Up__
 
 We began with three galaxies whose light became progressively more concentrated, while keeping the image sampling, PSF and noise realization fixed.
@@ -683,9 +658,7 @@ We will then use a fitted brightness distribution to guide a Hilbert image mesh,
 At each stage, we will return to the questions raised here: does the mesh resolve the galaxy’s bright structure, and does regularization preserve that structure while controlling fluctuations elsewhere?
 
 Tutorial 5 then returns to search chaining and combines an MGE with a pixelization. That alternative can let analytic profiles describe the smooth central light while a mesh supplies additional spatial freedom.
-"""
 
-r"""
 **🤖 Ask AI:** How would you distinguish insufficient galaxy-mesh resolution from over-smoothing when compact-galaxy residuals remain at the evidence-preferred coefficient?
 
 __Env__

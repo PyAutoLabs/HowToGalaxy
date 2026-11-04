@@ -26,9 +26,6 @@ __Contents__
 - Does adaptive regularization address the fit problem?
 - Wrap Up
 
-"""
-
-r"""
 __Adaptive galaxy reconstruction__
 
 In **Fit Problems**, we identified two limitations of our reconstruction: too few mesh points across compact galaxy structure, and a single regularization coefficient that must compromise between the bright centre and faint outskirts.
@@ -59,9 +56,7 @@ We will proceed through:
 - Preparing for the combined analytic and pixelized model in Tutorial 5.
 
 ---
-"""
 
-r"""
 __Returning to the compact-galaxy problem__
 
 We return to the very compact galaxy from **Fit Problems**. Keeping the same example lets us examine whether the adaptive methods address the difficulties we have just investigated.
@@ -152,9 +147,7 @@ We keep the image sampling and PSF fixed. This lets us inspect mesh placement an
 We know the simulated galaxy profile, but we will not use its brightness distribution to tell the adaptive mesh where to place its points. Brightness adaptation will use a fitted model image, as it would for observed data.
 
 ---
-"""
 
-r"""
 __From image coordinates to a reconstruction mesh__
 
 Previously, we constructed a rectangular mesh over the galaxy image.
@@ -189,13 +182,9 @@ These are mesh coordinates, rather than a selection of the only image pixels we 
 The overlay’s shape describes the grid before masking. Its retained number of points is therefore smaller than `25 × 25` for our circular mask.
 
 We will connect these coordinates directly into a triangulation.
-"""
 
-r"""
 The overlay still does not inspect brightness. Changing an extended galaxy into a compact one leaves these coordinates unchanged for a fixed mask. Switching triangulation alone therefore does not allocate extra resolution to the bright centre. We will establish a baseline reconstruction before introducing brightness-based placement.
-"""
 
-r"""
 __Constructing the Delaunay galaxy mesh__
 
 We now connect the selected mesh points into a **Delaunay triangulation**.
@@ -261,9 +250,7 @@ Inspect the mesh points around the reconstructed galaxy. For this overlay, their
 The coefficient of `1.0` is only a starting value. We should not judge whether this mesh improves the fit until we have explored its regularization.
 
 ---
-"""
 
-r"""
 __Interpolating within a triangle__
 
 How does a triangular mesh predict the brightness at an image coordinate?
@@ -319,9 +306,7 @@ The PSF then redistributes the predicted light between image pixels, as in our r
 Interpolation still does not determine the vertex brightnesses. Those are solved by the inversion, with regularization controlling how freely they can vary.
 
 ---
-"""
 
-r"""
 __Regularization on an irregular mesh__
 
 We begin with the same `Constant` regularization scheme used earlier.
@@ -383,9 +368,7 @@ Now examine the galaxy centre and bright image residuals. Has the overlay placed
 We have changed the mesh geometry, but two limitations remain. The overlay does not respond to the galaxy brightness, and one coefficient still controls regularization everywhere.
 
 Next, we will use a fitted image to guide where the image-mesh points are placed, concentrating more sampling on the galaxy emission.
-"""
 
-r"""
 __Building an adapt image__
 
 Our overlay samples the image mask uniformly. It does not distinguish bright galaxy emission from background noise.
@@ -414,9 +397,7 @@ This example reconstructs one galaxy entirely on a mesh. In a combined MGE–pix
 We will keep this adapt image fixed while comparing mesh settings. It guides the placement of points; it does not fix the brightness values reconstructed on the new mesh.
 
 ---
-"""
 
-r"""
 __Placing points with a Hilbert image mesh__
 
 We now replace the evenly spaced overlay with a **Hilbert image mesh**.
@@ -461,17 +442,13 @@ Compare the spacing of the points across the bright galaxy regions and the surro
 The overlay distributes its points evenly across the image mask. The Hilbert mesh uses the adapt image to concentrate more points on the emission, while the non-zero weight floor retains some sampling in faint regions.
 
 These selected sky coordinates will be the reconstruction vertices.
-"""
 
-r"""
 The point distribution now responds to the fitted image brightness. As the galaxy becomes more compact, a brightness-weighted mesh can place more points across that compact emission. Its effective resolution remains limited by the image sampling, PSF and signal-to-noise; more vertices alone do not recover arbitrary small-scale structure.
 
 Next, let’s examine how its weights are calculated.
 
 ---
-"""
 
-r"""
 __Controlling the brightness weighting__
 
 Two parameters control how the adapt image becomes a weight map: `weight_power` and `weight_floor`.
@@ -533,9 +510,7 @@ A higher power is not automatically better. Concentrating too many points on the
 The weight floor helps moderate this effect. Here, every location has a weight of at least `0.05`. This is a minimum weight, not a statement that five per cent of the mesh points must lie in the background.
 
 Next, we will vary that floor and reconstruct the galaxy with the Hilbert mesh, checking the residuals and evidence rather than judging the mesh by its appearance alone.
-"""
 
-r"""
 __Keeping resolution in the faint regions__
 
 Increasing `weight_power` concentrates points on the brightest parts of the adapt image. However, the galaxy may also have faint extended emission that needs to be reconstructed.
@@ -591,9 +566,7 @@ Because the background can cover much more area than the galaxy light, even a mo
 For our first reconstruction, we return to the mesh already constructed with `weight_power=1.0` and `weight_floor=0.05`. These are starting choices to investigate, rather than settings we have established as optimal.
 
 ---
-"""
 
-r"""
 __Reconstructing with the Hilbert mesh__
 
 We now use the Hilbert coordinates to build a Delaunay galaxy mesh.
@@ -660,9 +633,7 @@ Then inspect the residuals around the bright galaxy regions. Additional resoluti
 We have initially reused the overlay’s preferred coefficient. As tutorial 2 showed, changing the mesh can change the preferred smoothing strength. We therefore need to explore regularization again before comparing the two reconstructions.
 
 ---
-"""
 
-r"""
 __Comparing overlay and Hilbert reconstructions__
 
 Let’s scan the regularization coefficient for the Hilbert mesh, using the same range as the overlay.
@@ -744,9 +715,7 @@ Connect the evidence comparison to the residuals. Does the brightness-adaptive m
 This tests one Hilbert weighting choice, using a fixed adapt image. It does not establish that every Hilbert mesh outperforms every overlay.
 
 We have now addressed where the galaxy points are placed. Next, we will address how to regularize their brightnesses on an irregular mesh, before allowing the smoothing strength to vary between bright and faint regions.
-"""
 
-r"""
 __Smoothing on an irregular mesh__
 
 Our Delaunay mesh has vertices with different neighbour counts, edge lengths and directions.
@@ -769,9 +738,7 @@ It is also important to distinguish **Split** from **adaptive** regularization:
 We will first examine `ConstantSplit`, then introduce the brightness-dependent coefficients.
 
 ---
-"""
 
-r"""
 __Reconstructing with ConstantSplit__
 
 Let’s keep the Hilbert mesh and adapt image fixed and change the regularization scheme.
@@ -854,9 +821,7 @@ As before, refine the coefficient sampling around the peaks before interpreting 
 Split changes how local brightness variations are penalized, but `ConstantSplit` still applies one coefficient everywhere. It therefore retains the centre-versus-outskirts compromise identified in **Fit Problems**.
 
 ---
-"""
 
-r"""
 __Allowing different smoothing strengths__
 
 We now let the regularization strength depend on the galaxy brightness.
@@ -921,9 +886,7 @@ Compare the regularization-weight map with the reconstructed galaxy. Smaller wei
 These weights control the regularization penalty; they are not uncertainties on the reconstructed brightnesses.
 
 The trial coefficients were chosen to illustrate the mechanism. We have not yet established that they improve the fit or maximize the evidence. Next, we will examine the transition controlled by `signal_scale` and explore the adaptive coefficients systematically.
-"""
 
-r"""
 __Controlling the transition with `signal_scale`__
 
 The inner and outer coefficients set the smoothing strengths at the high- and low-signal ends of the galaxy. How do we assign a strength to the regions between them?
@@ -978,9 +941,7 @@ These weights are based on the fixed adapt image and its mappings. They are not 
 Also distinguish `signal_scale` from the Hilbert mesh’s `weight_power`. Both transform brightness-derived information, but they control different things: `weight_power` changes **where mesh points are placed**, whereas `signal_scale` changes **how their brightnesses are regularized**.
 
 ---
-"""
 
-r"""
 __Exploring the adaptive coefficients__
 
 We now have three regularization parameters: the inner coefficient, outer coefficient and signal scale.
@@ -1052,9 +1013,7 @@ If the preferred inner and outer coefficients are equal, changing `signal_scale`
 For a complete analysis, a non-linear search can explore these regularization parameters. Tutorial 5 demonstrates search chaining for a combined MGE–pixelization model, using constant regularization to isolate the component-decomposition question.
 
 ---
-"""
 
-r"""
 __Does adaptive regularization address the fit problem?__
 
 Let’s inspect the highest-evidence adaptive reconstruction we have evaluated and compare it with `ConstantSplit`.
@@ -1125,9 +1084,7 @@ A higher log evidence shows that this adaptive setting improves the reconstructi
 If substantial residuals remain, inspect where they occur. Adaptive regularization still cannot supply resolution missing from the mesh, and both adaptive steps depend on the initial adapt image.
 
 We have now explored the mesh placement and smoothing separately. Next, Tutorial 5 explores a complementary strategy: fitting smooth light with an MGE and additional light with a pixelization. This can reduce the burden on the mesh, but makes the interpretation of individual components depend on how their shared light is divided.
-"""
 
-r"""
 __Wrap Up__
 
 We have separated two choices that a single regularization coefficient cannot make: where the mesh has resolution,
