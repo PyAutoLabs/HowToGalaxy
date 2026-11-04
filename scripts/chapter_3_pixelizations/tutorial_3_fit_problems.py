@@ -229,6 +229,7 @@ def fit_source(dataset, coefficient):
         galaxies=galaxies,
     )
 
+
 r"""
 The image grid and mask are identical across our three datasets. The rectangular mesh is therefore constructed from the same mapped coordinates, regardless of how compact the galaxy light becomes.
 
@@ -406,8 +407,7 @@ The galaxy reconstruction may look broadly reasonable while still missing these 
 """
 
 normalized_residuals = np.asarray(
-    (datasets["Compact"].data - compact_fit.model_data)
-    / datasets["Compact"].noise_map
+    (datasets["Compact"].data - compact_fit.model_data) / datasets["Compact"].noise_map
 )
 
 print(
@@ -494,13 +494,9 @@ for label, effective_radius, _ in source_parameters:
 
     mesh_coordinates = np.asarray(mapper.source_plane_mesh_grid)
 
-    radii = np.sqrt(
-        np.sum(mesh_coordinates**2, axis=1)
-    )
+    radii = np.sqrt(np.sum(mesh_coordinates**2, axis=1))
 
-    points_within_radius = int(
-        np.count_nonzero(radii <= effective_radius)
-    )
+    points_within_radius = int(np.count_nonzero(radii <= effective_radius))
 
     print(
         f"{label}: effective radius={effective_radius:.2f} arcsec, "
@@ -607,10 +603,12 @@ The evidence evaluates the complete reconstruction. It balances improvements in 
 Let’s compare the evidence of the three reconstructions.
 """
 
-comparison_evidences = np.array([
-    float(current_fit.log_evidence)
-    for _, _, current_fit in regularization_comparisons
-])
+comparison_evidences = np.array(
+    [
+        float(current_fit.log_evidence)
+        for _, _, current_fit in regularization_comparisons
+    ]
+)
 
 highest_evidence = float(np.max(comparison_evidences))
 

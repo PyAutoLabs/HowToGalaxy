@@ -66,6 +66,7 @@ larger area. Inspect the mask against the galaxy before deciding whether more me
 check image integration. Each unmasked pixel has a position and a flattened index. These indexes describe the data,
 not the separate mesh we are about to construct.
 """
+
 from pathlib import Path
 import subprocess
 import sys

@@ -39,6 +39,7 @@ follow.
 We use the same smooth bulge and disc dataset as tutorial 1. The mesh and data treatment remain fixed, so the first
 experiments isolate our regularization choices.
 """
+
 from pathlib import Path
 import subprocess
 import sys
@@ -308,7 +309,9 @@ for label, coefficient, current_fit in fit_comparisons:
 best_index = int(np.argmax(log_evidences))
 best_label, best_coefficient, _ = fit_comparisons[best_index]
 for (label, coefficient, _), log_evidence in zip(fit_comparisons, log_evidences):
-    print(f"{label}: difference from highest log evidence={log_evidence - max(log_evidences):.3f}")
+    print(
+        f"{label}: difference from highest log evidence={log_evidence - max(log_evidences):.3f}"
+    )
 
 print(
     f"\nHighest evidence among these examples: "

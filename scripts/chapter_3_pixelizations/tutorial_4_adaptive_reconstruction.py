@@ -266,21 +266,13 @@ The brightness therefore varies continuously across each triangle. It is not a c
 We can inspect the mapping weights for an image pixel, using the same approach as tutorial 1.
 """
 
-image_index = int(
-    np.argmax(np.asarray(dataset.data.slim))
-)
+image_index = int(np.argmax(np.asarray(dataset.data.slim)))
 
-mapping_weights = np.asarray(
-    overlay_mapper.mapping_matrix[image_index]
-)
+mapping_weights = np.asarray(overlay_mapper.mapping_matrix[image_index])
 
-source_indexes = np.flatnonzero(
-    np.abs(mapping_weights) > 1.0e-12
-)
+source_indexes = np.flatnonzero(np.abs(mapping_weights) > 1.0e-12)
 
-reconstruction = np.asarray(
-    overlay_fit.inversion.reconstruction
-)
+reconstruction = np.asarray(overlay_fit.inversion.reconstruction)
 
 for source_index in source_indexes:
     weight = mapping_weights[source_index]
@@ -417,11 +409,9 @@ hilbert_image_mesh = ag.image_mesh.Hilbert(
     weight_floor=0.05,
 )
 
-hilbert_image_plane_mesh_grid = (
-    hilbert_image_mesh.image_plane_mesh_grid_from(
-        mask=dataset.mask,
-        adapt_data=adapt_image,
-    )
+hilbert_image_plane_mesh_grid = hilbert_image_mesh.image_plane_mesh_grid_from(
+    mask=dataset.mask,
+    adapt_data=adapt_image,
 )
 
 for label, mesh_grid in [
@@ -575,6 +565,7 @@ The reconstruction proceeds as before: construct the triangulation at the select
 
 We retain `Constant` regularization for now, so that we can investigate brightness-based mesh placement before introducing adaptive smoothing.
 """
+
 
 def fit_delaunay_hilbert(coefficient):
     pixelization = ag.Pixelization(
@@ -746,6 +737,7 @@ Let’s keep the Hilbert mesh and adapt image fixed and change the regularizatio
 We generalize our fitting helper so that it accepts a regularization object. This will let us use the same reconstruction setup for both constant and adaptive Split regularization.
 """
 
+
 def fit_hilbert_with_regularization(regularization):
     pixelization = ag.Pixelization(
         mesh=ag.mesh.Delaunay(
@@ -776,6 +768,7 @@ def fit_hilbert_with_regularization(regularization):
         adapt_images=adapt_images,
     )
 
+
 r"""
 The coefficient preferred by neighbour-based regularization need not be preferred by Split regularization. We therefore repeat the coefficient scan.
 """
@@ -786,7 +779,9 @@ best_evidence = -np.inf
 # Keep only the preferred full fit; other scan entries are scalar evidences.
 for coefficient in overlay_coefficients:
     coefficient = float(coefficient)
-    current_fit = fit_hilbert_with_regularization(regularization=ag.reg.ConstantSplit(coefficient=coefficient))
+    current_fit = fit_hilbert_with_regularization(
+        regularization=ag.reg.ConstantSplit(coefficient=coefficient)
+    )
     evidence = float(current_fit.log_evidence)
     split_evidences.append(evidence)
     if evidence > best_evidence:
@@ -855,10 +850,8 @@ adaptive_fit = fit_hilbert_with_regularization(
 
 adaptive_mapper = adaptive_fit.inversion.cls_list_from(ag.Mapper)[0]
 
-adaptive_weights = (
-    adaptive_mapper.regularization.regularization_weights_from(
-        linear_obj=adaptive_mapper,
-    )
+adaptive_weights = adaptive_mapper.regularization.regularization_weights_from(
+    linear_obj=adaptive_mapper,
 )
 
 aaplt.plot_inversion_reconstruction(
@@ -915,9 +908,8 @@ fig, ax = plt.subplots()
 for signal_scale in [0.5, 1.0, 3.0]:
     scaled_signal = normalized_signal**signal_scale
 
-    weights = (
-        inner_coefficient * scaled_signal
-        + outer_coefficient * (1.0 - scaled_signal)
+    weights = inner_coefficient * scaled_signal + outer_coefficient * (
+        1.0 - scaled_signal
     )
 
     ax.plot(
@@ -953,9 +945,7 @@ We centre the coefficient grid on the preferred `ConstantSplit` value. The grid 
 We also allow either coefficient to be larger. Although weaker smoothing in bright regions motivates the scheme, we should inspect what the evidence actually prefers.
 """
 
-adaptive_coefficient_grid = (
-    split_coefficient * np.logspace(-1, 1, 5)
-)
+adaptive_coefficient_grid = split_coefficient * np.logspace(-1, 1, 5)
 signal_scales = [0.5, 1.0, 3.0]
 
 adaptive_trials = []
@@ -1059,14 +1049,10 @@ At the bright centre, does the adaptive reconstruction preserve a sharper bright
 Inspect the preferred regularization weights alongside those changes.
 """
 
-best_adaptive_mapper = best_adaptive_fit.inversion.cls_list_from(
-    ag.Mapper
-)[0]
+best_adaptive_mapper = best_adaptive_fit.inversion.cls_list_from(ag.Mapper)[0]
 
-best_adaptive_weights = (
-    best_adaptive_mapper.regularization.regularization_weights_from(
-        linear_obj=best_adaptive_mapper,
-    )
+best_adaptive_weights = best_adaptive_mapper.regularization.regularization_weights_from(
+    linear_obj=best_adaptive_mapper,
 )
 
 aaplt.plot_inversion_reconstruction(
