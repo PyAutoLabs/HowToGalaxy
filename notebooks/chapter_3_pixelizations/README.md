@@ -16,10 +16,13 @@ The reconstruction still depends on modelling choices, including the mesh, its r
 
 MGE and other analytic profiles remain useful for describing and measuring smooth galaxy components. Pixelizations complement them when more complicated structure needs to be represented, including in models that combine analytic components with a pixelized reconstruction.
 
+The chapter moves from mappings and evidence-based regularization to the practical limits of a fixed mesh. We then
+explore brightness-guided mesh placement and adaptive smoothing, before fitting an MGE and a pixelization together.
+
 # Files
 
-- [Tutorial 1: Pixelizations](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_3_pixelizations/tutorial_1_pixelizations.ipynb) — Meshes, indexed mappings, inversions and telescope blurring.
-
-- [Tutorial 2: Bayesian Regularization](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_3_pixelizations/tutorial_2_bayesian_regularization.ipynb) — Interpolation, smoothness priors, evidence and resolution experiments.
-
-- [Tutorial 3: Model Fit](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_3_pixelizations/tutorial_3_model_fit.ipynb) — An MGE fit followed by a combined MGE and pixelized model.
+- [Tutorial 1: Pixelizations](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_3_pixelizations/tutorial_1_pixelizations.ipynb) — Mappings, inversions, positivity and telescope blurring.
+- [Tutorial 2: Bayesian Regularization](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_3_pixelizations/tutorial_2_bayesian_regularization.ipynb) — The Goldilocks balance, log-evidence selection and mesh resolution.
+- [Tutorial 3: Fit Problems](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_3_pixelizations/tutorial_3_fit_problems.ipynb) — Compact galaxies expose mesh-resolution and constant-smoothing limitations.
+- [Tutorial 4: Adaptive Reconstruction](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_3_pixelizations/tutorial_4_adaptive_reconstruction.ipynb) — Delaunay/Hilbert mesh placement and adaptive Split regularization.
+- [Tutorial 5: Model Fit](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_3_pixelizations/tutorial_5_model_fit.ipynb) — MGE fitting, adding a pixelization and refining the combined model.

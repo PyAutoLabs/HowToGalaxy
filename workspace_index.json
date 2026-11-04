@@ -250,8 +250,11 @@
       "A brightness mesh",
       "Following the mappings",
       "An inversion",
+      "Keeping brightnesses non-negative",
+      "Where the image weakly constrains the mesh",
       "A model image",
-      "Using FitImaging"
+      "Using FitImaging",
+      "Wrap Up"
     ],
     "cross_refs": [],
     "notebook": "notebooks/chapter_3_pixelizations/tutorial_1_pixelizations.ipynb",
@@ -261,34 +264,86 @@
   },
   {
     "contents": [
-      "Interpolation and our starting reconstruction.",
-      "Reducing and increasing regularization.",
-      "Bayesian evidence and a coefficient experiment.",
-      "Inspecting the preferred reconstruction.",
-      "Linear brightnesses and non-linear model choices.",
-      "Comparing mesh resolutions."
+      "Interpolation and Bayesian regularization",
+      "Interpolation and our starting reconstruction",
+      "Reducing regularization",
+      "Increasing regularization",
+      "Bayesian evidence",
+      "Exploring the regularization coefficient",
+      "Inspecting the preferred reconstruction",
+      "What is linear, and what requires a search?",
+      "Mesh resolution and regularization belong together",
+      "Wrap Up"
     ],
     "cross_refs": [
       "//github.com/PyAutoLabs/autogalaxy_workspace/blob/main/scripts/imaging/features/pixelization/likelihood_function.py"
     ],
     "notebook": "notebooks/chapter_3_pixelizations/tutorial_2_bayesian_regularization.ipynb",
     "path": "scripts/chapter_3_pixelizations/tutorial_2_bayesian_regularization.py",
-    "summary": "(no summary in script docstring)",
+    "summary": "Choose the regularization strength by comparing log evidences, then examine how mesh resolution changes that choice.",
     "title": "Tutorial 2: Bayesian Regularization"
   },
   {
     "contents": [
-      "Dataset",
-      "Search 1",
-      "Search 2",
-      "Search 3",
-      "Interpretation"
+      "When the best coefficient is not enough",
+      "Three progressively compact galaxies",
+      "Simulating the images",
+      "Reconstructing the galaxies",
+      "Finding the preferred regularization",
+      "Starting with the extended galaxy",
+      "Making the galaxy more compact",
+      "A very compact galaxy",
+      "Why the mesh becomes a limitation",
+      "Why one regularization coefficient becomes a compromise",
+      "Why maximizing the evidence does not remove the compromise",
+      "Wrap Up"
     ],
     "cross_refs": [],
-    "notebook": "notebooks/chapter_3_pixelizations/tutorial_3_model_fit.ipynb",
-    "path": "scripts/chapter_3_pixelizations/tutorial_3_model_fit.py",
-    "summary": "A pixelization can describe a galaxy without assigning an analytic centre and shape to every visible feature. However, analytic profiles remain useful when we want to describe its smooth components. In this tutorial we combine an MGE with a pixelization and use search chaining to put the smooth light model in place first.",
-    "title": "Tutorial 3: Model Fit"
+    "notebook": "notebooks/chapter_3_pixelizations/tutorial_3_fit_problems.ipynb",
+    "path": "scripts/chapter_3_pixelizations/tutorial_3_fit_problems.py",
+    "summary": "Investigate why compact galaxies can challenge mesh resolution and constant regularization even with a known PSF.",
+    "title": "Tutorial 3: Fit Problems"
+  },
+  {
+    "contents": [
+      "Adaptive galaxy reconstruction",
+      "Returning to the compact-galaxy problem",
+      "From image coordinates to a reconstruction mesh",
+      "Constructing the Delaunay galaxy mesh",
+      "Interpolating within a triangle",
+      "Regularization on an irregular mesh",
+      "Building an adapt image",
+      "Placing points with a Hilbert image mesh",
+      "Controlling the brightness weighting",
+      "Keeping resolution in the faint regions",
+      "Reconstructing with the Hilbert mesh",
+      "Comparing overlay and Hilbert reconstructions",
+      "Smoothing on an irregular mesh",
+      "Reconstructing with ConstantSplit",
+      "Allowing different smoothing strengths",
+      "Controlling the transition with `signal_scale`",
+      "Exploring the adaptive coefficients",
+      "Does adaptive regularization address the fit problem?",
+      "Wrap Up"
+    ],
+    "cross_refs": [],
+    "notebook": "notebooks/chapter_3_pixelizations/tutorial_4_adaptive_reconstruction.ipynb",
+    "path": "scripts/chapter_3_pixelizations/tutorial_4_adaptive_reconstruction.py",
+    "summary": "Combine Delaunay meshes, Hilbert brightness adaptation and adaptive Split regularization for directly observed galaxies.",
+    "title": "Tutorial 4: Adaptive Reconstruction"
+  },
+  {
+    "contents": [
+      "Search 1: Fit the MGE",
+      "Search 2: Add the pixelization",
+      "Search 3: Refine both components",
+      "Wrap Up"
+    ],
+    "cross_refs": [],
+    "notebook": "notebooks/chapter_3_pixelizations/tutorial_5_model_fit.ipynb",
+    "path": "scripts/chapter_3_pixelizations/tutorial_5_model_fit.py",
+    "summary": "Tutorials 3 and 4 explored mesh resolution and adaptive smoothing using a galaxy reconstructed entirely on a mesh. We now return to the complementary question of how to combine a smooth analytic component with a pixelization. The rectangular mesh here keeps that decomposition experiment simple; inspect its residuals and revisit the adaptive choices from Tutorial 4 when the pixelized component needs more spatially varying resolution.",
+    "title": "Tutorial 5: Model Fit"
   },
   {
     "contents": [
