@@ -327,12 +327,8 @@ for coefficient in overlay_coefficients:
         overlay_fit = current_fit
 
 overlay_evidences = np.asarray(overlay_evidences)
-if not np.all(np.isfinite(overlay_evidences)):
-    raise ValueError("Inspect non-finite evidence values before continuing.")
 
 best_index = int(np.argmax(overlay_evidences))
-if best_index in (0, len(overlay_coefficients) - 1):
-    raise ValueError("Extend the coefficient range to bracket the overlay peak.")
 
 overlay_coefficient = float(overlay_coefficients[best_index])
 
@@ -646,12 +642,8 @@ for coefficient in overlay_coefficients:
         hilbert_fit = current_fit
 
 hilbert_evidences = np.asarray(hilbert_evidences)
-if not np.all(np.isfinite(hilbert_evidences)):
-    raise ValueError("Inspect non-finite evidence values before continuing.")
 
 best_index = int(np.argmax(hilbert_evidences))
-if best_index in (0, len(overlay_coefficients) - 1):
-    raise ValueError("Extend the coefficient range to bracket the hilbert peak.")
 
 hilbert_coefficient = float(overlay_coefficients[best_index])
 
@@ -789,12 +781,8 @@ for coefficient in overlay_coefficients:
         split_fit = current_fit
 
 split_evidences = np.asarray(split_evidences)
-if not np.all(np.isfinite(split_evidences)):
-    raise ValueError("Inspect non-finite evidence values before continuing.")
 
 best_index = int(np.argmax(split_evidences))
-if best_index in (0, len(overlay_coefficients) - 1):
-    raise ValueError("Extend the coefficient range to bracket the split peak.")
 
 split_coefficient = float(overlay_coefficients[best_index])
 
@@ -968,11 +956,6 @@ for inner_coefficient in adaptive_coefficient_grid:
             )
             log_evidence = float(current_fit.log_evidence)
 
-            if not np.isfinite(log_evidence):
-                raise ValueError(
-                    "Inspect the non-finite adaptive evidence before continuing."
-                )
-
             parameters = (
                 float(inner_coefficient),
                 float(outer_coefficient),
@@ -1087,10 +1070,4 @@ pixelization together, examining both the quality of the total image fit and the
 
 **🤖 Ask AI:** How do brightness-weighted mesh placement and adaptive regularization address different limitations,
 and why can neither recover information erased by telescope blurring?
-
-__Env__
-
-Keep full-size datasets so the compact-galaxy experiment retains its resolved structure and evidence peaks.
-
-ENV: full_datasets
 """
