@@ -1,176 +1,59 @@
 # HowToGalaxy
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/start_here.ipynb)
-
-[Start Here on Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/start_here.ipynb) |
-[Installation Guide](https://pyautogalaxy.readthedocs.io/en/latest/installation/overview.html) |
-[PyAutoGalaxy readthedocs](https://pyautogalaxy.readthedocs.io/en/latest/index.html) |
-[Browse Chapter 1 With Images](markdown/README.md) |
-[autogalaxy_workspace](https://github.com/PyAutoLabs/autogalaxy_workspace)
-
 <img src="https://github.com/Jammy2211/PyAutoLogo/blob/main/gifs/pyautogalaxy.gif?raw=true" width="900" />
 
-Welcome to **HowToGalaxy** — the tutorial lecture series for [PyAutoGalaxy](https://github.com/PyAutoLabs/PyAutoGalaxy),
-an open-source library for modeling the light of galaxies.
+Learn galaxy modeling and Bayesian inference through worked examples with **PyAutoGalaxy**. HowToGalaxy starts from first principles and guides you from building a galaxy light profile to fitting observations and modeling complex galaxy structures.
 
-**PyAutoGalaxy** can be used with an AI coding agent to compose galaxy models, fit data and explore results
-**using natural language**. **HowToGalaxy** teaches the core principles behind this workflow, so you
-understand the science and inference being performed rather than treating them as a black box.
-
-The tutorials assume minimal prior knowledge of astronomy or statistics. They start from first principles:
-grids, light profiles and simulated images, then progress to Bayesian model-fitting, pixelized
-reconstructions and modeling multiple galaxies.
-
-For experienced scientists who already know the fundamentals of galaxy light profile fitting and Bayesian
-modeling, the [autogalaxy_workspace](https://github.com/PyAutoLabs/autogalaxy_workspace) examples will be
-more appropriate — they are concise and assume the concepts taught in **HowToGalaxy** as background.
-
-## Chapters
-
-- `chapter_1_introduction` — An introduction to galaxy morphology and **PyAutoGalaxy**: grids, light
-  profiles, galaxies, simulated imaging data, and fitting.
-- `chapter_2_modeling` — Bayesian inference, non-linear searches, and how to fit a galaxy model to CCD
-  imaging data with **PyAutoGalaxy**, ending with search chaining and automated pipelines.
-- `chapter_3_pixelizations` — Pixelized reconstructions for galaxies with irregular morphologies, choosing
-  regularization using Bayesian evidence, fit problems and adaptive reconstruction.
-- `chapter_4_scaling_up_galaxies` — Scaling galaxy modeling up beyond a single galaxy: extra galaxies,
-  blended multi-galaxy systems, and cluster fields.
-- `chapter_optional` — Optional tutorials on alternative non-linear searches and other advanced topics.
-
-**HowToGalaxy** currently sits at four chapters. Each chapter will take around a day to work through.
-We recommend completing chapters 1 and 2, then applying what you've learned to real galaxy modeling in the
-`autogalaxy_workspace` before returning for the more advanced material in chapters 3 and 4.
+You don’t need prior experience with galaxy modeling or Bayesian statistics. If you already know the fundamentals, head to the [PyAutoGalaxy workspace](https://github.com/PyAutoLabs/autogalaxy_workspace#find-your-examples) for concise examples.
 
 ## Getting Started
 
-### Study with the assistant
+### Explore It Yourself
 
-Use the [Jupyter notebooks](notebooks/) to run the code (recommended), or read the
-available [Markdown lectures](markdown/README.md) directly on GitHub.
+- **[Start in your browser](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/start_here.ipynb)** — open the series introduction in Google Colab without installing anything locally.
+- **[Run it locally](https://pyautogalaxy.readthedocs.io/en/latest/installation/overview.html)** — install PyAutoGalaxy, download this repository and open the Jupyter notebooks in `notebooks/`.
+- **[Read Chapter 1 with images](https://github.com/PyAutoLabs/HowToGalaxy/blob/main/markdown/README.md)** — browse the available lectures and their results directly on GitHub.
 
-For help alongside the lectures, study with the [PyAutoGalaxy AI Assistant](https://github.com/PyAutoLabs/autogalaxy_assistant)
-in teacher mode. Open Claude Code, Codex or another AI coding agent and paste the prompt below. The agent downloads
-the assistant and installs **PyAutoGalaxy** for you:
+Begin with [Tutorial 0: Visualization](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_1_introduction/tutorial_0_visualization.ipynb) to check your setup and learn how to display figures.
+
+### Study with AI
+
+The [**PyAutoGalaxy AI Assistant**](https://github.com/PyAutoLabs/autogalaxy_assistant) can explain concepts, equations and code, help with notebook errors, and discuss your results. Paste this prompt into your AI coding agent:
 
 ```text
-I want to work through the HowToGalaxy lectures (https://github.com/PyAutoLabs/HowToGalaxy) with the
-PyAutoGalaxy Assistant: https://github.com/PyAutoLabs/autogalaxy_assistant
-First clone that repository, cd into it and follow its AGENTS.md.
+I want to work through HowToGalaxy
+(https://github.com/PyAutoLabs/HowToGalaxy) with the
+PyAutoGalaxy Assistant (https://github.com/PyAutoLabs/autogalaxy_assistant).
 
-Enter teacher mode. Show me where to find the lectures and how to use Jupyter Notebook or
-Markdown, then help me with questions as I go.
+First clone the assistant repository, cd into it and follow its AGENTS.md.
+Enter teacher mode. Help me find the lectures and get started,
+then answer questions as I work through them at my own pace.
 ```
 
-The assistant can answer questions about concepts, equations, code and results as you study, and help with
-notebook errors. Share the lecture link and section or the cell you are working on; you choose when to move on.
+See [AI Options](https://github.com/PyAutoLabs/PyAutoScientist/blob/main/AI_OPTIONS.md) for tools and setup guidance.
 
-### Run in Google Colab (nothing to install)
+## Choose Your Chapter
 
-Every tutorial opens in Google Colab in one click. There is nothing to install on your own machine and
-no local Python environment to set up — **PyAutoGalaxy** installs itself in the notebook's first cell.
-In Colab you *run* the tutorial: edit the code, change the model, and see the output for yourself.
+| Chapter | What you’ll learn |
+|---|---|
+| [1. Introduction](https://github.com/PyAutoLabs/HowToGalaxy/blob/main/scripts/chapter_1_introduction/README.md) | Grids, light profiles, simulated observations and fitting |
+| [2. Modeling](https://github.com/PyAutoLabs/HowToGalaxy/blob/main/scripts/chapter_2_modeling/README.md) | Bayesian inference, fitting galaxy models and combining searches |
+| [3. Pixelizations](https://github.com/PyAutoLabs/HowToGalaxy/blob/main/scripts/chapter_3_pixelizations/README.md) | Reconstructing irregular galaxy structures with pixels and regularization |
+| [4. Scaling Up Galaxies](https://github.com/PyAutoLabs/HowToGalaxy/blob/main/scripts/chapter_4_scaling_up_galaxies/README.md) | Blended galaxies and modeling galaxy light in cluster fields |
+| [Optional tutorials](https://github.com/PyAutoLabs/HowToGalaxy/tree/main/scripts/chapter_optional) | Search methods, runtime and additional modeling techniques |
 
-Whilst in Colab, you can use **Gemini** as a study assistant alongside the lecture: ask it to explain an
-equation, unpack what a cell is doing, or help interpret the output of a fit.
+Start with Chapters 1 and 2, then try the [workspace examples](https://github.com/PyAutoLabs/autogalaxy_workspace) before returning for Chapters 3 and 4.
 
-The `markdown` links are the same tutorial already executed and rendered on GitHub, with its real
-output figures inline. Nothing runs and nothing installs — you just read it. They are good for
-skimming a tutorial before running it, or for reading on a phone. Markdown pages currently exist only
-for the chapter 1 tutorials listed with a `markdown` link below; every other tutorial is Colab-only.
+## Community and Contributing
 
-**[Start Here](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/start_here.ipynb)** — a one-page overview of the whole series.
+Ask questions, suggest improvements and share your work in [PyAutoLabs Discussions](https://github.com/orgs/PyAutoLabs/discussions), or chat with us on [Slack](https://join.slack.com/t/pyautolens/shared_invite/zt-2cufp4eyf-fXfgMxRGuvg~bMrI3uOAxg).
 
-- **[Chapter 1: Introduction](scripts/chapter_1_introduction/README.md)** — Grids, light profiles, galaxies, simulated imaging data, and fitting.
-  - Tutorial 0: Visualization — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_1_introduction/tutorial_0_visualization.ipynb) / [markdown](markdown/chapter_1_introduction/tutorial_0_visualization.md))
-  - Tutorial 1: Grids and Galaxies — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_1_introduction/tutorial_1_grids_and_galaxies.ipynb) / [markdown](markdown/chapter_1_introduction/tutorial_1_grids_and_galaxies.md))
-  - Tutorial 2: Data — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_1_introduction/tutorial_2_data.ipynb) / [markdown](markdown/chapter_1_introduction/tutorial_2_data.md))
-  - Tutorial 3: Fitting — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_1_introduction/tutorial_3_fitting.ipynb) / [markdown](markdown/chapter_1_introduction/tutorial_3_fitting.md))
-  - Tutorial 4: Methods — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_1_introduction/tutorial_4_methods.ipynb))
-  - Tutorial 5: Summary — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_1_introduction/tutorial_5_summary.ipynb) / [markdown](markdown/chapter_1_introduction/tutorial_5_summary.md))
-- **[Chapter 2: Modeling](scripts/chapter_2_modeling/README.md)** — Practical galaxy models, data and likelihoods, linear profiles and search chaining.
-  - Tutorial 1: Non-linear Search — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_2_modeling/tutorial_1_non_linear_search.ipynb))
-  - Tutorial 2: Practicalities — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_2_modeling/tutorial_2_practicalities.ipynb))
-  - Tutorial 3: Why Modeling Is Hard — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_2_modeling/tutorial_3_why_modeling_is_hard.ipynb))
-  - Tutorial 4: Linear Profiles — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_2_modeling/tutorial_4_linear_profiles.ipynb))
-  - Tutorial 5: Data and Likelihoods — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_2_modeling/tutorial_5_data_and_likelihoods.ipynb))
-  - Tutorial 6: Search Chaining — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_2_modeling/tutorial_6_search_chaining.ipynb))
-  - Tutorial 7: Summary — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_2_modeling/tutorial_7_summary.ipynb))
-- **[Chapter 3: Pixelizations](scripts/chapter_3_pixelizations/README.md)** — Mappings, Bayesian regularization, fit problems, adaptive reconstruction and MGE search chaining.
-  - Tutorial 1: Pixelizations — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_3_pixelizations/tutorial_1_pixelizations.ipynb))
-  - Tutorial 2: Bayesian Regularization — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_3_pixelizations/tutorial_2_bayesian_regularization.ipynb))
-  - Tutorial 3: Fit Problems — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_3_pixelizations/tutorial_3_fit_problems.ipynb))
-  - Tutorial 4: Adaptive Reconstruction — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_3_pixelizations/tutorial_4_adaptive_reconstruction.ipynb))
-  - Tutorial 5: Model Fit — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_3_pixelizations/tutorial_5_model_fit.ipynb))
-
-- **[Chapter 4: Scaling Up Galaxies](scripts/chapter_4_scaling_up_galaxies/README.md)** — Extra galaxies, blended multi-galaxy systems, and cluster fields.
-  - Tutorial 1: Extra Galaxies — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_4_scaling_up_galaxies/tutorial_1_extra_galaxies.ipynb))
-  - Tutorial 2: Multi Galaxy — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_4_scaling_up_galaxies/tutorial_2_multi_galaxy.ipynb))
-  - Tutorial 3: Cluster — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_4_scaling_up_galaxies/tutorial_3_cluster.ipynb))
-- **[Optional Tutorials](scripts/chapter_optional/)** — Alternative non-linear searches and advanced topics.
-  - Alternative Searches — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_optional/tutorial_searches.ipynb))
-  - Need for Speed — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_optional/tutorial_need_for_speed.ipynb))
-  - Historical Prior Passing — ([Colab](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/main/notebooks/chapter_optional/tutorial_prior_passing.ipynb)); not required reading.
-
-Model-fits can run faster on a GPU. In Colab, enable one via *Runtime* → *Change runtime type*
-→ *Hardware accelerator* before running a notebook.
-
-### Run on your own machine
-
-Follow the
-[PyAutoGalaxy installation guide](https://pyautogalaxy.readthedocs.io/en/latest/installation/overview.html),
-then clone this repository:
-
-```bash
-git clone https://github.com/PyAutoLabs/HowToGalaxy.git
-cd HowToGalaxy
-```
-
-The tutorials are distributed as both Jupyter notebooks (`notebooks/`) and Python scripts (`scripts/`).
-We recommend the notebooks for reading — images and plots render inline, and you can step through small
-code blocks interactively. Use the Python scripts for actual **PyAutoGalaxy** use, which is the workflow
-chapter 3 onwards transitions you to.
-
-## Before Chapter 1
-
-Before starting chapter 1, complete `scripts/chapter_1_introduction/tutorial_0_visualization.py`
-(or the equivalent notebook). This confirms your **PyAutoGalaxy** installation, walks you through how
-images and figures display in Jupyter, and configures matplotlib for the rest of the tutorial series.
-
-## Repository Structure
-
-- `scripts/` — Runnable Python tutorial scripts, one subfolder per chapter.
-- `notebooks/` — Jupyter notebook versions of the scripts (auto-generated; see below).
-- `config/` — **PyAutoGalaxy** configuration YAML files used by the tutorials.
-- `dataset/` — Tutorial datasets are generated at runtime by scripts in `scripts/simulators/` —
-  no `.fits` files are committed.
-- `output/` — Model-fit results (generated at runtime, not committed).
-
-## Notebooks vs Scripts
-
-Notebooks in `notebooks/` are generated from the Python files in `scripts/`. **Always edit the \`\`.py\`\`
-scripts, never the notebooks directly.** The `# %%` markers in each script alternate between code and
-markdown cells, which [PyAutoHands](https://github.com/PyAutoLabs/PyAutoHands) uses to produce the
-`.ipynb` files.
-
-## Relationship to autogalaxy_workspace
-
-[autogalaxy_workspace](https://github.com/PyAutoLabs/autogalaxy_workspace) is the main user-facing
-workspace for **PyAutoGalaxy** — concise examples, guides, and science templates aimed at users who have
-a working understanding of galaxy morphology and light profile fitting. **HowToGalaxy** is the teaching
-companion. Many tutorials in chapters 2–4 reference `autogalaxy_workspace` scripts as the next place to
-go after the relevant concept has been introduced.
+To contribute, see the [contribution guide](https://github.com/PyAutoLabs/HowToGalaxy/blob/main/CONTRIBUTING.md).
 
 ## Citations
 
-If you use **HowToGalaxy** or **PyAutoGalaxy** in your research, please cite the references listed in
-`CITATIONS.rst`.
+If you use HowToGalaxy or PyAutoGalaxy in your research, see the [citation guide](https://github.com/PyAutoLabs/HowToGalaxy/blob/main/CITATIONS.md).
 
-## Community & Contributing
+## License
 
-**PyAutoGalaxy** is built in the open by its users: everyone is welcome to ask questions,
-share what they have made with it, and contribute.
-
-Questions, ideas and bug reports: the [PyAutoLabs Discussions](https://github.com/orgs/PyAutoLabs/discussions).
-Chat with us on [Slack](https://join.slack.com/t/pyautolens/shared_invite/zt-2cufp4eyf-fXfgMxRGuvg~bMrI3uOAxg).
-
-Community-built tools and tutorials, and how to contribute: the [**PyAutoGalaxy** community page](https://pyautogalaxy.readthedocs.io/en/latest/general/community.html).
+See the [license](https://github.com/PyAutoLabs/HowToGalaxy/blob/main/LICENSE).
