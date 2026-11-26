@@ -16,6 +16,7 @@ __Contents__
 - Placing points with a Hilbert image mesh
 - Controlling the brightness weighting
 - Keeping resolution in the faint regions
+- The default image mesh: `HilbertSNR`
 - Reconstructing with the Hilbert mesh
 - Comparing overlay and Hilbert reconstructions
 - Smoothing on an irregular mesh
@@ -548,6 +549,57 @@ Compare the points around the brightest peaks, along the fainter galaxy emission
 Increasing the floor reduces the contrast between their weights. This retains more sampling away from the brightest emission, but leaves fewer points available to concentrate on its peaks.
 
 Because the background can cover much more area than the galaxy light, even a modest floor can affect the allocation substantially. We should inspect the resulting mesh rather than interpret the floor as a fixed fraction of points assigned to faint regions.
+
+Both `weight_power` and `weight_floor` act on weights divided by the **brightest** value in the adapt image. How the rest of the galaxy is sampled therefore depends on how bright that single peak is.
+
+---
+
+__The default image mesh: `HilbertSNR`__
+
+That dependence on the peak is a problem for real data. Suppose the galaxy contains a compact clump or bulge with a signal-to-noise (S/N) of 250, next to extended emission at S/N 30. With `weight_power=3.5` and `weight_floor=0.01`, any pixel below S/N ~67 receives the floor weight, so the well-detected extended emission is weighted like empty sky and receives few points. Lowering the power or raising the floor spreads points more evenly, but then the mesh stops concentrating on the galaxy at all.
+
+The default image mesh, `HilbertSNR`, keeps the Hilbert path but shares out the points differently:
+
+- 25% are spread evenly over the mask, so the background is always covered.
+- 70% follow the galaxy's **absolute** S/N through a soft curve: zero at or below S/N 2, which is noise, rising through S/N 5 and flattening out for bright pixels. Faint detected emission always receives points, and the brightest regions cannot take them all.
+- 5% go to the region near the brightest S/N, giving a compact bright feature extra resolution.
+- No image pixel receives more than 8 points, so a faint galaxy does not have its points piled onto a few pixels.
+
+Because the weighting uses absolute S/N, it expects an S/N map rather than an image in flux units. S/N is the natural input: it is unit-free and comparable between datasets, whereas an image's values depend on its brightness units and exposure. Here the galaxy is the only emission, so its S/N map is the data divided by the noise map. In a model fit with several galaxies, the S/N map of each galaxy is the data with every other galaxy's model subtracted, divided by the noise map; `ag.AdaptImages.from_result` computes these maps from a previous fit and builds the mesh and the adaptive regularization input from them in one call.
+"""
+
+snr_map = ag.Array2D(
+    values=np.asarray(dataset.data.slim) / np.asarray(dataset.noise_map.slim),
+    mask=dataset.mask,
+)
+
+snr_image_mesh = ag.image_mesh.HilbertSNR(pixels=hilbert_pixels)
+
+snr_image_plane_mesh_grid = snr_image_mesh.image_plane_mesh_grid_from(
+    mask=dataset.mask,
+    adapt_data=snr_map,
+)
+
+aplt.plot_array(array=snr_map, title="Signal-to-Noise Map")
+
+for label, mesh_grid in [
+    ("Hilbert: weight_power=1.0, weight_floor=0.05", hilbert_image_plane_mesh_grid),
+    ("HilbertSNR (default)", snr_image_plane_mesh_grid),
+]:
+    aplt.plot_array(
+        array=dataset.data,
+        grid=mesh_grid,
+        title=label,
+    )
+
+r"""
+Compare where the two meshes place their points across the galaxy's bright centre, its fainter emission and the background.
+
+`HilbertSNR` has no `weight_power` or `weight_floor`. Its defaults were chosen on fits of HST and JWST lens datasets and checked on sources from a peak S/N of 5 to 1000. They can be changed (for example `background`, the evenly spread share), but in most fits they should not need to be.
+
+Two limits are worth knowing. A very faint galaxy, with only a few pixels above S/N 2, receives most of its points on those pixels. A very bright galaxy, whose detected emission is almost all past the flattening of the soft curve, receives an even spread of points across it.
+
+For the fixed experiments in the rest of this tutorial we keep the `weight_power` mesh, so the effect of each setting stays easy to see; the workspace's modelling examples use `HilbertSNR`.
 
 For our first reconstruction, we return to the mesh already constructed with `weight_power=1.0` and `weight_floor=0.05`. These are starting choices to investigate, rather than settings we have established as optimal.
 
