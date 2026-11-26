@@ -129,11 +129,12 @@ convolves it with the PSF and compares it with the measured image using the nois
 `log_likelihood_function` returns the score that guides the search.
 
 This is the same comparison you performed using `FitImaging` in chapter 1, now repeated automatically.
-`use_jax=True` enables the numerical engine that accelerates these repeated calculations on a CPU or a compatible
-GPU. You do not need to know how JAX works to use it.
+The analysis chooses the numerical engine that accelerates these repeated calculations on a CPU or a compatible
+GPU for you (pass `use_jax=True` or `use_jax=False` to choose it yourself). You do not need to know how JAX works
+to use it.
 """
 
-analysis = ag.AnalysisImaging(dataset=dataset, use_jax=True)
+analysis = ag.AnalysisImaging(dataset=dataset)
 
 """
 __Nested Sampling__

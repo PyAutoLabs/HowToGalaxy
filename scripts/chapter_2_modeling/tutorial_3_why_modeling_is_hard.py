@@ -90,7 +90,7 @@ model = af.Collection(
         )
     )
 )
-analysis = ag.AnalysisImaging(dataset=dataset, use_jax=True)
+analysis = ag.AnalysisImaging(dataset=dataset)
 search = af.Nautilus(
     path_prefix=Path("howtogalaxy", "chapter_2"),
     name="tutorial_2_practicalities",

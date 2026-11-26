@@ -89,7 +89,7 @@ model = af.Collection(
         galaxy=af.Model(ag.Galaxy, redshift=0.5, bulge=ag.lp_linear.Sersic)
     )
 )
-analysis = ag.AnalysisImaging(dataset=dataset, use_jax=True)
+analysis = ag.AnalysisImaging(dataset=dataset)
 
 search = af.Nautilus(
     path_prefix=Path("howtogalaxy", "chapter_2"),
@@ -172,7 +172,7 @@ prepared dataset and uses its noise map when calculating the likelihood. This is
 the model comparison. A search sees the returned score, not the reasons we chose a mask or excluded a neighbour.
 """
 
-analysis = ag.AnalysisImaging(dataset=dataset, use_jax=True)
+analysis = ag.AnalysisImaging(dataset=dataset)
 
 search = af.Nautilus(
     path_prefix=Path("howtogalaxy", "chapter_2"),

@@ -99,9 +99,7 @@ search_1 = af.Nautilus(
     n_live=100,
     n_batch=50,
 )
-result_1 = search_1.fit(
-    model=model_1, analysis=ag.AnalysisImaging(dataset=dataset, use_jax=True)
-)
+result_1 = search_1.fit(model=model_1, analysis=ag.AnalysisImaging(dataset=dataset))
 aplt.subplot_fit_imaging(fit=result_1.max_log_likelihood_fit)
 
 """
@@ -145,9 +143,7 @@ search_2 = af.Nautilus(
     n_live=50,
     n_batch=50,
 )
-result_2 = search_2.fit(
-    model=model_2, analysis=ag.AnalysisImaging(dataset=dataset, use_jax=True)
-)
+result_2 = search_2.fit(model=model_2, analysis=ag.AnalysisImaging(dataset=dataset))
 fit_2 = result_2.max_log_likelihood_fit
 aplt.subplot_fit_imaging(fit=fit_2)
 mapper_2 = fit_2.inversion.cls_list_from(ag.Mapper)[0]
@@ -186,9 +182,7 @@ search_3 = af.Nautilus(
     n_live=100,
     n_batch=50,
 )
-result_3 = search_3.fit(
-    model=model_3, analysis=ag.AnalysisImaging(dataset=dataset, use_jax=True)
-)
+result_3 = search_3.fit(model=model_3, analysis=ag.AnalysisImaging(dataset=dataset))
 fit_3 = result_3.max_log_likelihood_fit
 aplt.subplot_fit_imaging(fit=fit_3)
 mapper_3 = fit_3.inversion.cls_list_from(ag.Mapper)[0]

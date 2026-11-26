@@ -272,7 +272,7 @@ search = af.Nautilus(
     n_batch=50,
 )
 
-analysis = ag.AnalysisImaging(dataset=dataset, use_jax=True)
+analysis = ag.AnalysisImaging(dataset=dataset)
 
 """
 __Model Fit__

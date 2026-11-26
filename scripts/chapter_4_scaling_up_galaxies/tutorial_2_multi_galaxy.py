@@ -294,7 +294,7 @@ search = af.Nautilus(
     n_batch=50,  # GPU batching and VRAM use explained in chapter 2 tutorial 2.
 )
 
-analysis = ag.AnalysisImaging(dataset=dataset, use_jax=True)
+analysis = ag.AnalysisImaging(dataset=dataset)
 
 print(
     "The non-linear search has begun running - checkout the HowToGalaxy/output/howtogalaxy/chapter_4/tutorial_2_multi_galaxy"

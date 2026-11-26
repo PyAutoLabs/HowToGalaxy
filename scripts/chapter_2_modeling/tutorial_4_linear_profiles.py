@@ -110,7 +110,7 @@ of the likelihood. This adds work per evaluation but can reduce the number of ev
 model. Overall runtime depends on the data, hardware and search; there is no universal speed-up factor.
 """
 
-analysis = ag.AnalysisImaging(dataset=dataset, use_jax=True)
+analysis = ag.AnalysisImaging(dataset=dataset)
 
 search = af.Nautilus(
     path_prefix=Path("howtogalaxy", "chapter_2"),
