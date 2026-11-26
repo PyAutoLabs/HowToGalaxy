@@ -128,7 +128,7 @@ The model defines possible bulges and disks; `AnalysisImaging` compares their pr
 dataset. The search itself does not need to know how a galaxy image is calculated.
 """
 
-analysis = ag.AnalysisImaging(dataset=dataset, use_jax=True)
+analysis = ag.AnalysisImaging(dataset=dataset)
 
 """
 __Run Times__

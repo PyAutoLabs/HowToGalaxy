@@ -134,7 +134,7 @@ and a ceiling of 300 steps per start as a first pass. These settings are not a g
 `batch_size=4` limits how many starts are evaluated together to keep memory use manageable.
 """
 
-analysis_1 = ag.AnalysisImaging(dataset=dataset, use_jax=True)
+analysis_1 = ag.AnalysisImaging(dataset=dataset)
 search_1 = af.MultiStartProdigy(
     path_prefix=Path("howtogalaxy", "chapter_2"),
     name="tutorial_6_search_1",
@@ -202,7 +202,7 @@ Use Nautilus to explore the target's geometric parameters and estimate their unc
 likelihood definition are unchanged; the model and search have different roles in this second stage.
 """
 
-analysis_2 = ag.AnalysisImaging(dataset=dataset, use_jax=True)
+analysis_2 = ag.AnalysisImaging(dataset=dataset)
 search_2 = af.Nautilus(
     path_prefix=Path("howtogalaxy", "chapter_2"),
     name="tutorial_6_search_2",

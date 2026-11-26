@@ -80,7 +80,7 @@ model = af.Collection(
         galaxy=af.Model(ag.Galaxy, redshift=0.5, bulge=ag.lp_linear.Sersic)
     )
 )
-analysis = ag.AnalysisImaging(dataset=dataset, use_jax=True)
+analysis = ag.AnalysisImaging(dataset=dataset)
 search = af.MultiStartProdigy(
     path_prefix=Path("howtogalaxy", "chapter_optional"),
     name="tutorial_searches_prodigy",
