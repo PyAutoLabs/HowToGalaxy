@@ -21,8 +21,8 @@ explore brightness-guided mesh placement and adaptive smoothing, before fitting 
 
 # Files
 
-- [Tutorial 1: Pixelizations](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.26.1/notebooks/chapter_3_pixelizations/tutorial_1_pixelizations.ipynb) — Mappings, inversions, positivity and telescope blurring.
-- [Tutorial 2: Bayesian Regularization](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.26.1/notebooks/chapter_3_pixelizations/tutorial_2_bayesian_regularization.ipynb) — The Goldilocks balance, log-evidence selection and mesh resolution.
-- [Tutorial 3: Fit Problems](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.26.1/notebooks/chapter_3_pixelizations/tutorial_3_fit_problems.ipynb) — Compact galaxies expose mesh-resolution and constant-smoothing limitations.
-- [Tutorial 4: Adaptive Reconstruction](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.26.1/notebooks/chapter_3_pixelizations/tutorial_4_adaptive_reconstruction.ipynb) — Delaunay/Hilbert mesh placement and adaptive Split regularization.
-- [Tutorial 5: Model Fit](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.26.1/notebooks/chapter_3_pixelizations/tutorial_5_model_fit.ipynb) — MGE fitting, adding a pixelization and refining the combined model.
+- [Tutorial 1: Pixelizations](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.27.1/notebooks/chapter_3_pixelizations/tutorial_1_pixelizations.ipynb) — Mappings, inversions, positivity and telescope blurring.
+- [Tutorial 2: Bayesian Regularization](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.27.1/notebooks/chapter_3_pixelizations/tutorial_2_bayesian_regularization.ipynb) — The Goldilocks balance, log-evidence selection and mesh resolution.
+- [Tutorial 3: Fit Problems](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.27.1/notebooks/chapter_3_pixelizations/tutorial_3_fit_problems.ipynb) — Compact galaxies expose mesh-resolution and constant-smoothing limitations.
+- [Tutorial 4: Adaptive Reconstruction](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.27.1/notebooks/chapter_3_pixelizations/tutorial_4_adaptive_reconstruction.ipynb) — Delaunay/Hilbert mesh placement and adaptive Split regularization.
+- [Tutorial 5: Model Fit](https://colab.research.google.com/github/PyAutoLabs/HowToGalaxy/blob/2026.11.27.1/notebooks/chapter_3_pixelizations/tutorial_5_model_fit.ipynb) — MGE fitting, adding a pixelization and refining the combined model.
